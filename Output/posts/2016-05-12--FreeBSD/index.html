@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="og:site_name" content="ju ka"/><link rel="canonical" href="https://juliankahnert.de/posts/2016-05-12--FreeBSD"/><meta name="twitter:url" content="https://juliankahnert.de/posts/2016-05-12--FreeBSD"/><meta name="og:url" content="https://juliankahnert.de/posts/2016-05-12--FreeBSD"/><title>FreeBSD | ju ka</title><meta name="twitter:title" content="FreeBSD | ju ka"/><meta name="og:title" content="FreeBSD | ju ka"/><meta name="description" content="Installation und erste Schritte"/><meta name="twitter:description" content="Installation und erste Schritte"/><meta name="og:description" content="Installation und erste Schritte"/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><link rel="stylesheet" href="/fonts.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to ju ka"/></head><body class="item-page"><header><div class="wrapper"><a class="site-name" href="/">ju ka</a><nav><ul><li><a class="selected" href="/posts">My posts</a></li><li><a href="/about">About Me</a></li></ul></nav></div></header><div class="wrapper"><article><div class="content"><h3>Update vom 29. Juli 2016</h3><p>Wegen einiger Umstrukturierungen der <a href="https://github.com/JulianKahnert/.dotfiles">Dotfiles</a> muss die Einrichtung der Z-Shell angepasst werden:</p><pre><code>cd $HOME &amp;&amp; git clone https://github.<span class="property">com</span>/<span class="type">JulianKahnert</span>/.<span class="property">dotfiles</span>.<span class="property">git</span> &amp;&amp; cd $HOME/.<span class="property">dotfiles</span>/dotfiles.<span class="property">sh</span> install
+</code></pre><hr><h3>Original vom 12. Mai 2016</h3><p>Ein neues Blog und jetzt auch noch ein neues Betriebssystem (FreeBSD 10.3). Ich habe mir den <a href="https://vimeo.com/channels/freebsdguides">FreeBSD Guide</a> mal genauer angesehen und dachte mir,dass es vielleicht ganz nützlich sein könnte eine Mitschrift davon zu haben. Ich halte mich hier bei der Beschreibung bewusst kurz, um eine Überblick zu bekommen. Der Ablauf sieht wie folgt aus:</p><ul><li>Basiseinstellungen (ports, pkg, sudo, Zeit)</li><li>ZFS Auto Snapshot</li><li>Jails</li><li>BTSync</li></ul><h3>Basiseinstellungen</h3><h4>Ports &amp; Paket Manager</h4><p>Zuerst werden die Ports für FreeBSD heruntergeladen und extrahiert. Anschließend wird der Port <code>portmaster</code> kompiliert, um später einfacher weitere Ports installieren zu können. Für <code>sudo</code>, <code>git</code> und <code>nano</code> wird der Paket Manager verwendet.</p><pre><code>su
+portsnap fetch
+portsnap extract
+
+cd /usr/ports/ports-mgmt/portmaster/ &amp;&amp; make install
+
+portmaster /usr/ports/shells/zsh
+
+pkg install security/sudo devel/git editors/nano
+</code></pre><h4>Einstellungen sudo</h4><ul><li><code>visudo</code> um Einstellungen für <code>sudo</code> zu verändern.</li><li>Kein Passwort für <code>sudo</code>:</li></ul><pre><code>## <span class="type">Same</span> thing without a password
+%wheel <span class="type">ALL</span>=(<span class="type">ALL</span>) <span class="type">NOPASSWD</span>: <span class="type">ALL</span>
+</code></pre><h4>Zeit einstellen</h4><ul><li><code>sudo ntpdate pool.ntp.org</code> Systemzeit aktualisieren</li><li><code>sudo nano /etc/rc.conf</code> Eintrag hinzufügen um Dienst automatisch zu starten:</li></ul><pre><code>ntpd_enable=<span class="string">"YES"</span>
+</code></pre><ul><li><code>sudo service ntpd start</code> Dienst beim ersten Mal manuell starten.</li><li><code>sudo ntpq -p</code> bzw. <code>date</code> um zu prüfen, ob die Uhrzeit richtig eingestellt wurde.</li></ul><h4>Z-Shell einrichten</h4><ul><li><code>chsh</code> um die standard Shell (<code>which zsh</code>) zu verändern:</li></ul><pre><code><span class="type">Shell</span>: /usr/local/bin/zsh
+</code></pre><ul><li><em>Dotfiles</em> von <a href="https://github.com/JulianKahnert/.dotfiles">GitHub</a> kopieren und installieren:</li></ul><pre><code>git clone https://github.<span class="property">com</span>/<span class="type">JulianKahnert</span>/.<span class="property">dotfiles</span>.<span class="property">git</span> &amp;&amp; cd ~/.<span class="property">dotfiles</span> &amp;&amp; sh ./install-dotfiles.<span class="property">sh</span>
+</code></pre><h3>ZFS Auto Snapshot einrichten</h3><http://eduardosanchez.me/2015/08/31/zfs-automatic-snapshots/><ul><li><code>sudo pkg install zfstools</code> Tools installieren</li><li>mit denen <code>sudo nano /etc/crontab</code> Einträge erstellen</li><li><code>PATH</code> in Crontab hinzufügen <code>which ruby &amp;&amp; which zfs-auto-snapshot</code> z.B.:</li></ul><pre><code><span class="type">PATH</span>=/etc:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+</code></pre><p>und <em>crontabs</em> einrichten:</p><pre><code># <span class="type">ZFS Autosnapshots</span>
+<span class="number">15</span>,<span class="number">30</span>,<span class="number">45</span> * * * * root /usr/local/sbin/zfs-auto-snapshot frequent  <span class="number">4
+0</span>        * * * * root /usr/local/sbin/zfs-auto-snapshot hourly   <span class="number">24
+7        0</span> * * * root /usr/local/sbin/zfs-auto-snapshot daily     <span class="number">7
+14       0</span> * * <span class="number">7</span> root /usr/local/sbin/zfs-auto-snapshot weekly    <span class="number">4
+28       0 1</span> * * root /usr/local/sbin/zfs-auto-snapshot monthly  <span class="number">12</span>
+</code></pre><ul><li>Autosnapshots für <code>ZPOOL/DATASET</code> aktivieren und Frequenz auswählen:</li></ul><pre><code>sudo zfs <span class="keyword">set</span> com.<span class="property">sun</span>:auto-snapshot=<span class="keyword">true</span> <span class="type">ZPOOL</span>/<span class="type">DATASET</span>
+sudo zfs <span class="keyword">set</span> com.<span class="property">sun</span>:auto-snapshot:hourly=<span class="keyword">true</span> <span class="type">ZPOOL</span>/<span class="type">DATASET</span>
+</code></pre><ul><li>Einstellungen für Autosnapshots ansehen:</li></ul><pre><code>sudo zfs <span class="keyword">get</span> com.<span class="property">sun</span>:auto-snapshot:frequent,com.<span class="property">sun</span>:auto-snapshot:hourly,com.<span class="property">sun</span>:auto-snapshot:daily,com.<span class="property">sun</span>:auto-snapshot:weekly,com.<span class="property">sun</span>:auto-snapshot:monthly <span class="type">POOL</span>/<span class="type">DATASET</span>
+</code></pre><h3>Jails</h3><h4>Netzwerk für die Jails</h4><p><code>sudo nano /etc/rc.conf</code> editieren, diese Zeilen hinzufügen:</p><pre><code>ifconfig_em0=<span class="string">"inet 10.0.1.65 netmask 255.255.255.0"</span>
+defaultrouter=<span class="string">"10.0.1.1"</span>
+
+ifconfig_em0_alias0=<span class="string">"inet 10.0.1.101 netmask 255.255.255.0"</span>
+ifconfig_em0_alias1=<span class="string">"inet 10.0.1.102 netmask 255.255.255.0"</span>
+ifconfig_em0_alias2=<span class="string">"inet 10.0.1.103 netmask 255.255.255.0"</span>
+</code></pre><h3>EZJail einrichten</h3><https://erdgeist.org/arts/software/ezjail/><ul><li><code>sudo portmaster sysutils/ezjail</code> Installation</li><li><code>sudo nano /usr/local/etc/ezjail.conf</code> editieren, um ZFS verwenden zu können:</li></ul><pre><code># <span class="type">ZFS</span> options
+
+# <span class="type">Setting</span> this to <span class="type">YES</span> will start to manage the basejail and newjail <span class="keyword">in</span> <span class="type">ZFS</span>
+ezjail_use_zfs=<span class="string">"YES"</span>
+
+# <span class="type">Setting</span> this to <span class="type">YES</span> will manage <span class="type">ALL</span> new jails <span class="keyword">in</span> their own zfs
+ezjail_use_zfs_for_jails=<span class="string">"YES"</span>
+
+# <span class="type">The</span> name of the <span class="type">ZFS</span> ezjail should create jails on, it will be mounted at the ezjail_jaildir
+ezjail_jailzfs=<span class="string">"zroot/ezjail"</span>
+
+# <span class="type">ADVANCED</span>, be very careful!
+ezjail_zfs_properties=<span class="string">"-o compression=lz4"</span>
+</code></pre><ul><li><code>sudo ezjail-admin install -msp</code> <em>ezjail</em> installieren</li><li><code>sudo nano /etc/rc.conf</code> Zeile anhängen:</li></ul><pre><code>ezjail_enable=<span class="string">"YES"</span>
+</code></pre><ul><li><code>cd /usr/jails/flavours &amp;&amp; sudo cp -r example myflavour</code> neues Template für weitere Jails einrichten.</li><li><code>sudo nano /usr/jails/flavours/myflavour/etc/rc.conf</code> editieren:</li></ul><pre><code>sshd_enable=<span class="string">"YES"</span>
+</code></pre><ul><li><code>sudo nano /usr/jails/flavours/myflavour/etc/resolv.conf</code> Nameserver eintragen:</li></ul><pre><code>search no-dns-available.<span class="property">example</span>.<span class="property">com</span>
+nameserver <span class="number">208.67.222.222</span>
+nameserver <span class="number">8.8.8.8</span>
+</code></pre><ul><li>IP Adresse nochmal prüfen und Jail erstellen:</li></ul><pre><code>ifconfig
+sudo ezjail-admin create -f myflavour sync.<span class="property">juliankahnert</span>.<span class="property">de</span> <span class="number">10.0.1.101</span>
+</code></pre><ul><li><strong>Jail starten:</strong> <code>sudo ezjail-admin console -f sync_juliankahnert_de</code> oder <code>sudo ezjail-admin start sync_juliankahnert_de</code></li></ul><h4>ZPool erstellen und in Jail einbinden</h4><ul><li>Data Set erzeugen <https://www.freebsd.org/doc/handbook/zfs-zpool.html>
+    * `sudo zpool create mypool mirror /dev/ada1 /dev/ada2`
+    * `sudo zfs set compression=lz4 mypool`
+* Status anzeigen lassen: `zpool status`
+
+* Einstellungen aus <https://forums.freebsd.org/threads/51262/>
+
+```sh
+sudo sysctl security.jail.mount_allowed=1
+sudo sysctl security.jail.mount_devfs_allowed=1
+sudo sysctl security.jail.mount_zfs_allowed=1
+```
+
+* `sudo nano /usr/local/etc/ezjail/sync_juliankahnert_de` EZJail config verändern:
+
+```sh
+export jail_sync_juliankahnert_de_zfs_datasets="mypool/BTSync"
+export jail_sync_juliankahnert_de_parameters="enforce_statfs=1 allow.mount=1 allow.mount.zfs=1 allow.mount.procfs=1 allow.mount.devfs=1"
+```
+
+* **Auf Host:** ZFS einbinden:
+
+```sh
+sudo zfs create mypool/BTSync
+sudo zfs set jailed=on mypool/BTSync
+sudo zfs jail sync_juliankahnert_de mypool/BTSync
+```
+
+* **Im Jail:** ZPool mounten `sudo ezjail-admin console sync_juliankahnert_de`:
+
+```sh
+sudo zfs mount mypool/BTSync
+sudo chown -R sync_user:wheel /mypool/BTSync
+
+```
+* `sudo nano /usr/local/etc/crontab` Autostart einrichten:
+
+```sh
+@reboot		root    	zfs mount mypool/BTSync
+```
+
+### BTSync: Installation, Autostart und Data Set einrichten
+<https://www.freshports.org/net-p2p/btsync>
+
+* BTSync installieren: `cd /usr/ports/net-p2p/btsync/ && make install clean`
+* `sudo nano /etc/crontab` editieren für Autostart:
+
+```sh
+@reboot 	sync_user  	/usr/local/bin/btsync
+```
+
+* Autosnapshot für BTSync Daten einrichten:
+
+```sh
+sudo zfs set com.sun:auto-snapshot=true mypool/BTSync
+sudo zfs set com.sun:auto-snapshot:frequent=true mypool/BTSync
+sudo zfs set com.sun:auto-snapshot:hourly=true mypool/BTSync
+sudo zfs set com.sun:auto-snapshot:daily=true mypool/BTSync
+sudo zfs set com.sun:auto-snapshot:weekly=true mypool/BTSync
+sudo zfs set com.sun:auto-snapshot:monthly=true mypool/BTSync
+```
+</li></ul></div><span>Tagged with: </span><ul class="tag-list"><li><a href="/tags/freebsd">freebsd</a></li><li><a href="/tags/hacking">hacking</a></li></ul></article></div><footer><p>Generated using <a href="https://github.com/johnsundell/publish">Publish</a></p><p><a href="/feed.rss">RSS feed</a></p></footer></body></html>
