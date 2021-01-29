@@ -4,10 +4,11 @@
 *  MIT license, see LICENSE file for details
 */
 
-* {
+*:not(pre) {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Lato, Helvetica, Arial;
 }
 
 body {
@@ -40,9 +41,10 @@ header a {
 }
 
 header .site-name {
-    font-size: 1.5em;
     color: #000;
+/*    font-family: Lato, Helvetica, Arial;*/
     font-weight: bold;
+    font-size: 2.5em;
 }
 
 nav {
