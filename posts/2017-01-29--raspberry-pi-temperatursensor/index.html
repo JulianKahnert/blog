@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="og:site_name" content="ju ka"/><link rel="canonical" href="https://juliankahnert.de/posts/2017-01-29--raspberry-pi-temperatursensor"/><meta name="twitter:url" content="https://juliankahnert.de/posts/2017-01-29--raspberry-pi-temperatursensor"/><meta name="og:url" content="https://juliankahnert.de/posts/2017-01-29--raspberry-pi-temperatursensor"/><title>Raspberry Pi Temperatursensor | ju ka</title><meta name="twitter:title" content="Raspberry Pi Temperatursensor | ju ka"/><meta name="og:title" content="Raspberry Pi Temperatursensor | ju ka"/><meta name="description" content="A tech blog with focus on Swift"/><meta name="twitter:description" content="A tech blog with focus on Swift"/><meta name="og:description" content="A tech blog with focus on Swift"/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><link rel="stylesheet" href="/fonts.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to ju ka"/></head><body class="item-page"><header><div class="wrapper"><a class="site-name" href="/">ju ka</a><nav><ul><li><a class="selected" href="/posts">My posts</a></li><li><a href="/about">About Me</a></li></ul></nav></div></header><div class="wrapper"><article><div class="content"><p>Im Rahmen von meiner Heimautomation mit <a href="http://home-assistant.io/">HomeAssistant</a> (eine sehr interessantes Projekt mit unzähligen Möglichkeiten) wollte ich die Temperatur in einem Raum messen und habe hierfür eine einfache und kostengünstige Lösung gesucht. Da ich ohnehin schon einen Raspberry Pi für andere Dinge nutze, bot es sich an diesen auch als Temperatursensor zu verwenden und so bin ich auf <a href="http://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/temperature/">dieses</a> Tutorial gestoßen. Die Einrichtung ist extrem einfach und die Kosten bleiben im einstelligen Euro-Bereich (sofern ein Raspberry Pi schon vorhanden ist).</p><h3>Komponenten</h3><p>Die folgenden Komponenten werden benötigt:</p><ul><li>Raspberry Pi</li><li>1x Temperatursensor (<code>DS18B20</code>)</li><li>1x Widerstand (<code>4.7kΩ</code>)</li><li>1x Steckbrett (z.B. <a href="https://www.amazon.de/gp/product/B00LO32MBM">diese</a>)</li><li>3x male-female Jumper-Kabel (z.B. <a href="https://www.amazon.de/dp/B00DI4ZSRU">diese</a>)</li></ul><p>Anstelle des Steckbretts und der Jumper-Kabel kann der Sensor natürlich auch an den Raspberry Pi gelötet werden.</p><h3>Verbindung</h3><p>Der Temperatursensor mit wie folgt mit dem Raspberry Pi (ausgeschaltet) verbunden werden:</p><img src="http://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/temperature/sensor-connection.png" alt="Temperatursensor"/><p>Die Pin-Belegung des Raspberry Pis sind z.B. <a href="https://www.raspberrypi.org/documentation/usage/gpio/">hier</a> zu finden.</p><p><strong>Wichtig:</strong> Wenn der Sensor angeschlossen ist und der Raspberry Pi zum ersten Mal gestartet wird, sollte man den Sensor anfassen und prüfen, ob er nach 4-5 Sekunden heiß wird. Ist dies der Fall, ist er nicht richtig verbunden und die Schaltung muss nochmal überprüft werden.</p><h3>Programmierungen</h3><p>Zunächst muss der <code>1-Wire</code> Sensor in der Raspberry Pi Konfiguration aktiviert werde:</p><pre><code>sudo raspi-config
+# <span class="type">Interfacing Options</span> &gt; <span class="number">1</span>-<span class="type">Wire</span> &gt; enable
+
+sudo modprobe w1-gpio
+sudo modprobe w1-therm
+
+# <span class="type">Pi</span> ggf. <span class="property">neu</span> starten
+sudo reboot
+</code></pre><p>Anschließend wird der Name des Sensors gesucht:</p><pre><code>ls /sys/bus/w1/devices/
+
+# nun sollte der <span class="type">Name</span> zu sehen sein
+<span class="number">28</span>-0416869dcaff  w1_bus_master1
+
+# hier: <span class="number">28</span>-0416869dcaff
+</code></pre><p>Die Temperatur kann schon jetzt ausgelesen werde <code>cat /sys/bus/w1/devices/28-0416869dcaff/w1_slave</code> (Name entsprechend anpassen):</p><pre><code>2e <span class="number">01</span> 4b <span class="number">46</span> 7f ff 0c <span class="number">10</span> e4 : crc=e4 <span class="type">YES</span>
+2e <span class="number">01</span> 4b <span class="number">46</span> 7f ff 0c <span class="number">10</span> e4 t=<span class="number">18875</span>
+</code></pre><p>Der Wert <code>t=18875</code> entspricht der Temperatur in <code>1/1000 ˚C</code>. Dies wird mit dem folgenden Python Skript (<code>temperature.py</code>) auf eine Nachkommastelle gerundet und anschließend ausgegeben.</p><pre><code>#!/usr/bin/env python
+
+# <span class="type">CHANGE THIS</span> - device id from <span class="string">"ls /sys/bus/w1/devices/"</span>
+device_id = <span class="string">"28-0416869dcaff"</span>
+
+# <span class="keyword">get</span> temperature data
+tfile = <span class="call">open</span>(<span class="string">"/sys/bus/w1/devices/"</span> + device_id + <span class="string">"/w1_slave"</span>)  
+text = tfile.<span class="call">read</span>()
+tfile.<span class="call">close</span>()
+
+# parse and format temperature data
+secondline = text.<span class="call">split</span>(<span class="string">"\n"</span>)[<span class="number">1</span>]
+temperaturedata = secondline.<span class="call">split</span>(<span class="string">" "</span>)[<span class="number">9</span>]
+temperature = <span class="call">float</span>(temperaturedata[<span class="number">2</span>:])
+
+# round to one decimal place
+temperature = <span class="call">round</span>(temperature / <span class="number">1000</span>, <span class="number">1</span>)
+print temperature
+</code></pre><p>Nun lassen sich unterschiedliche Anwendungen realisieren. In meinem Fall lese ich die Werte des Raspberry Pis via <code>ssh</code> aus:</p><pre><code>ssh pi@192.<span class="number">168.178.101</span> <span class="string">"python temperature.py"</span>
+</code></pre><p>In einem weiteren Anwendungsbeispiel könnte man einen Cronjob einrichten, sodass der Raspberry Pi die Temperatur an eine <a href="https://home-assistant.io/components/mqtt/">MQTT-Datenbank</a> überträgt.</p><hr><p><strong>Anmerkung zum Bild:</strong> Es hat sich herausgestellt, dass es ratsam ist, den Temperatursensor nicht direkt auf dem Raspberry Pi zu befestigen, da die Abwärme die Temperaturmessung stark verfälscht, selbst wenn keine anspruchsvollen Berechnungen ausgeführt werden.</p></div><span>Tagged with: </span><ul class="tag-list"><li><a href="/tags/hacking">hacking</a></li></ul></article></div><footer><p>Generated using <a href="https://github.com/johnsundell/publish">Publish</a></p><p><a href="/feed.rss">RSS feed</a></p></footer></body></html>

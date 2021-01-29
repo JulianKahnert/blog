@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>PersonalWebsite</title><description>A description of PersonalWebsite</description><link>https://your-website-url.com</link><language>en</language><lastBuildDate>Thu, 28 Jan 2021 13:37:53 +0100</lastBuildDate><pubDate>Thu, 28 Jan 2021 13:37:53 +0100</pubDate><ttl>250</ttl><atom:link href="https://your-website-url.com/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">https://your-website-url.com/posts/2018-03-03--pdf-archiver</guid><title>PDF Archiver</title><description>A tool for tagging files and archiving tasks.</description><link>https://your-website-url.com/posts/2018-03-03--pdf-archiver</link><pubDate>Thu, 28 Jan 2021 13:37:33 +0100</pubDate><content:encoded><![CDATA[<p>Let's be honest: sorting documents is painful, no matter if you try it with analogue folders or digitally on your computer.<br>
+Putting letters in different filing folders might help you to find your documents if needed. But it is a time consuming process, which ended (in my case) in a huge amount of unsorted letters on my desk.
+
+
+## New Archiving Approach
+Last year I started with a new approach.
+I talked to some friends about a structure which could handle files longterm.
+We found [this blog post](http://karl-voit.at/managing-digital-photographs/) by [Karl Voit](http://karl-voit.at) and came up with the following two *requirements*:
+
+* Longterm archiving
+* Fast way to find the documents, e.g. with a clean name structure
+
+Both will be discussed in the following sections.
+
+### Longterm Archiving
+If I have to tag all the old files manually, it will take some time and I don't want to do this more than one time.
+So at first we dismissed the thought about storing all files with the help of one specific app.
+We still want to access our documents if a developer stops supporting his app.<br>
+With that in mind, we thought that plain files on a hard drive seemed to be a good fit.
+The file format was an obvious choice: [PDF](https://en.wikipedia.org/wiki/Portable_Document_Format) (or [PDF/A](https://en.wikipedia.org/wiki/PDF/A)) files are standarized and exist for quite a while already.<br>
+While beeing geeks, searching via a terminal was a no-brainer.
+Furthermore we wanted to put all the necessary information into the filename.
+This keeps us independent of the current operating/file system and lets us easily backup the whole archive to another machine.
+
+### Finding Documents
+With this fixed we create a filename from the following three document attributes:
+
+* **Date:** `yyyy-mm-dd` Date of the document content.
+* **Description:** `--ikea-tradfri-gateway` Meaningful description of the document.
+* **Tags:** `__bill_ikea_iot` Tags which will help you to find the document in your archive.
+
+Furthermore we came to the conclusion that we have to remove capital letters, spaces and language specific characters (such as `ä, ö, ü, ß`).
+This helps to maximize the filesystem compatibility.
+Finally, the archive looks like this:
+
+```
+.
+└── Archive
+    ├── 2017
+    │   ├── 2017-05-12--apple-macbook__apple_bill.pdf
+    │   └── 2017-01-02--this-is-a-document__bill_vacation.pdf
+    └── 2018
+        ├── 2018-04-30--this-might-be-important__work_travel.pdf
+        ├── 2018-05-26--parov-stelar__concert_ticket.pdf
+        └── 2018-12-01--master-thesis__finally_longterm_university.pdf
+```
+
+This structure accomplishes our needs and makes it very easy to search files ...
+
+* ... by tag via a searchterm like: `_tagname`, starting with `_`
+* ... by description via a searchterm like: `-descriptionword`, starting with `-`
+* ... by tag or description via a searchterm like: `searchword`,  starting with the term
+
+Moreover the file content can be searched, if the PDF files contain a text layer, which can be done with [OCR](https://en.wikipedia.org/wiki/Optical_character_recognition).
+
+## My Workflow
+
+### Scanning
+With all these archive parameters set up, I started creating a workflow.
+I scanned all the old letters, bills etc. which was really time consuming.
+Afterwards I stacked the paper documents chronologically.
+One filing folder for each year.
+New incoming documents will be scanned and stored in a box.
+Only very important certificates get stored separately.
+
+Now you might think: *Well, is it really faster to scan the documents and tag them afterwards instead of sorting them right away?*<br>
+The answer in my case: **Yes, definitely!**
+As you are reading this I assume you are a tech person, which leads you to spend more time on your computer than in front of your shelf with all the binders.<br>
+By scanning a document and leaving it in a box afterwards, you shift them to a place, where you might spend some time.
+In my case, I speed up the scanning process by using the [Scanbot App](https://scanbot.io/) which also extracts the text from my scans and saves it in the PDF (Pro Feature).
+
+### Tagging
+With the scanned documents on my computer, I first used a little python tool to tag them, which was *ok*.
+But tabbing, tag autocompletion and other shortcuts seemed to be a better fit for this workflow.
+That's why I started [**PDF Archiver**](https://github.com/JulianKahnert/PDF-Archiver).
+
+<p align="center">
+<a href="https://github.com/JulianKahnert/PDF-Archiver" target="itunes_store">
+  <img src="https://your-website-url.com/img/AppIcon.svg" width="100px">
+</a>
+</p>
+
+It is an open source project, which helps to rename the scanned documents accordingly to the prior concept.
+The app can be installed with the commands from the [installation section](https://github.com/JulianKahnert/PDF-Archiver#floppy_disk-installation) of the GitHub repository or be downloaded directly from the [Mac App Store](https://apps.apple.com/app/pdf-archiver/id1352719750).
+In both cases: please talk to me about feature requests and/or general thoughts.
+Send me a [mail](mailto:PDF-Archiver@juliankahnert.de) or create a [GitHub issue](https://github.com/JulianKahnert/PDF-Archiver/issues)!
+
+## Benefits
+This leads to the benefits of saving the files digitally:
+
+* With all your documents on your computer, you can easily copy them.
+Having tagged documents stored on your smartphone might get handy in the future.
+
+* Furthermore you can create backups of all your documents.
+Keep in mind that a [3-2-1 Backup Strategy](https://www.backblaze.com/blog/the-3-2-1-backup-strategy/) is a useful thing.
+The archive should not be stored on only one disk!
+
+* Besides the archive structure, the [PDF Archiver](https://github.com/JulianKahnert/PDF-Archiver) saves all tags as [macOS Finder Tags](https://support.apple.com/HT202754).
+This becomes very handy in the Finder on macOS and the iCloud Drive app on iOS.
+
+* Last but not least: old paper documents can be trashed easily after some years.
+Just ditch the whole filing folder of e.g. the year 2001.
+</p>]]></content:encoded></item><item><guid isPermaLink="true">https://your-website-url.com/posts/2016-07-07--einstieg-espresso</guid><title>Einstieg Espresso</title><description></description><link>https://your-website-url.com/posts/2016-07-07--einstieg-espresso</link><pubDate>Thu, 28 Jan 2021 13:37:33 +0100</pubDate><content:encoded><![CDATA[<p>Letztes Jahr fing ich an, mich für Kaffee bzw. Espresso zu begeistern. Bis zu diesem Zeitpunkt hatte ich einen Vollautomaten und war auch eigentlich recht zufrieden mit den Ergebnissen. Doch irgendwie fand ich das Thema so spannend, dass ich anfing mich weiter zu informieren. Dieser Blogeintrag soll die ersten Schritte vereinfachen, indem ich mein eigenes Setup und ein paar nützliche Webseiten vorstelle.</p><h3>Informationen</h3><p>Die erste Anlaufstelle für die Zubereitung von Espresso ist für mich das <a href="https://www.kaffeewiki.de/">KaffeeWiki</a>. Dort gibt es alle wichtigen Daten und Beschreibungen der Abläufe von der <a href="https://www.kaffeewiki.de/index.php?title=Mahlgrad">Bestimmung des Mahlgrads</a> über die <a href="https://www.kaffeewiki.de/index.php?title=Espresso_mit_Siebträgermaschine_zubereiten">Zubereitung des Espressos</a> bis hin zum [Aufschäumen der Milch](https:// www.kaffeewiki.de/index.php?title=Milchaufschäumen). Wem das nicht reicht, für den habe ich hier noch ein paar Buchempfehlungen:</p><ul><li>Scott Rao: <em>The Professional Barista's Handbook</em>.</li><li>Anette Moldvaer: <em>Das Kaffee-Buch</em>.</li><li>Johanna Wechselberger: <em>Das Kaffeebuch: für Anfänger, Profis und Freaks</em>.</li><li>Dimitrios Tsantidis: <em>Faszination Espressomaschine</em>.</li></ul><h3>Mein Setup</h3><p>Bei dem Kauf war mir wichtig, dass die Maschine unter 500€ kostet und ein PID (zur Temperaturregelung) besitzt. Also entschied ich mich für die <strong>Lelit PL41TEM</strong>. Auch nach fast einem Jahr halte ich sie für eine ideale Einstiegs-Maschine. Sie ist ein <em>Einkreiser</em>, was bedeutet, dass man nicht gleichzeitig seinen Espresso beziehen und Milch aufschäumen kann. Vergleichbare Maschinen, die zwei Kreisläufe besitzen, sind in der Regel mindestens doppelt so teuer. Falls man jedoch vorwiegend Milchgetränke wie Cappuccino, Latte Macchiato etc. trinkt, sollte man einen Zweikreiser in Erwägung ziehen.</p><p>Als nächstes kommt die Kaffeemühle. Frisch gemahlener Kaffee ist das Wichtigste bei der Zubereitung eines Espressos. Hier wird häufig am falschen Ende gespart. Als Faustregel hört man immer wieder, dass die Mühle ungefähr so viel kosten sollte wie die Siebträgermaschine. Auch ich habe zuerst den Fehler gemacht und mir die <strong>GREAF C800</strong> gekauft, doch ich war mit den Mahlgradeinstellungen nicht zufrieden. Nun bin ich auf die <strong>Mahlkönig Vario Home</strong> umgestiegen, welche einen Timer hat. Dies hat den Vorteil, dass die Kaffeemenge immer konstant bleibt. Ich habe zwar keinen Blindtest machen können aber subjektiv ließ sich auch geschmacklich einen deutlicher Unterschied ausmachen. Außerdem lässt sich der Mahlgrad mit der Mahlkönig durch die vielen Zwischenstufen besser bestimmen.</p><p>Ein Kritikpunkt ist allerdings die sehr grobe Werkseinstellung. Sowohl bei meiner, als auch bei einer Vario Home im Freundeskreis, wurde die Mühle mit einer viel zu groben Werkseinstellung ausgeliefert. Dies hat zur Folge, dass selbst bei der feinsten Einstellung der Espresso viel zu schnell durch das Kaffeemehl fließt. Im Gegensatz zu der <a href="http://www.baratza.com/grinder/vario/">baugleichen Version</a> (wird nur in UK/USA vertrieben) ist ein Loch bei der Mahlkönig versiegelt, durch das man die Werkseinstellung verändern könnte. Abhilfe schafft jedoch die <a href="http://www.home-barista.com/grinders/recalibrating-baratza-vario-t10282.html">grobe Justierung</a>, welche auch bei Mahlkönig nur mit einem Gummistopfen verschlossen wird.</p><p>Ein letzter Tipp, der mir deutlich weitergeholfen hat, ist die Waage von <a href="http://brewista.eu">Brewista</a>. Sie kann so verwendet werden, dass ein Timer startet, sobald Espresso in die Tasse läuft. Mit diesem Setup hat man zumindest einige der vielen Faktoren (Temperatur, Durchflusszeit und Gewicht des Kaffeepulvers), die Espresso beeinflussen unter Kontrolle.</p><h3>Bohnen</h3><p>Wer bisher noch keine Erfahrungen mit Siebträgermaschinen sammeln konnte, sollte erstmal nur eine Bohnensorte (min. 1 kg) kaufen und mit dieser herum experimentieren. Bohnen von Tchibo, Melitta etc. sind hier <u>nicht</u> zielführend. Mir schmeckte der <em>Vietnam Espresso</em> von den <a href="http://www.hancoffee.de/">Han Coffee Roasters</a> besonders gut und stellt meiner Meinung nach eine gute Bohne für den Einstieg dar. Erst wenn man über einen längeren Zeitraum eine gute Espresso-Qualität reproduzieren kann, sollte man andere Bohnen testen.</p><h3>Shops</h3><p>Bei <a href="https://www.coffee24.de">Coffee24</a> findet man eine große Auswahl an Lelit Maschinen, welche sonst eher selten zu finden sind. Neben <a href="http://www.amazon.de/ref=as_li_ss_tl?_encoding=UTF8&camp=1638&creative=19454&linkCode=ur2&site-redirect=de&tag=minkorrekt-21">Amazon.de</a> gibt es bei <a href="http://www.stoll-espresso.de">Stoll Espresso</a> und <a href="http://espresso-maschinenraum.de">Espresso Maschinenraum</a> eine große Auswahl an Maschinen und Mühlen. Ersatzteile findet man bei <a href="https://www.espressoxxl.de">EspressoXXL</a>.</p><h3>Überblick - Grundausstattung</h3><table><thead><tr><th align="left"></th><th align="left"></th></tr></thead><tbody><tr><td align="left"><strong>Maschine</strong></td><td align="left">Lelit PL41TEM</td></tr><tr><td align="left"><strong>Mühle</strong></td><td align="left">Mahlkönig Vario Home</td></tr><tr><td align="left"><strong>Waage</strong></td><td align="left">Brewrista Smart Scale</td></tr><tr><td align="left"><strong>Milchkännchen</strong></td><td align="left">Motta Europa 250ml + 500ml</td></tr><tr><td align="left"><strong>Tamper</strong></td><td align="left">Motta 8170/B 57mm</td></tr><tr><td align="left"><strong>Maschinenreiniger</strong></td><td align="left">Puly Caff Kaffeefettreiniger</td></tr><tr><td align="left"><strong>Tassen</strong></td><td align="left">Cilio Cappuccino-/Espressotasse Roma</td></tr><tr><td align="left"><strong>Tamping Matte</strong></td><td align="left">Concept Art Tamping Matte aus Silikon</td></tr><tr><td align="left"><strong>Abschlagbehälter</strong></td><td align="left">Motta 7750 Edelstahl Abschlagbehälter</td></tr><tr><td align="left"><strong>Milchthermometer</strong></td><td align="left"></td></tr><tr><td align="left"><strong>Seifenhandtücher</strong></td><td align="left"></td></tr></tbody></table><hr><img src="https://your-website-url.com/img/coffee1.jpg" style="border: 2px solid black;" height="150"/><img src="https://your-website-url.com/img/coffee2.jpg" style="border: 2px solid black;" height="150"/><hr>]]></content:encoded></item><item><guid isPermaLink="true">https://your-website-url.com/posts/2018-12-20--pdf-archiver-auf-dem-35c3</guid><title>PDF Archiver auf dem 35c3</title><description>Refreshing Memories</description><link>https://your-website-url.com/posts/2018-12-20--pdf-archiver-auf-dem-35c3</link><pubDate>Thu, 28 Jan 2021 13:37:33 +0100</pubDate><content:encoded><![CDATA[<p>Auch in diesem Jahr werde ich wieder auf dem Chaos Communication Congress in Leipzig sein. Neben spannenden Talks entstehen in den Tagen zwischen Weihnachten und Neujahr auch immer wieder viele kleinere und größere Software-Projekte. So auch <a href="https://pdf-archiver.io">PDF Archiver</a> bei dem <a href="https://github.com/PDF-Archiver/PDF-Archiver/commit/a232f5c2007dca0fd290bdcacd69e7a807ee2d8e">34c3</a>.</p><p>Seit dem 29.12.2017 hat sich einiges an der App verändert. Neben unzähligen kleineren Veränderungen hat die App auch einen DarkMode erhalten. Darüber hinaus ist auch eine iOS App <a href="http://github.com/pdf-Archiver/pdf-archive-viewer">PDF Archive Viewer</a> hinzugekommen, mit der PDFs schnell und übersichtlich gefunden werden können.</p><p align="center">
+  <img src="https://www.ccc.de/system/uploads/274/headline/Hello_Loop.gif">
+</p><p>Sehr gerne würde ich den 35c3 nutzen, um mit Leuten in Kontakt zu treten die sich für das Projekt interessieren oder es beobachten! Hierbei könnte man Feature-Ideen besprechen, einen kleinen Hackathon starten oder auch einfach nur bei einem Tschunk oder Bier nett sprechen.</p><p>Schreibt mich gerne einfach im <a href="https://pdf-archiver.slack.com">PDF Archiver Slack</a> oder per <a href="mailto:mail@pdf-archiver.io">Mail</a> an und wir stimmen alles weitere ab. 😊</p>]]></content:encoded></item><item><guid isPermaLink="true">https://your-website-url.com/posts/2017-01-29--raspberry-pi-temperatursensor</guid><title>Raspberry Pi Temperatursensor</title><description></description><link>https://your-website-url.com/posts/2017-01-29--raspberry-pi-temperatursensor</link><pubDate>Thu, 28 Jan 2021 13:37:33 +0100</pubDate><content:encoded><![CDATA[<p>Im Rahmen von meiner Heimautomation mit <a href="http://home-assistant.io/">HomeAssistant</a> (eine sehr interessantes Projekt mit unzähligen Möglichkeiten) wollte ich die Temperatur in einem Raum messen und habe hierfür eine einfache und kostengünstige Lösung gesucht. Da ich ohnehin schon einen Raspberry Pi für andere Dinge nutze, bot es sich an diesen auch als Temperatursensor zu verwenden und so bin ich auf <a href="http://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/temperature/">dieses</a> Tutorial gestoßen. Die Einrichtung ist extrem einfach und die Kosten bleiben im einstelligen Euro-Bereich (sofern ein Raspberry Pi schon vorhanden ist).</p><h3>Komponenten</h3><p>Die folgenden Komponenten werden benötigt:</p><ul><li>Raspberry Pi</li><li>1x Temperatursensor (<code>DS18B20</code>)</li><li>1x Widerstand (<code>4.7kΩ</code>)</li><li>1x Steckbrett (z.B. <a href="https://www.amazon.de/gp/product/B00LO32MBM">diese</a>)</li><li>3x male-female Jumper-Kabel (z.B. <a href="https://www.amazon.de/dp/B00DI4ZSRU">diese</a>)</li></ul><p>Anstelle des Steckbretts und der Jumper-Kabel kann der Sensor natürlich auch an den Raspberry Pi gelötet werden.</p><h3>Verbindung</h3><p>Der Temperatursensor mit wie folgt mit dem Raspberry Pi (ausgeschaltet) verbunden werden:</p><img src="http://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/temperature/sensor-connection.png" alt="Temperatursensor"/><p>Die Pin-Belegung des Raspberry Pis sind z.B. <a href="https://www.raspberrypi.org/documentation/usage/gpio/">hier</a> zu finden.</p><p><strong>Wichtig:</strong> Wenn der Sensor angeschlossen ist und der Raspberry Pi zum ersten Mal gestartet wird, sollte man den Sensor anfassen und prüfen, ob er nach 4-5 Sekunden heiß wird. Ist dies der Fall, ist er nicht richtig verbunden und die Schaltung muss nochmal überprüft werden.</p><h3>Programmierungen</h3><p>Zunächst muss der <code>1-Wire</code> Sensor in der Raspberry Pi Konfiguration aktiviert werde:</p><pre><code class="language-sh">sudo raspi-config
+# Interfacing Options &gt; 1-Wire &gt; enable
+
+sudo modprobe w1-gpio
+sudo modprobe w1-therm
+
+# Pi ggf. neu starten
+sudo reboot
+</code></pre><p>Anschließend wird der Name des Sensors gesucht:</p><pre><code class="language-sh">ls /sys/bus/w1/devices/
+
+# nun sollte der Name zu sehen sein
+28-0416869dcaff  w1_bus_master1
+
+# hier: 28-0416869dcaff
+</code></pre><p>Die Temperatur kann schon jetzt ausgelesen werde <code>cat /sys/bus/w1/devices/28-0416869dcaff/w1_slave</code> (Name entsprechend anpassen):</p><pre><code class="language-sh">2e 01 4b 46 7f ff 0c 10 e4 : crc=e4 YES
+2e 01 4b 46 7f ff 0c 10 e4 t=18875
+</code></pre><p>Der Wert <code>t=18875</code> entspricht der Temperatur in <code>1/1000 ˚C</code>. Dies wird mit dem folgenden Python Skript (<code>temperature.py</code>) auf eine Nachkommastelle gerundet und anschließend ausgegeben.</p><pre><code class="language-python">#!/usr/bin/env python
+
+# CHANGE THIS - device id from "ls /sys/bus/w1/devices/"
+device_id = "28-0416869dcaff"
+
+# get temperature data
+tfile = open("/sys/bus/w1/devices/" + device_id + "/w1_slave")  
+text = tfile.read()
+tfile.close()
+
+# parse and format temperature data
+secondline = text.split("\n")[1]
+temperaturedata = secondline.split(" ")[9]
+temperature = float(temperaturedata[2:])
+
+# round to one decimal place
+temperature = round(temperature / 1000, 1)
+print temperature
+</code></pre><p>Nun lassen sich unterschiedliche Anwendungen realisieren. In meinem Fall lese ich die Werte des Raspberry Pis via <code>ssh</code> aus:</p><pre><code class="language-sh">ssh pi@192.168.178.101 "python temperature.py"
+</code></pre><p>In einem weiteren Anwendungsbeispiel könnte man einen Cronjob einrichten, sodass der Raspberry Pi die Temperatur an eine <a href="https://home-assistant.io/components/mqtt/">MQTT-Datenbank</a> überträgt.</p><hr><p><strong>Anmerkung zum Bild:</strong> Es hat sich herausgestellt, dass es ratsam ist, den Temperatursensor nicht direkt auf dem Raspberry Pi zu befestigen, da die Abwärme die Temperaturmessung stark verfälscht, selbst wenn keine anspruchsvollen Berechnungen ausgeführt werden.</p>]]></content:encoded></item><item><guid isPermaLink="true">https://your-website-url.com/posts/2019-05-16--pdf-archiver-ios</guid><title>PDF Archiver iOS</title><description>Scan it. Tag it. Find it. - macOS &amp; iOS</description><link>https://your-website-url.com/posts/2019-05-16--pdf-archiver-ios</link><pubDate>Thu, 28 Jan 2021 13:37:33 +0100</pubDate><content:encoded><![CDATA[<p>In der letzten Zeit ist es etwas ruhiger geworden um <a href="https://pdf-archiver.io">PDF Archiver</a> - was jedoch nicht heißt, dass nichts passiert ist, denn:</p><p><a href="https://macos.pdf-archiver.io">PDF Archiver für macOS</a> analysiert nun den Inhalt deiner gescannten Dokumente. Anschließend werden über <em>Natural Language Processing</em> (NLP) vorhandene Orte und Firmen erkannt. Wurden diese Namen bereits vorher als Tags verwendet, so werden sie dir automatisch vorgeschlagen und angezeigt.</p><p>Darüber hinaus wird geprüft, ob ein Datum in deinem Dokument vorhanden ist. Falls ja, wird dir auch dies automatisch vorgeschlagen, sodass du nur noch eine kurze Beschreibung eingeben und dein gescanntes Dokument speichern musst (oder <code>⌘ s</code> 😊).</p><p>Die automatischen Vorschläge von Datum und Tags waren die Grundlage für den nächsten Schritt vom <a href="http://github.com/pdf-Archiver/">PDF Archiver Projekt</a>. Auch wenn das iPhone, verglichen mit den Macs, ein kleineres Display hat, tragen wir (und ja, ich auch!) es immer bei uns.</p><p>Deshalb freue ich mich sehr ankündigen zu können, dass es schon bald auch eine iOS Version von PDF Archiver geben wird. Mit ihr wird der Slogan <strong>"Scan it. Tag it. Find it."</strong> dann endlich komplett werden!</p><h3>Scan it.</h3><p>Neue Dokumente können ganz einfach eingescannt werden. Die App unterstützt dich bei der Auswahl des richtigen Kamera-Bereichs und scannt dein Dokument automatisch.</p><p>Wenn du mit dem Scan zufrieden bist, kannst du es abspeichern und direkt das nächste Dokument scannen. So landen all deine Briefe, Rechnungen und anderweitigen Dokumente schnell und mit wenig Aufwand auf deinem iPhone und in iCloud Drive.</p><p>Während des Scans finden zudem verschiedene Analysen statt, die dafür sorgen, dass das fotografierte Dokument nicht nur aufbereitet wird, sondern dir auch das Datum sowie passende Tags für das eingescannte Dokument vorgeschlagen werden.</p><h3>Tag it.</h3><p>Mit all den analysierten PDF-Dateien auf deinem iPhone kann nun der nächste Schritt erfolgen:</p><p>Du bist unterwegs, sitzt in der Bahn oder im Bus und hast gerade etwas Zeit? Nutze diese und tagge deine Dokumente, um sie strukturiert zu archivieren. Die durch PDF Archiver vorgeschlagenen Tag- und Datums-Angaben helfen dir dabei.</p><p>Natürlich kannst du auch weiterhin die <a href="https://macos.pdf-archiver.io">macOS App</a> verwenden und die Dokumente aus iCloud Drive verarbeiten.</p><h3>Find it.</h3><p>Nach und nach gelangen immer mehr Dokumente in dein persönliches Archiv.</p><p>Ganz egal wo du gerade bist – mit der <a href="https://ios.pdf-archiver.io">PDF Archiver App für iOS</a> kannst du jederzeit auf deine wichtigsten Informationen zugreifen. So sind Kunden- und Versicherungsnummern sowie weitere relevante Daten immer griffbereit in deiner Tasche.</p><h3>Private Daten schützen!</h3><ul><li><em>... analysiert nun den Inhalt deiner gescannten Dokumente.</em></li><li><em>Automatische Vorschläge von Datum und Tags ...</em></li><li><em>Im Hintergrund finden verschiedene Analysen statt ...</em></li></ul><p>All das sind Sätze, die man ungern im Zusammenhang mit persönlichen Dokumenten und Rechnungen hört.</p><p><strong>Dieser Meinung bin auch ich</strong> und deshalb analysiert PDF Archiver die Dokumente in keinem Rechenzentrum, sondern verarbeitet den Text des Dokumentes lediglich <strong>lokal auf deinem iPhone!</strong> Doch Worte sind geduldig ... also überzeug' dich selbst:</p><p>Wie auch schon bei <a href="https://github.com/pdf-archiver/PDF-Archiver">PDF Archiver (macOS)</a> ist der gesamte Quellcode der <a href="https://github.com/pdf-archiver/PDF-Archive-Viewer">iOS App bei GitHub</a> verfügbar.</p><p>Schau' gerne mal rein oder unterstütze die Weiterentwicklung der App!</p><h3>Wann geht's los?</h3><p><s>Bis PDF Archiver den App Store erreicht, wird noch etwas Zeit vergehen. Doch schon jetzt kannst du die App innerhalb der öffentlichen Beta-Version testen. Alle weiteren Informationen zur Installation findest du bei Apple TestFlight.</s></p><p><strong>Update vom 16.07.2019:</strong> Ich freue mich sehr nun endlich die iOS Version von PDF Archiver veröffentlichen zu können:</p><p align="center">
+<a href="https://ios.pdf-archiver.io" target="itunes_store">
+  <img src="https://your-website-url.com/img/AppIcon-PDFArchiveViewer.svg" width="100px">
+</a>
+<br><br>
+<a href="https://ios.pdf-archiver.io" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/assets/shared/badges/en-us/appstore-lrg.svg) no-repeat;width:135px;height:40px;"></a>
+</p><h1>English</h1><p>Lately it has become a bit quieter around <a href="https://pdf-archiver.io">PDF Archiver</a> - but that doesn't mean that there hasn't been much happening in the background.</p><p><a href="https://macos.pdf-archiver.io">PDF Archiver for macOS</a> now analyzes the content of your scanned documents. Then <em>Natural Language Processing</em> (NLP) detects existing locations and companies. If these names have already been used as tags before, they will be automatically suggested to you. In addition, the app checks whether there is a date in the document, that can be suggested. So all you have to do is enter a description and click save (or <code>⌘ s</code> 😊).</p><p>The automatic date and tag suggestions were the basis for the next step of the <a href="http://github.com/pdf-Archiver/">PDF Archiver Project</a>. The iPhone has a smaller display (compared to Macs), but we always carry it with us. I'm very happy to announce that there will be an iOS version of PDF Archiver soon. With it the slogan <strong>"Scan it. Day it. Find it."</strong> now finally is fully reached!</p><h3>Scan it.</h3><p>New documents can be easily scanned. The app supports you by selecting the right camera area and scans the document automatically. If you are satisfied with the selection, you can save it and scan the next document directly. All your letters, invoices etc. will quickly land on your iPhone and in iCloud Drive. In the background, various analyses take place, which process the photographed document and suggest the date and tags.</p><h3>Tag it.</h3><p>With all the analyzed PDF files on your iPhone, you can now take the next step: Are you sitting in the train and have some time? Then now is the perfect time to tag and archive some of your documents. The tag and date suggestions will help you!</p><p>Of course you can still use the <a href="https://macos.pdf-archiver.io">macOS App</a> and process the documents from iCloud Drive.</p><h3>Find it.</h3><p>More and more documents get into your personal archive. No matter where you are - with the <a href="https://ios.pdf-archiver.io">PDF Archiver App for iOS</a> you can always access your most important information. Customer numbers, insurance numbers etc. are always at hand in your pocket.</p><h3>Protect your private data!</h3><ul><li><em>... now analyzes the content of your scanned documents.</em></li><li><em>... automatic date and tag suggestions ...</em></li><li><em>In the background, various analyses take place ...</em></li></ul><p>These are all sentences that you don't like to hear in connection with personal letters and invoices. <strong>This is also my opinion</strong> and therefore PDF Archiver does not analyze the documents on any cloud server, but processes the text of the document <strong>locally on your iPhone!</strong> But words are patient ... so convince yourself: As with <a href="https://github.com/pdf-archiver/PDF-Archiver">PDF Archiver (macOS)</a> the complete source code of the <a href="https://github.com/pdf-archiver/PDF-Archive-Viewer">iOS App at GitHub</a> is available. Have a look or support the further development of the app!</p><h3>When does it start?</h3><p><s>It will be some time before PDF Archiver reaches the App Store. But already now you can test the app within the public beta version. All further information about the installation can be found at Apple TestFlight.</s></p><p><strong>Update from 16.07.2019:</strong> I am very happy to finally release the iOS version of PDF Archiver:</p><p align="center">
+<a href="https://ios.pdf-archiver.io" target="itunes_store">
+  <img src="https://your-website-url.com/img/AppIcon-PDFArchiveViewer.svg" width="100px">
+</a>
+<br><br>
+<a href="https://ios.pdf-archiver.io" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/assets/shared/badges/en-us/appstore-lrg.svg) no-repeat;width:135px;height:40px;"></a>
+</p>]]></content:encoded></item><item><guid isPermaLink="true">https://your-website-url.com/posts/2018-10-16--pdf-archive-viewer</guid><title>PDF Archive Viewer</title><description>Scan it. Tag it. Find it.</description><link>https://your-website-url.com/posts/2018-10-16--pdf-archive-viewer</link><pubDate>Thu, 28 Jan 2021 13:37:33 +0100</pubDate><content:encoded><![CDATA[<p>It's been a while since the last post and a few things have changed on the project. First of all, I would like to thank all the nice people, who contacted me and said, how the <a href="https://github.com/JulianKahnert/PDF-Archiver">PDF Archiver</a> improved their workflow. All this positive feedback helps me and encourages me to continue working on it actively. Furthermore there have been some awesome blogposts about the app. I would like to emphasize two german reviews in particular. <a href="https://www.ifun.de/pdf-archiver-deutlich-verbessert-und-mit-symbolischem-abo-preis-124604/">iFun</a> wrote an update of their <a href="https://www.ifun.de/pdf-archiver-open-source-projekt-zur-langzeit-archivierung-119547/">original story</a> and <a href="https://www.sir-apfelot.de/pdf-archiver-22021/">Sir Apfelot</a> posted a wonderful detailed and affectionately written review.</p><p>Today I released Version 1.3.6, which includes some bugfixes and two major features. First, <a href="https://github.com/JulianKahnert/PDF-Archiver">PDF Archiver</a> now supports the all new macOS Dark Mode and I really love it!</p><p align="center">
+<a href="https://apps.apple.com/de/app/pdf-archiver/id1352719750?mt=12">
+  <img src="https://your-website-url.com/img/PDFArchiver-DarkMode.png" width="600px">
+</a>
+</p><p>And second, the app supports iCloud Drive, which can be enabled in the preferences (<code>⌘ ,</code>) now. This feature moves all your documents to iCloud Drive where they can be synced between devices. That said, please keep in mind to backup all your archived documents regularly to a separate location, such as an external hard drive. It is always more secure to have a copy of all documents independent of the scope of fancy iCloud syncing magic. The iCloud Drive feature (finally) brings me to the reason of this blogpost:</p><p>PDF Archiver structures an archive of PDFs and you can find them quickly via the <a href="https://github.com/pdf-Archiver/pdf-archiver#scroll-convention">naming convention</a> and the Finder tags. But what if you need to lookup something, when you don't have your computer nearby? Your iPhone might be a device, which helps out in those cases. That's why I built the open source app <a href="https://github.com/PDF-Archiver/PDF-Archive-Viewer">PDF Archive Viewer</a>, which can be downloaded from the <a href="https://apps.apple.com/de/app/pdf-archiver/id1352719750?mt=12">App Store</a> for free. With this app you can view all your tagged documents and search for the one you want to have a look at. Just give it a try! If you like it, I would love to hear your story in a <a href="https://apps.apple.com/app/id1433801905?action=write-review">App Store review</a> ... and if you don't like it, <a href="mailto:mail@pdf-archiver.io">let me know why</a>. 😊</p><p align="center">
+<a href="https://apps.apple.com/app/pdf-archiver/id1433801905?mt=12&app=apps" target="itunes_store">
+  <img src="https://your-website-url.com/img/AppIcon-PDFArchiveViewer.svg" width="100px">
+</a>
+<br><br>
+<a href="https://apps.apple.com/app/pdf-archiver/id1433801905?mt=8&app=apps" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/assets/shared/badges/en-us/appstore-lrg.svg) no-repeat;width:135px;height:40px;"></a>
+</p>]]></content:encoded></item><item><guid isPermaLink="true">https://your-website-url.com/posts/2017-04-30--open-source</guid><title>Open Source</title><description>Eine Meinung ...</description><link>https://your-website-url.com/posts/2017-04-30--open-source</link><pubDate>Thu, 28 Jan 2021 13:37:33 +0100</pubDate><content:encoded><![CDATA[<p>Ich nutze den Messenger <a href="https://wire.com/">Wire</a>, das Betriebssystem <a href="https://www.freebsd.org">FreeBSD</a> , den Texteditor <a href="https://atom.io">Atom</a>, <a href="https://home-assistant.io">Home Assistant</a>, <a href="https://feedbin.com">Feedbin</a>, <a href="http://www.latex-project.org">LaTeX</a> etc. Was sie alle gemeinsam haben: der Quellcode ist frei zugänglich!<br>
+Ich habe vor ein paar Tagen mit einem Freund über das Thema *Open Source* diskutiert und gemerkt, dass es mich auch im Nachhinein noch sehr beschäftigt hat.
+Ich weiß, dass man selber vielleicht schnell eine schützende Haltung einnimmt, wenn man etwas sehr zeitintensives geschaffen hat.
+Doch bin ich der festen Überzeugung, dass man über diese Haltung reflektiert nachdenken sollte, indem man sich fragt: Wäre es nicht schön, wenn noch weitere Personen daran teilhaben können?
+
+Ich würde gerne an einer Welt arbeiten, in der wir eine Kultur des *Teilens* leben!
+Bei der jeder den Teil, den er gut kann, auslebt und wir so gemeinsam das *großen Ganzen* vielleicht ein kleines bisschen besser machen.
+Den instinktiven Gedanken Dinge zu "schützen", indem wir sie anderen vorenthalten, sollten wir hingegen versuchen abzuschalten bzw. im Keim ersticken!
+</p>]]></content:encoded></item><item><guid isPermaLink="true">https://your-website-url.com/posts/2017-10-24--triosence</guid><title>Triosence</title><description>Eine musikalische Weltreise</description><link>https://your-website-url.com/posts/2017-10-24--triosence</link><pubDate>Thu, 28 Jan 2021 13:37:33 +0100</pubDate><content:encoded><![CDATA[<p><em>Anspruchsvolle Musik ein­gän­gig präsentieren.</em><br>
+So lautet eines der Ziele von [Triosence](http://www.triosence.com), welches mit einer unglaublichen Leichtigkeit und Präzision umgesetzt wird.
+Gleichzeitig wirken die vom Pianisten komponierten Lieder und deren Geschichten absolut authentisch, was neue Ebenen der Musik eröffnet.
+Hierbei werden Ideen von dem Bassisten und dem Schlagzeuger aufgenommen und in grandiosen Soli weiterentwickelt.
+So entstehen Stücke deren Genres variieren und trotzdem über die Alben hinweg harmonieren.
+
+Liebe Triosence, ich hoffe ihr behaltet die Freude an der Musik und eure Gelassenheit die das Publikum mit Begeisterung aufnimmt.
+
+<iframe src="https://tools.applemusic.com/embed/v1/album/1207845190?country=de" height="400px" width="100%" frameborder="0"></iframe>
+</p>]]></content:encoded></item><item><guid isPermaLink="true">https://your-website-url.com/posts/2016-05-12--FreeBSD</guid><title>FreeBSD</title><description>Installation und erste Schritte</description><link>https://your-website-url.com/posts/2016-05-12--FreeBSD</link><pubDate>Thu, 28 Jan 2021 13:37:33 +0100</pubDate><content:encoded><![CDATA[<h3>Update vom 29. Juli 2016</h3><p>Wegen einiger Umstrukturierungen der <a href="https://github.com/JulianKahnert/.dotfiles">Dotfiles</a> muss die Einrichtung der Z-Shell angepasst werden:</p><pre><code class="language-sh">cd $HOME &amp;&amp; git clone https://github.com/JulianKahnert/.dotfiles.git &amp;&amp; cd $HOME/.dotfiles/dotfiles.sh install
+</code></pre><hr><h3>Original vom 12. Mai 2016</h3><p>Ein neues Blog und jetzt auch noch ein neues Betriebssystem (FreeBSD 10.3). Ich habe mir den <a href="https://vimeo.com/channels/freebsdguides">FreeBSD Guide</a> mal genauer angesehen und dachte mir,dass es vielleicht ganz nützlich sein könnte eine Mitschrift davon zu haben. Ich halte mich hier bei der Beschreibung bewusst kurz, um eine Überblick zu bekommen. Der Ablauf sieht wie folgt aus:</p><ul><li>Basiseinstellungen (ports, pkg, sudo, Zeit)</li><li>ZFS Auto Snapshot</li><li>Jails</li><li>BTSync</li></ul><h3>Basiseinstellungen</h3><h4>Ports &amp; Paket Manager</h4><p>Zuerst werden die Ports für FreeBSD heruntergeladen und extrahiert. Anschließend wird der Port <code>portmaster</code> kompiliert, um später einfacher weitere Ports installieren zu können. Für <code>sudo</code>, <code>git</code> und <code>nano</code> wird der Paket Manager verwendet.</p><pre><code class="language-sh">su
+portsnap fetch
+portsnap extract
+
+cd /usr/ports/ports-mgmt/portmaster/ &amp;&amp; make install
+
+portmaster /usr/ports/shells/zsh
+
+pkg install security/sudo devel/git editors/nano
+</code></pre><h4>Einstellungen sudo</h4><ul><li><code>visudo</code> um Einstellungen für <code>sudo</code> zu verändern.</li><li>Kein Passwort für <code>sudo</code>:</li></ul><pre><code class="language-sh">## Same thing without a password
+%wheel ALL=(ALL) NOPASSWD: ALL
+</code></pre><h4>Zeit einstellen</h4><ul><li><code>sudo ntpdate pool.ntp.org</code> Systemzeit aktualisieren</li><li><code>sudo nano /etc/rc.conf</code> Eintrag hinzufügen um Dienst automatisch zu starten:</li></ul><pre><code class="language-sh">ntpd_enable="YES"
+</code></pre><ul><li><code>sudo service ntpd start</code> Dienst beim ersten Mal manuell starten.</li><li><code>sudo ntpq -p</code> bzw. <code>date</code> um zu prüfen, ob die Uhrzeit richtig eingestellt wurde.</li></ul><h4>Z-Shell einrichten</h4><ul><li><code>chsh</code> um die standard Shell (<code>which zsh</code>) zu verändern:</li></ul><pre><code class="language-sh">Shell: /usr/local/bin/zsh
+</code></pre><ul><li><em>Dotfiles</em> von <a href="https://github.com/JulianKahnert/.dotfiles">GitHub</a> kopieren und installieren:</li></ul><pre><code class="language-sh">git clone https://github.com/JulianKahnert/.dotfiles.git &amp;&amp; cd ~/.dotfiles &amp;&amp; sh ./install-dotfiles.sh
+</code></pre><h3>ZFS Auto Snapshot einrichten</h3><http://eduardosanchez.me/2015/08/31/zfs-automatic-snapshots/><ul><li><code>sudo pkg install zfstools</code> Tools installieren</li><li>mit denen <code>sudo nano /etc/crontab</code> Einträge erstellen</li><li><code>PATH</code> in Crontab hinzufügen <code>which ruby &amp;&amp; which zfs-auto-snapshot</code> z.B.:</li></ul><pre><code class="language-sh">PATH=/etc:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+</code></pre><p>und <em>crontabs</em> einrichten:</p><pre><code class="language-sh"># ZFS Autosnapshots
+15,30,45 * * * * root /usr/local/sbin/zfs-auto-snapshot frequent  4
+0        * * * * root /usr/local/sbin/zfs-auto-snapshot hourly   24
+7        0 * * * root /usr/local/sbin/zfs-auto-snapshot daily     7
+14       0 * * 7 root /usr/local/sbin/zfs-auto-snapshot weekly    4
+28       0 1 * * root /usr/local/sbin/zfs-auto-snapshot monthly  12
+</code></pre><ul><li>Autosnapshots für <code>ZPOOL/DATASET</code> aktivieren und Frequenz auswählen:</li></ul><pre><code class="language-sh">sudo zfs set com.sun:auto-snapshot=true ZPOOL/DATASET
+sudo zfs set com.sun:auto-snapshot:hourly=true ZPOOL/DATASET
+</code></pre><ul><li>Einstellungen für Autosnapshots ansehen:</li></ul><pre><code class="language-sh">sudo zfs get com.sun:auto-snapshot:frequent,com.sun:auto-snapshot:hourly,com.sun:auto-snapshot:daily,com.sun:auto-snapshot:weekly,com.sun:auto-snapshot:monthly POOL/DATASET
+</code></pre><h3>Jails</h3><h4>Netzwerk für die Jails</h4><p><code>sudo nano /etc/rc.conf</code> editieren, diese Zeilen hinzufügen:</p><pre><code class="language-sh">ifconfig_em0="inet 10.0.1.65 netmask 255.255.255.0"
+defaultrouter="10.0.1.1"
+
+ifconfig_em0_alias0="inet 10.0.1.101 netmask 255.255.255.0"
+ifconfig_em0_alias1="inet 10.0.1.102 netmask 255.255.255.0"
+ifconfig_em0_alias2="inet 10.0.1.103 netmask 255.255.255.0"
+</code></pre><h3>EZJail einrichten</h3><https://erdgeist.org/arts/software/ezjail/><ul><li><code>sudo portmaster sysutils/ezjail</code> Installation</li><li><code>sudo nano /usr/local/etc/ezjail.conf</code> editieren, um ZFS verwenden zu können:</li></ul><pre><code class="language-sh"># ZFS options
+
+# Setting this to YES will start to manage the basejail and newjail in ZFS
+ezjail_use_zfs="YES"
+
+# Setting this to YES will manage ALL new jails in their own zfs
+ezjail_use_zfs_for_jails="YES"
+
+# The name of the ZFS ezjail should create jails on, it will be mounted at the ezjail_jaildir
+ezjail_jailzfs="zroot/ezjail"
+
+# ADVANCED, be very careful!
+ezjail_zfs_properties="-o compression=lz4"
+</code></pre><ul><li><code>sudo ezjail-admin install -msp</code> <em>ezjail</em> installieren</li><li><code>sudo nano /etc/rc.conf</code> Zeile anhängen:</li></ul><pre><code class="language-sh">ezjail_enable="YES"
+</code></pre><ul><li><code>cd /usr/jails/flavours &amp;&amp; sudo cp -r example myflavour</code> neues Template für weitere Jails einrichten.</li><li><code>sudo nano /usr/jails/flavours/myflavour/etc/rc.conf</code> editieren:</li></ul><pre><code class="language-sh">sshd_enable="YES"
+</code></pre><ul><li><code>sudo nano /usr/jails/flavours/myflavour/etc/resolv.conf</code> Nameserver eintragen:</li></ul><pre><code class="language-sh">search no-dns-available.example.com
+nameserver 208.67.222.222
+nameserver 8.8.8.8
+</code></pre><ul><li>IP Adresse nochmal prüfen und Jail erstellen:</li></ul><pre><code class="language-sh">ifconfig
+sudo ezjail-admin create -f myflavour sync.juliankahnert.de 10.0.1.101
+</code></pre><ul><li><strong>Jail starten:</strong> <code>sudo ezjail-admin console -f sync_juliankahnert_de</code> oder <code>sudo ezjail-admin start sync_juliankahnert_de</code></li></ul><h4>ZPool erstellen und in Jail einbinden</h4><ul><li>Data Set erzeugen <https://www.freebsd.org/doc/handbook/zfs-zpool.html>
+    * `sudo zpool create mypool mirror /dev/ada1 /dev/ada2`
+    * `sudo zfs set compression=lz4 mypool`
+* Status anzeigen lassen: `zpool status`
+
+* Einstellungen aus <https://forums.freebsd.org/threads/51262/>
+
+```sh
+sudo sysctl security.jail.mount_allowed=1
+sudo sysctl security.jail.mount_devfs_allowed=1
+sudo sysctl security.jail.mount_zfs_allowed=1
+```
+
+* `sudo nano /usr/local/etc/ezjail/sync_juliankahnert_de` EZJail config verändern:
+
+```sh
+export jail_sync_juliankahnert_de_zfs_datasets="mypool/BTSync"
+export jail_sync_juliankahnert_de_parameters="enforce_statfs=1 allow.mount=1 allow.mount.zfs=1 allow.mount.procfs=1 allow.mount.devfs=1"
+```
+
+* **Auf Host:** ZFS einbinden:
+
+```sh
+sudo zfs create mypool/BTSync
+sudo zfs set jailed=on mypool/BTSync
+sudo zfs jail sync_juliankahnert_de mypool/BTSync
+```
+
+* **Im Jail:** ZPool mounten `sudo ezjail-admin console sync_juliankahnert_de`:
+
+```sh
+sudo zfs mount mypool/BTSync
+sudo chown -R sync_user:wheel /mypool/BTSync
+
+```
+* `sudo nano /usr/local/etc/crontab` Autostart einrichten:
+
+```sh
+@reboot		root    	zfs mount mypool/BTSync
+```
+
+### BTSync: Installation, Autostart und Data Set einrichten
+<https://www.freshports.org/net-p2p/btsync>
+
+* BTSync installieren: `cd /usr/ports/net-p2p/btsync/ && make install clean`
+* `sudo nano /etc/crontab` editieren für Autostart:
+
+```sh
+@reboot 	sync_user  	/usr/local/bin/btsync
+```
+
+* Autosnapshot für BTSync Daten einrichten:
+
+```sh
+sudo zfs set com.sun:auto-snapshot=true mypool/BTSync
+sudo zfs set com.sun:auto-snapshot:frequent=true mypool/BTSync
+sudo zfs set com.sun:auto-snapshot:hourly=true mypool/BTSync
+sudo zfs set com.sun:auto-snapshot:daily=true mypool/BTSync
+sudo zfs set com.sun:auto-snapshot:weekly=true mypool/BTSync
+sudo zfs set com.sun:auto-snapshot:monthly=true mypool/BTSync
+```
+</li></ul>]]></content:encoded></item><item><guid isPermaLink="true">https://your-website-url.com/posts/2017-03-06--brot-backen</guid><title>Brot backen</title><description>CRE213 weckt Begeisterung!</description><link>https://your-website-url.com/posts/2017-03-06--brot-backen</link><pubDate>Thu, 28 Jan 2021 13:37:33 +0100</pubDate><content:encoded><![CDATA[<p>Die <a href="https://cre.fm/cre213-brot">Folge 213</a> des Podcast <a href="https://cre.fm">CRE: Technik, Kultur, Gesellschaft</a> befasst sich mit dem Thema Brot. Zunächst war ich skeptisch und fragte mich, wie man ein fast dreistündiges Gespräch mit diesem Thema füllt. Doch schon nach kurzer Zeit ist der Funk, vorangetrieben durch die Begeisterung von <a href="https://www.ploetzblog.de">Lutz Geißler</a>, übergesprungen.</p><h3>Das Anstellgut</h3><p>Ich fing an mich weiter zu informieren und so stand zunächst der Sauerteig auf dem Programm. Roggenvollkornmehl ließ sich schnell beschaffen und es konnte losgehen mit dem Projekt <em>Brot</em>. Die Herstellung des Anstellguts war vergleichsweise aufwändig, da ich versuchte die Zeiten exakt einzuhalten. Im Nachhinein betrachtet, wäre eine weniger <em>wissenschaftliche Herangehensweise</em>, also mit größeren Toleranzen bei Zeit und Zutatenmenge, wahrscheinlich ebenso erfolgreich. Mit <a href="https://www.ploetzblog.de/tipps-und-tricks/sauerteig/">dieser Anleitung</a> klappte es jedenfalls direkt beim ersten Versuch. Dieses Anstellgut muss (im besten Fall) einmalig hergestellt werden und kann von nun an aufgefrischt werden. Hierfür werden 10g Anstellgut mit jeweils 50g Mehl und Wasser vermischt und über Nacht auf eine Heizung gestellt. So sollte es 1-2 Wochen im Kühlschrank gelagert werden können, bevor es erneut aufgefrischt werden muss.</p><h3>Das Brot</h3><p>Da ich mit meinem Anstellgut sehr zufrieden war, suchte ich ein Rezept für das keine zusätzliche Hefe benötigt wurde. Ich entschied mich für das <a href="https://www.ploetzblog.de/2009/08/16/gebacken-konsumbrot/">Konsumbrot nach Bäcker Süpke</a> und experimentiere auch nach zwei Monaten immer noch mit diesem Rezept herum. Das Roggen- (Type 1150) und Weizenmehl (Type 1050) sind in diversen Drogeriemärkten zu finden. Um auf Weizenmehl Type 812 zu kommen, mische ich es mit dem "normalen" Weizenmehl Type 405.</p><h3>Das Ergebnis</h3><p>Zugegebenermaßen waren die ersten Versuche ess- aber noch nicht genießbar. Mittlerweile hat sich dies geändert und sogar als Geschenk wird es verwendet. Doch nicht nur der Genuss von frischem Brot lässt mich wöchentlich 1-2 Brot backen. Auch das Gefühl Wasser und Mehl so veredeln zu können, dass ein schmackhaftes Brot entsteht, ist immer wieder faszinierend. Von daher kann ich mich nur anschließen und sagen:</p><h3 style="text-align: center;" markdown="1"><a href="https://janw.io/backt-mehr-brot">Backt mehr Brot!</a></h3>]]></content:encoded></item><item><guid isPermaLink="true">https://your-website-url.com/posts/first-post</guid><title>My first post</title><description>A description of my first post.</description><link>https://your-website-url.com/posts/first-post</link><pubDate>Thu, 28 Jan 2021 13:36:00 +0100</pubDate><content:encoded><![CDATA[<h1>My first post</h1><p>My first post's text.</p>]]></content:encoded></item><item><guid isPermaLink="true">https://your-website-url.com/posts/2015-11-03--hello-world</guid><title>Hello, World!</title><description></description><link>https://your-website-url.com/posts/2015-11-03--hello-world</link><pubDate>Tue, 3 Nov 2015 00:00:00 +0100</pubDate><content:encoded><![CDATA[<p>Das hier ist jetzt also mein erster Blogeintrag. Ich bin sehr gespannt, wo die Reise hingeht.</p><p>Bei Fragen und Anmerkungen, meldet euch gerne: <a href="mailto:mail@juliankahnert.de">mail@juliankahnert.de</a>!</p>]]></content:encoded></item></channel></rss>
