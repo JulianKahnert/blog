@@ -4,17 +4,19 @@
 *  MIT license, see LICENSE file for details
 */
 
-*:not(pre) {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
     font-family: Lato, Helvetica, Arial;
 }
 
 body {
     background: #fff;
     color: #000;
-    font-family: Lato, Helvetica, Arial;
     text-align: center;
 }
 
@@ -22,12 +24,21 @@ body {
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
-    padding: 40px;
+    padding: 30px;
     text-align: left;
 }
 
 header {
-    background-color: #eee;
+/*    background-color: #eee;*/
+/*    border-bottom: solid 1px;*/
+/*    width: 85%;*/
+/*    margin: auto;*/
+}
+
+hr {
+    width: 85%;
+    margin: auto;
+    opacity: 0.4;
 }
 
 header .wrapper {
@@ -42,19 +53,20 @@ header a {
 
 header .site-name {
     color: #000;
-/*    font-family: Lato, Helvetica, Arial;*/
     font-weight: bold;
-    font-size: 2.5em;
+    font-size: 4rem;
 }
 
 nav {
-    margin-top: 20px;
+    margin-top: 10px;
+    opacity: 0.4;
 }
 
 nav li {
     display: inline-block;
     margin: 0 7px;
-    line-height: 1.5em;
+    font-size: 1.3rem;
+/*    line-height: 2rem;*/
 }
 
 nav li a.selected {
@@ -63,7 +75,7 @@ nav li a.selected {
 
 h1 {
     margin-bottom: 20px;
-    font-size: 2em;
+    font-size: 2rem;
 }
 
 h2 {
@@ -95,16 +107,17 @@ a {
 }
 
 .item-list h1 {
-    margin-bottom: 15px;
-    font-size: 1.3em;
+    margin-bottom: 10px;
+    font-size: 1.3rem;
 }
 
 .item-list p {
-    margin-bottom: 0;
+    margin-bottom: 10px;
 }
 
 .tag-list {
-    margin-bottom: 15px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .tag-list li,
@@ -136,7 +149,7 @@ a {
 }
 
 .all-tags li {
-    font-size: 1.4em;
+    font-size: 1.4rem;
     margin-right: 10px;
     padding: 6px 10px;
 }
@@ -159,9 +172,9 @@ footer {
         background-color: #333;
     }
 
-    header {
-        background-color: #000;
-    }
+/*    header {*/
+/*        background-color: #000;*/
+/*    }*/
 }
 
 @media(max-width: 600px) {

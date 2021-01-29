@@ -1,6 +1,6 @@
 /* Code blocks */
 pre {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.5rem;
     background-color: #1a1a1a;
     padding: 16px 0;
     border-radius: 16px;
@@ -11,8 +11,8 @@ pre code {
     display: block;
     padding: 0 20px;
     color: #a9bcbc;
-    line-height: 1.4em;
-    font-size: 1.3em;
+    line-height: 1.1rem;
+    font-size: 1rem;
     overflow-x: auto;
     white-space: pre;
     word-wrap: normal;
