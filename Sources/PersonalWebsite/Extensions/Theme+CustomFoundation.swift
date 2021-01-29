@@ -19,7 +19,7 @@ public extension Theme {
     }
 }
 
-private let styleFiles = ["styles.css", "fonts.css"]
+private let styleFiles = ["styles.css", "fonts.css", "code.css"]
 
 private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
     private let resourcePaths = styleFiles.map(Path.init)
@@ -31,6 +31,7 @@ private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
             .head(for: index, on: context.site, stylesheetPaths: resourcePaths),
             .body(
                 .header(for: context, selectedSection: nil),
+                .hr(),
                 .wrapper(
                     .h1(.text(index.title)),
                     .p(
@@ -58,6 +59,7 @@ private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
             .head(for: section, on: context.site, stylesheetPaths: resourcePaths),
             .body(
                 .header(for: context, selectedSection: section.id),
+                .hr(),
                 .if(section.items.isEmpty,
                     .wrapper(.contentBody(section.body)),
                     else: .wrapper(
@@ -78,6 +80,7 @@ private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
             .body(
                 .class("item-page"),
                 .header(for: context, selectedSection: item.sectionID),
+                .hr(),
                 .wrapper(
                     .article(
                         .div(
@@ -100,6 +103,7 @@ private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
             .head(for: page, on: context.site, stylesheetPaths: resourcePaths),
             .body(
                 .header(for: context, selectedSection: nil),
+                .hr(),
                 .wrapper(.contentBody(page.body)),
                 .footer(for: context.site)
             )
@@ -113,6 +117,7 @@ private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
             .head(for: page, on: context.site, stylesheetPaths: resourcePaths),
             .body(
                 .header(for: context, selectedSection: nil),
+                .hr(),
                 .wrapper(
                     .h1("Browse all tags"),
                     .ul(
@@ -140,6 +145,7 @@ private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
             .head(for: page, on: context.site, stylesheetPaths: resourcePaths),
             .body(
                 .header(for: context, selectedSection: nil),
+                .hr(),
                 .wrapper(
                     .h1(
                         "Tagged with ",
@@ -203,8 +209,8 @@ private extension Node where Context == HTML.BodyContext {
                         .href(item.path),
                         .text(item.title)
                     )),
-                    .tagList(for: item, on: site),
-                    .p(.text(item.description))
+                    .p(.text(item.description)),
+                    .tagList(for: item, on: site)
                 ))
             }
         )
