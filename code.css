@@ -13,8 +13,8 @@ pre code {
     color: #a9bcbc;
     background-color: #1a1a1a;
     line-height: 1.1rem;
-/*    font-size: 1rem;*/
-    font-size: 90%;
+    font-size: 1rem;
+/*    font-size: 90%;*/
     overflow-x: auto;
     white-space: pre;
     word-wrap: normal;
@@ -22,10 +22,11 @@ pre code {
 }
 
 code {
-/*    padding: 2px 4px;*/
-/*    font-size: 90%;*/
-    color: #c7254e;
-    background-color: #f9f2f4;
+    padding: 2px 4px;
+    font-size: 95%;
+/*    color: #c7254e;*/
+    background-color: #eee;
+    opacity: 0.7;
     border-radius: 4px;
 }
 
@@ -64,4 +65,10 @@ pre code .dotAccess {
 
 pre code .preprocessing {
     color: #b68a00;
+}
+
+@media (prefers-color-scheme: dark) {
+    code {
+        background-color: #333;
+    }
 }
