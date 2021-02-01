@@ -143,6 +143,13 @@ a {
     margin-bottom: 40px;
 }
 
+.content ul {
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
 .browse-all {
     display: block;
     margin-bottom: 30px;
