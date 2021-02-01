@@ -4,7 +4,8 @@ description: A tool for tagging files and archiving tasks.
 tags: pdfarchiver
 ---
 
-Let's be honest: sorting documents is painful, no matter if you try it with analogue folders or digitally on your computer.<br>
+Let's be honest: sorting documents is painful, no matter if you try it with analogue folders or digitally on your computer.
+
 Putting letters in different filing folders might help you to find your documents if needed. But it is a time consuming process, which ended (in my case) in a huge amount of unsorted letters on my desk.
 
 
@@ -21,9 +22,11 @@ Both will be discussed in the following sections.
 ### Longterm Archiving
 If I have to tag all the old files manually, it will take some time and I don't want to do this more than one time.
 So at first we dismissed the thought about storing all files with the help of one specific app.
-We still want to access our documents if a developer stops supporting his app.<br>
+We still want to access our documents if a developer stops supporting his app.
+
 With that in mind, we thought that plain files on a hard drive seemed to be a good fit.
-The file format was an obvious choice: [PDF](https://en.wikipedia.org/wiki/Portable_Document_Format) (or [PDF/A](https://en.wikipedia.org/wiki/PDF/A)) files are standarized and exist for quite a while already.<br>
+The file format was an obvious choice: [PDF](https://en.wikipedia.org/wiki/Portable_Document_Format) (or [PDF/A](https://en.wikipedia.org/wiki/PDF/A)) files are standarized and exist for quite a while already.
+
 While beeing geeks, searching via a terminal was a no-brainer.
 Furthermore we wanted to put all the necessary information into the filename.
 This keeps us independent of the current operating/file system and lets us easily backup the whole archive to another machine.
@@ -39,7 +42,7 @@ Furthermore we came to the conclusion that we have to remove capital letters, sp
 This helps to maximize the filesystem compatibility.
 Finally, the archive looks like this:
 
-```
+```no-highlight
 .
 └── Archive
     ├── 2017
@@ -69,9 +72,11 @@ One filing folder for each year.
 New incoming documents will be scanned and stored in a box.
 Only very important certificates get stored separately.
 
-Now you might think: *Well, is it really faster to scan the documents and tag them afterwards instead of sorting them right away?*<br>
+Now you might think: *Well, is it really faster to scan the documents and tag them afterwards instead of sorting them right away?*
+
 The answer in my case: **Yes, definitely!**
-As you are reading this I assume you are a tech person, which leads you to spend more time on your computer than in front of your shelf with all the binders.<br>
+As you are reading this I assume you are a tech person, which leads you to spend more time on your computer than in front of your shelf with all the binders.
+
 By scanning a document and leaving it in a box afterwards, you shift them to a place, where you might spend some time.
 In my case, I speed up the scanning process by using the [Scanbot App](https://scanbot.io/) which also extracts the text from my scans and saves it in the PDF (Pro Feature).
 

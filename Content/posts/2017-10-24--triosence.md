@@ -4,7 +4,8 @@ description: Eine musikalische Weltreise
 tags: music
 ---
 
-*Anspruchsvolle Musik ein­gän­gig präsentieren.*<br>
+*Anspruchsvolle Musik ein­gän­gig präsentieren.*
+
 So lautet eines der Ziele von [Triosence](http://www.triosence.com), welches mit einer unglaublichen Leichtigkeit und Präzision umgesetzt wird.
 Gleichzeitig wirken die vom Pianisten komponierten Lieder und deren Geschichten absolut authentisch, was neue Ebenen der Musik eröffnet.
 Hierbei werden Ideen von dem Bassisten und dem Schlagzeuger aufgenommen und in grandiosen Soli weiterentwickelt.

@@ -210,6 +210,10 @@ private extension Node where Context == HTML.BodyContext {
                         .text(item.title)
                     )),
                     .p(.text(item.description)),
+//                    .div(
+//                        .class("content"),
+//                        .contentBody(item.body)
+//                    ),
                     .tagList(for: item, on: site)
                 ))
             }
