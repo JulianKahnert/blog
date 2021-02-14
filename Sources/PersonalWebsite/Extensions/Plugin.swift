@@ -30,6 +30,8 @@ extension Plugin {
             let allItems = context.sections.flatMap { $0.items }
 
             for item in allItems {
+                
+                // TODO: fix this
                 guard !item.tags.isEmpty else {
                     throw PublishingError(
                         path: item.path,

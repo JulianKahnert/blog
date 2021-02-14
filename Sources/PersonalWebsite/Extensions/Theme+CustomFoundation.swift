@@ -124,7 +124,7 @@ private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
                         .class("all-tags"),
                         .forEach(page.tags.sorted()) { tag in
                             .li(
-                                .class("tag"),
+                                .class("tag \(TagColor.getColorClass(for: tag.string).cssClass)"),
                                 .a(
                                     .href(context.site.path(for: tag)),
                                     .text(tag.string)
@@ -149,7 +149,8 @@ private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
                 .wrapper(
                     .h1(
                         "Tagged with ",
-                        .span(.class("tag"), .text(page.tag.string))
+                        .span(.class("tag \(TagColor.getColorClass(for: page.tag.string).cssClass)"),
+                              .text(page.tag.string))
                     ),
                     .a(
                         .class("browse-all"),
@@ -221,10 +222,11 @@ private extension Node where Context == HTML.BodyContext {
     }
 
     static func tagList<T: Website>(for item: Item<T>, on site: T) -> Node {
-        return .ul(.class("tag-list"), .forEach(item.tags) { tag in
-            .li(.a(
-                .href(site.path(for: tag)),
-                .text(tag.string)
+        return .ul(.class("tag-list"), .forEach(item.tags.sorted { $0.string < $1.string }) { tag in
+            .li(.class(TagColor.getColorClass(for: tag.string).cssClass),
+                .a(
+                    .href(site.path(for: tag)),
+                    .text(tag.string)
             ))
         })
     }
@@ -243,5 +245,37 @@ private extension Node where Context == HTML.BodyContext {
                 .href("/feed.rss")
             ))
         )
+    }
+}
+
+
+
+enum TagColor: String {
+    case red
+    case orange
+    case blue
+    case green
+    case indigo
+    
+    static func getColorClass(for tagName: String) -> TagColor {
+        guard let firstCharacter = tagName.first else { return .green }
+        switch firstCharacter {
+        case (Character("a")...Character("c")):
+            return .red
+        case (Character("d")...Character("o")):
+            return .orange
+        case (Character("p")...Character("t")):
+            return .blue
+        case (Character("u")...Character("z")):
+            return .green
+        default:
+            return .indigo
+        }
+    }
+}
+
+extension TagColor {
+    var cssClass: String {
+        "tag-\(rawValue)"
     }
 }

@@ -124,7 +124,7 @@ a {
 .tag {
     display: inline-block;
     background-color: #000;
-    color: #ddd;
+    color: #eee;
     padding: 4px 6px;
     border-radius: 5px;
     margin-right: 5px;
@@ -157,8 +157,8 @@ a {
 
 .all-tags li {
     font-size: 1.4rem;
-    margin-right: 10px;
     padding: 6px 10px;
+    margin: 5px 5px;
 }
 
 footer {
@@ -172,7 +172,7 @@ footer {
 
     body,
     header .site-name {
-        color: #ddd;
+        color: #eee;
     }
 
     .item-list > li {
@@ -187,5 +187,57 @@ footer {
 @media(max-width: 600px) {
     .wrapper {
         padding: 40px 20px;
+    }
+}
+
+div .tag-red,
+.tag .tag-red {
+    background-color: rgb(255, 59, 48)
+}
+
+div .tag-orange,
+.tag .tag-orange {
+    background-color: rgb(255, 149, 0)
+}
+
+div .tag-blue,
+.tag .tag-blue {
+    background-color: rgb(0, 122, 255)
+}
+
+div .tag-green,
+.tag .tag-green {
+    background-color: rgb(52, 199, 89)
+}
+
+div .tag-indigo,
+.tag .tag-indigo {
+    background-color: rgb(88, 86, 214)
+}
+
+@media (prefers-color-scheme: dark) {
+    div .tag-red,
+    .tag .tag-red {
+        background-color: rgb(255, 69, 58)
+    }
+
+    div .tag-orange,
+    .tag .tag-orange {
+        background-color: rgb(255, 159, 10)
+    }
+
+    div .tag-blue,
+    .tag .tag-blue {
+        background-color: rgb(10, 132, 255)
+    }
+
+    div .tag-green,
+    .tag .tag-green {
+        background-color: rgb(48, 209, 88)
+    }
+
+    div .tag-indigo,
+    .tag .tag-indigo {
+        background-color: rgb(94, 92, 230)
     }
 }
