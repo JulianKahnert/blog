@@ -31,7 +31,7 @@ extension Plugin {
 
             for item in allItems {
                 
-                // TODO: fix this
+				#warning("TODO: fix this - validate date")
                 guard !item.tags.isEmpty else {
                     throw PublishingError(
                         path: item.path,
