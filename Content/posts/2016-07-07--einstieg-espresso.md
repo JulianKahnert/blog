@@ -1,6 +1,7 @@
 ---
 date: 2016-07-07 00:00
 title: Einstieg Espresso
+description: Meine Grundausstattung für den eigenen Espresso.
 bigimg:  /img/coffee0.jpg
 tags: coffee
 ---

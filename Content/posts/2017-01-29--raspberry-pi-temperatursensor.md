@@ -1,6 +1,7 @@
 ---
 date: 2017-01-29 00:00
 title: Raspberry Pi Temperatursensor
+description: Adding some sensors to my home automation.
 bigimg:  /img/pi-temperature.jpg
 tags: hacking
 ---

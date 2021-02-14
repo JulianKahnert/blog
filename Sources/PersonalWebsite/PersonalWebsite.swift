@@ -7,7 +7,12 @@ struct PersonalWebsite: Website {
         case posts, about
     }
 
-    struct ItemMetadata: WebsiteItemMetadata {}
+    struct ItemMetadata: WebsiteItemMetadata {
+        var title: String?
+        var description: String?
+        var date: Date?
+        var tags: String?
+    }
 
     let url = URL(string: "https://juliankahnert.de")!
     let name = "ju ka"

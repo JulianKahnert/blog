@@ -16,11 +16,12 @@ try PersonalWebsite().publish(using: [
     .addMarkdownFiles(),
     .sortItems(by: \.date, order: .descending),
     .installPlugin(.ensureAllItemsAreTagged),
-    .installPlugin(.ensureAllPostsHaveADate),
-    .generateHTML(withTheme: .customFoundation),
+    .installPlugin(.ensureAllPostsHaveMetadata),
     .generateRSSFeed(including: [.posts],
                      config: .default),
+    .generateHTML(withTheme: .customFoundation),
     .generateSiteMap(),
+    .installPlugin(.addLegacyRedirectsHTML),
     .installPlugin(.generateCNAME(with: "test.juliankahnert.de")),
     .deploy(using: .gitHub("JulianKahnert/blog", branch: "main"))
 ])
