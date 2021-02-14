@@ -1,4 +1,5 @@
 ---
+date: 2017-10-24 00:00
 title: Triosence
 description: Eine musikalische Weltreise
 tags: music

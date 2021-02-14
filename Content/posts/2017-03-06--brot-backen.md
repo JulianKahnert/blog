@@ -1,4 +1,5 @@
 ---
+date: 2017-03-06 00:00
 title: Brot backen
 description: CRE213 weckt Begeisterung!
 tags: bread

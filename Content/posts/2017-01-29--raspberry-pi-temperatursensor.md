@@ -1,4 +1,5 @@
 ---
+date: 2017-01-29 00:00
 title: Raspberry Pi Temperatursensor
 bigimg:  /img/pi-temperature.jpg
 tags: hacking

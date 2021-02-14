@@ -1,4 +1,5 @@
 ---
+date: 2016-07-07 00:00
 title: Einstieg Espresso
 bigimg:  /img/coffee0.jpg
 tags: coffee
@@ -33,22 +34,20 @@ Bei [Coffee24](https://www.coffee24.de) findet man eine große Auswahl an Lelit 
 ### Überblick - Grundausstattung
 
 |  						| 										|
-|:----------------------|:--------------------------------------|
-| **Maschine**			| Lelit PL41TEM 						|
-| **Mühle**      		| Mahlkönig Vario Home  				|
-| **Waage**         	| Brewrista Smart Scale 				|
-| **Milchkännchen** 	| Motta Europa 250ml + 500ml			|
-| **Tamper**       		| Motta 8170/B 57mm						|
-| **Maschinenreiniger** | Puly Caff Kaffeefettreiniger			|
-| **Tassen**			| Cilio Cappuccino-/Espressotasse Roma	|
-| **Tamping Matte**		| Concept Art Tamping Matte aus Silikon	|
-| **Abschlagbehälter**	| Motta 7750 Edelstahl Abschlagbehälter |
+|:------------------------------|:--------------------------------------------------|
+| **Maschine**			| Lelit PL41TEM 						       |
+| **Mühle**      		       | Mahlkönig Vario Home  				       |
+| **Waage**         	              | Brewrista Smart Scale 				       |
+| **Milchkännchen** 	       | Motta Europa 250ml + 500ml			       |
+| **Tamper**       		       | Motta 8170/B 57mm						|
+| **Maschinenreiniger**    | Puly Caff Kaffeefettreiniger			       |
+| **Tassen**			       | Cilio Cappuccino-/Espressotasse Roma	|
+| **Tamping Matte**		| Concept Art Tamping Matte aus Silikon	       |
+| **Abschlagbehälter**	| Motta 7750 Edelstahl Abschlagbehälter       |
 | **Milchthermometer**	| 										|
 | **Seifenhandtücher**	|										|
 
----------------------
-
+<p align="center">
 <img src="/img/coffee1.jpg" style="border: 2px solid black;" height="150"/>
 <img src="/img/coffee2.jpg" style="border: 2px solid black;" height="150"/>
-
----------------------
+</p>

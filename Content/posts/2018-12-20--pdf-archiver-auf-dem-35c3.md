@@ -1,4 +1,5 @@
 ---
+date: 2018-12-20 00:00
 title: PDF Archiver auf dem 35c3
 description: Refreshing Memories
 tags: pdfarchiver, ccc
