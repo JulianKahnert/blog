@@ -49,65 +49,23 @@ nameserver <span class="number">208.67.222.222</span>
 nameserver <span class="number">8.8.8.8</span>
 </code></pre><ul><li>IP Adresse nochmal prüfen und Jail erstellen:</li></ul><pre><code>ifconfig
 sudo ezjail-admin create -f myflavour sync.<span class="property">juliankahnert</span>.<span class="property">de</span> <span class="number">10.0.1.101</span>
-</code></pre><ul><li><strong>Jail starten:</strong> <code>sudo ezjail-admin console -f sync_juliankahnert_de</code> oder <code>sudo ezjail-admin start sync_juliankahnert_de</code></li></ul><h4>ZPool erstellen und in Jail einbinden</h4><ul><li>Data Set erzeugen <https://www.freebsd.org/doc/handbook/zfs-zpool.html>
-    * `sudo zpool create mypool mirror /dev/ada1 /dev/ada2`
-    * `sudo zfs set compression=lz4 mypool`
-* Status anzeigen lassen: `zpool status`
+</code></pre><ul><li><strong>Jail starten:</strong> <code>sudo ezjail-admin console -f sync_juliankahnert_de</code> oder <code>sudo ezjail-admin start sync_juliankahnert_de</code></li></ul><h4>ZPool erstellen und in Jail einbinden</h4><ul><li>Data Set <a href="https://www.freebsd.org/doc/handbook/zfs-zpool.html">erzeugen</a><ul><li><code>sudo zpool create mypool mirror /dev/ada1 /dev/ada2</code></li><li><code>sudo zfs set compression=lz4 mypool</code></li><li>Status anzeigen lassen: <code>zpool status</code></li></ul></li></ul><ul><li>Einstellungen aus <https://forums.freebsd.org/threads/51262/></li></ul><pre><code>sudo sysctl security.<span class="property">jail</span>.<span class="property">mount_allowed</span>=<span class="number">1</span>
+sudo sysctl security.<span class="property">jail</span>.<span class="property">mount_devfs_allowed</span>=<span class="number">1</span>
+sudo sysctl security.<span class="property">jail</span>.<span class="property">mount_zfs_allowed</span>=<span class="number">1</span>
+</code></pre><ul><li><code>sudo nano /usr/local/etc/ezjail/sync_juliankahnert_de</code> EZJail config verändern:</li></ul><pre><code>export jail_sync_juliankahnert_de_zfs_datasets=<span class="string">"mypool/BTSync"</span>
+export jail_sync_juliankahnert_de_parameters=<span class="string">"enforce_statfs=1 allow.mount=1 allow.mount.zfs=1 allow.mount.procfs=1 allow.mount.devfs=1"</span>
+</code></pre><ul><li><strong>Auf Host:</strong> ZFS einbinden:</li></ul><pre><code>sudo zfs create mypool/<span class="type">BTSync</span>
+sudo zfs <span class="keyword">set</span> jailed=on mypool/<span class="type">BTSync</span>
+sudo zfs jail sync_juliankahnert_de mypool/<span class="type">BTSync</span>
+</code></pre><ul><li><strong>Im Jail:</strong> ZPool mounten <code>sudo ezjail-admin console sync_juliankahnert_de</code>:</li></ul><pre><code>sudo zfs mount mypool/<span class="type">BTSync</span>
+sudo chown -<span class="type">R</span> sync_user:wheel /mypool/<span class="type">BTSync</span>
 
-* Einstellungen aus <https://forums.freebsd.org/threads/51262/>
-
-```sh
-sudo sysctl security.jail.mount_allowed=1
-sudo sysctl security.jail.mount_devfs_allowed=1
-sudo sysctl security.jail.mount_zfs_allowed=1
-```
-
-* `sudo nano /usr/local/etc/ezjail/sync_juliankahnert_de` EZJail config verändern:
-
-```sh
-export jail_sync_juliankahnert_de_zfs_datasets="mypool/BTSync"
-export jail_sync_juliankahnert_de_parameters="enforce_statfs=1 allow.mount=1 allow.mount.zfs=1 allow.mount.procfs=1 allow.mount.devfs=1"
-```
-
-* **Auf Host:** ZFS einbinden:
-
-```sh
-sudo zfs create mypool/BTSync
-sudo zfs set jailed=on mypool/BTSync
-sudo zfs jail sync_juliankahnert_de mypool/BTSync
-```
-
-* **Im Jail:** ZPool mounten `sudo ezjail-admin console sync_juliankahnert_de`:
-
-```sh
-sudo zfs mount mypool/BTSync
-sudo chown -R sync_user:wheel /mypool/BTSync
-
-```
-* `sudo nano /usr/local/etc/crontab` Autostart einrichten:
-
-```sh
-@reboot		root    	zfs mount mypool/BTSync
-```
-
-### BTSync: Installation, Autostart und Data Set einrichten
-<https://www.freshports.org/net-p2p/btsync>
-
-* BTSync installieren: `cd /usr/ports/net-p2p/btsync/ && make install clean`
-* `sudo nano /etc/crontab` editieren für Autostart:
-
-```sh
-@reboot 	sync_user  	/usr/local/bin/btsync
-```
-
-* Autosnapshot für BTSync Daten einrichten:
-
-```sh
-sudo zfs set com.sun:auto-snapshot=true mypool/BTSync
-sudo zfs set com.sun:auto-snapshot:frequent=true mypool/BTSync
-sudo zfs set com.sun:auto-snapshot:hourly=true mypool/BTSync
-sudo zfs set com.sun:auto-snapshot:daily=true mypool/BTSync
-sudo zfs set com.sun:auto-snapshot:weekly=true mypool/BTSync
-sudo zfs set com.sun:auto-snapshot:monthly=true mypool/BTSync
-```
-</li></ul></div><span>Tagged with: </span><ul class="tag-list"><li class="tag-orange"><a href="/tags/freebsd">freebsd</a></li><li class="tag-orange"><a href="/tags/hacking">hacking</a></li></ul></article></div><footer><p>Generated using <a href="https://github.com/johnsundell/publish">Publish</a></p><p><a href="/feed.rss">RSS feed</a></p></footer></body></html>
+</code></pre><ul><li><code>sudo nano /usr/local/etc/crontab</code> Autostart einrichten:</li></ul><pre><code><span class="keyword">@reboot</span>		root    	zfs mount mypool/<span class="type">BTSync</span>
+</code></pre><h3>BTSync: Installation, Autostart und Data Set einrichten</h3><ul><li>BTSync installieren: <code>cd /usr/ports/net-p2p/btsync/ &amp;&amp; make install clean</code></li><li><code>sudo nano /etc/crontab</code> editieren für Autostart:</li></ul><pre><code><span class="keyword">@reboot</span> 	sync_user  	/usr/local/bin/btsync
+</code></pre><ul><li>Autosnapshot für BTSync Daten einrichten:</li></ul><pre><code>sudo zfs <span class="keyword">set</span> com.<span class="property">sun</span>:auto-snapshot=<span class="keyword">true</span> mypool/<span class="type">BTSync</span>
+sudo zfs <span class="keyword">set</span> com.<span class="property">sun</span>:auto-snapshot:frequent=<span class="keyword">true</span> mypool/<span class="type">BTSync</span>
+sudo zfs <span class="keyword">set</span> com.<span class="property">sun</span>:auto-snapshot:hourly=<span class="keyword">true</span> mypool/<span class="type">BTSync</span>
+sudo zfs <span class="keyword">set</span> com.<span class="property">sun</span>:auto-snapshot:daily=<span class="keyword">true</span> mypool/<span class="type">BTSync</span>
+sudo zfs <span class="keyword">set</span> com.<span class="property">sun</span>:auto-snapshot:weekly=<span class="keyword">true</span> mypool/<span class="type">BTSync</span>
+sudo zfs <span class="keyword">set</span> com.<span class="property">sun</span>:auto-snapshot:monthly=<span class="keyword">true</span> mypool/<span class="type">BTSync</span>
+</code></pre></div><span>Tagged with: </span><ul class="tag-list"><li class="tag-orange"><a href="/tags/freebsd">freebsd</a></li><li class="tag-orange"><a href="/tags/hacking">hacking</a></li></ul></article></div><footer><p>Generated using <a href="https://github.com/johnsundell/publish">Publish</a></p><p><a href="/feed.rss">RSS feed</a></p></footer></body></html>
