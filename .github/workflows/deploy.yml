@@ -1,0 +1,35 @@
+name: Deploy with Publish
+
+on:
+  push:
+    branches:
+    - author
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Build Publish
+      run: |
+        git clone https://github.com/JohnSundell/Publish.git
+        cd Publish
+        make
+
+    - name: Build the site with Publish
+      run: |
+        publish generate
+
+    # - name: Move files to 'page' folder
+    #   run: mkdir page && cp -R _site/* page/ && cp CNAME page/ && touch page/.nojekyll && cp -r .well-known page/
+
+    - name: Build and Deploy
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: main # The branch the action should deploy to.
+        FOLDER: Output # The folder the action should deploy.
+        CLEAN: true # Automatically remove deleted files from the deploy branch

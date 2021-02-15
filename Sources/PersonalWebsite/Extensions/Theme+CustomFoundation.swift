@@ -5,8 +5,10 @@
 //  Created by Julian Kahnert on 28.01.21.
 //
 
+import Foundation
 import Plot
 import Publish
+import ReadTimePublishPlugin
 
 public extension Theme {
     /// The default "Foundation" theme that Publish ships with, a very
@@ -83,6 +85,7 @@ private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
                 .hr(),
                 .wrapper(
                     .article(
+                        .h1(.text(item.title)),
                         .div(
                             .class("content"),
                             .contentBody(item.body)
@@ -201,20 +204,27 @@ private extension Node where Context == HTML.BodyContext {
         )
     }
 
+    static var formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = .init(identifier: "en")
+        formatter.dateStyle = .medium
+        return formatter
+    }()
     static func itemList<T: Website>(for items: [Item<T>], on site: T) -> Node {
         return .ul(
             .class("item-list"),
             .forEach(items) { item in
                 .li(.article(
+                    .div(
+                        .class("metadata-header"),
+                        .span(.text(formatter.string(from: item.date))),
+                        .unwrap(item.readTime().time, { .span("\($0) min") })
+                    ),
                     .h1(.a(
                         .href(item.path),
                         .text(item.title)
                     )),
                     .p(.text(item.description)),
-//                    .div(
-//                        .class("content"),
-//                        .contentBody(item.body)
-//                    ),
                     .tagList(for: item, on: site)
                 ))
             }

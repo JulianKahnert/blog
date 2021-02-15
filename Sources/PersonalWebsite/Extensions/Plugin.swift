@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Plot
 import Publish
 
 extension Plugin {

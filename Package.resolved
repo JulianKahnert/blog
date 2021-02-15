@@ -56,6 +56,15 @@
         }
       },
       {
+        "package": "ReadTimePublishPlugin",
+        "repositoryURL": "https://github.com/artrmz/ReadTimePublishPlugin",
+        "state": {
+          "branch": null,
+          "revision": "e7e51d32fd30648f362c83909db06ba3a101489b",
+          "version": "0.1.1"
+        }
+      },
+      {
         "package": "ShellOut",
         "repositoryURL": "https://github.com/johnsundell/shellout.git",
         "state": {
