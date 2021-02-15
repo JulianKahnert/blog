@@ -1,6 +1,5 @@
 # About Me
 
-Hello,
+Hi 👋,
 
-this is my new blog.
-test2
+I'm Julian and this is my new blog.
