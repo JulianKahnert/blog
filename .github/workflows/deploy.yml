@@ -11,7 +11,19 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build and run chia
+      run: |
+        # TODO: download chia binary directly would improve build times
+        git clone https://github.com/worldiety/chia 
+        cd chia
+        swift build --configuration release
+        mv `swift build --configuration release --show-bin-path`/chia /usr/local/bin
+        cd ..
+        rm -rf chia/
+        /usr/local/bin/chia --config .chia.yml
 
     - name: Build Publish
       run: |

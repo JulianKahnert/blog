@@ -11,7 +11,7 @@ enum TagColor: String {
     case blue
     case green
     case indigo
-    
+
     static func getColorClass(for tagName: String) -> TagColor {
         guard let firstCharacter = tagName.first else { return .green }
         switch firstCharacter {

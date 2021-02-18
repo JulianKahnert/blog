@@ -10,10 +10,10 @@ import Plot
 import Publish
 
 extension Plugin {
-    
+
     static var addLegacyRedirectsHTML: Self {
         Plugin(name: "Ensure that all items are tagged") { context in
-            
+
             guard let postsSection = context.sections.first(where: { $0.id.rawValue == "posts" }) else {
                 throw PublishingError(path: "N/A",
                                       infoMessage: "Could not find posts section.")
@@ -25,13 +25,13 @@ extension Plugin {
                     throw PublishingError(path: legacyItem.path,
                                           infoMessage: "Failed to create relative path for legacy item.")
                 }
-                
+
                 let url = context.site.url.appendingPathComponent(legacyItem.path.string)
                 try context.createOutputFile(at: Path("\(relativePath)/index.html")).write(redirectHtml(with: url))
             }
         }
     }
-    
+
     /// Source: https://github.com/JohnSundell/Publish
     static var ensureAllItemsAreTagged: Self {
         Plugin(name: "Ensure that all items are tagged") { context in
@@ -45,41 +45,7 @@ extension Plugin {
             }
         }
     }
-    
-    static var ensureAllPostsHaveMetadata: Self {
-        Plugin(name: "Ensure that all items have valid metadata") { context in
-            let allItems = context.sections.flatMap { $0.items }
 
-            for item in allItems {
-                
-                guard let metadata = item.metadata as? PersonalWebsite.ItemMetadata else {
-                    throw PublishingError(path: item.path,
-                                          infoMessage: "Failed to parse metadata")
-                }
-
-                guard !(metadata.title?.isEmpty ?? true) else {
-                    throw PublishingError(path: item.path,
-                                          infoMessage: "Metadata has no title")
-                }
-                
-                guard !(metadata.description?.isEmpty ?? true) else {
-                    throw PublishingError(path: item.path,
-                                          infoMessage: "Metadata has no description")
-                }
-                
-                guard metadata.date != nil else {
-                    throw PublishingError(path: item.path,
-                                          infoMessage: "Metadata has no date")
-                }
-                
-                guard !(metadata.tags?.isEmpty ?? true) else {
-                    throw PublishingError(path: item.path,
-                                          infoMessage: "Metadata has no tags")
-                }
-            }
-        }
-    }
-    
     private static func redirectHtml(with url: URL) -> String {
         """
         <!DOCTYPE HTML>

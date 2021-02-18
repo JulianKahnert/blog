@@ -38,7 +38,7 @@ Bei [Coffee24](https://www.coffee24.de) findet man eine große Auswahl an Lelit 
 |:------------------------------|:--------------------------------------------------|
 | **Maschine**			| Lelit PL41TEM 						       |
 | **Mühle**      		       | Mahlkönig Vario Home  				       |
-| **Waage**         	              | Brewrista Smart Scale 				       |
+| **Waage**         	              | Brewista Smart Scale 				       |
 | **Milchkännchen** 	       | Motta Europa 250ml + 500ml			       |
 | **Tamper**       		       | Motta 8170/B 57mm						|
 | **Maschinenreiniger**    | Puly Caff Kaffeefettreiniger			       |

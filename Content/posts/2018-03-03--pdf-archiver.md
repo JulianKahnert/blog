@@ -26,9 +26,9 @@ So at first we dismissed the thought about storing all files with the help of on
 We still want to access our documents if a developer stops supporting his app.
 
 With that in mind, we thought that plain files on a hard drive seemed to be a good fit.
-The file format was an obvious choice: [PDF](https://en.wikipedia.org/wiki/Portable_Document_Format) (or [PDF/A](https://en.wikipedia.org/wiki/PDF/A)) files are standarized and exist for quite a while already.
+The file format was an obvious choice: [PDF](https://en.wikipedia.org/wiki/Portable_Document_Format) (or [PDF/A](https://en.wikipedia.org/wiki/PDF/A)) files are standardized and exist for quite a while already.
 
-While beeing geeks, searching via a terminal was a no-brainer.
+While being geeks, searching via a terminal was a no-brainer.
 Furthermore we wanted to put all the necessary information into the filename.
 This keeps us independent of the current operating/file system and lets us easily backup the whole archive to another machine.
 

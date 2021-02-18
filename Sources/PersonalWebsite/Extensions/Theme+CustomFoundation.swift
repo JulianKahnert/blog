@@ -25,7 +25,7 @@ private let styleFiles = ["styles.css", "fonts.css", "code.css"]
 
 private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
     private let resourcePaths = styleFiles.map(Path.init)
-    
+
     func makeIndexHTML(for index: Index,
                        context: PublishingContext<Site>) throws -> HTML {
         HTML(
