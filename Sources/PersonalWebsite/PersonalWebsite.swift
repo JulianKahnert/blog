@@ -21,4 +21,9 @@ struct PersonalWebsite: Website {
     var imagePath: Path? { nil }
     var favicon: Favicon? { Favicon(path: "favicon.ico", type: "image/x-icon") }
     var tagHTMLConfig: TagHTMLConfiguration? { .default }
+    
+    // swiftlint:disable force_unwrapping
+    let twitterURL = URL(string: "https://twitter.com/JulianKahnert")!
+    let githubURL = URL(string: "https://github.com/JulianKahnert")!
+    let xingURL = URL(string: "https://www.xing.com/profile/Julian_Kahnert")!
 }

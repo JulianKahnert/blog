@@ -253,7 +253,14 @@ private extension Node where Context == HTML.BodyContext {
             .p(.a(
                 .text("RSS feed"),
                 .href("/feed.rss")
-            ))
+            )),
+            .unwrap(site as? PersonalWebsite) { site in
+                .p(
+                    .a(.class("social-icon"), .target(.blank), .href(site.twitterURL.absoluteString), .img(.src("/img/logo-twitter.svg"))),
+                    .a(.class("social-icon"), .target(.blank), .href(site.githubURL.absoluteString), .img(.src("/img/logo-github.svg"))),
+                    .a(.class("social-icon"), .target(.blank), .href(site.xingURL.absoluteString), .img(.src("/img/logo-xing.svg")))
+                )
+            }
         )
     }
 }
