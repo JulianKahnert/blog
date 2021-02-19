@@ -2,9 +2,12 @@
 date: 2017-01-29 00:00
 title: Raspberry Pi Temperatursensor
 description: Adding some sensors to my home automation.
-bigimg:  /img/pi-temperature.jpg
 tags: hacking
 ---
+
+<p align="center">
+<img src="/img/pi-temperature.jpg" style="border: 2px solid black;" height="150"/>
+</p>
 
 Im Rahmen von meiner Heimautomation mit [HomeAssistant](http://home-assistant.io/) (eine sehr interessantes Projekt mit unzähligen Möglichkeiten) wollte ich die Temperatur in einem Raum messen und habe hierfür eine einfache und kostengünstige Lösung gesucht.
 Da ich ohnehin schon einen Raspberry Pi für andere Dinge nutze, bot es sich an diesen auch als Temperatursensor zu verwenden und so bin ich auf [dieses](http://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/temperature/) Tutorial gestoßen.

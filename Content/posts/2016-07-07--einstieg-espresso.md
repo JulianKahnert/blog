@@ -2,7 +2,6 @@
 date: 2016-07-07 00:00
 title: Einstieg Espresso
 description: Meine Grundausstattung für den eigenen Espresso.
-bigimg:  /img/coffee0.jpg
 tags: coffee
 ---
 
@@ -49,6 +48,7 @@ Bei [Coffee24](https://www.coffee24.de) findet man eine große Auswahl an Lelit 
 | **Seifenhandtücher**	|										|
 
 <p align="center">
+<img src="/img/coffee0.jpg" style="border: 2px solid black;" height="150"/>
 <img src="/img/coffee1.jpg" style="border: 2px solid black;" height="150"/>
 <img src="/img/coffee2.jpg" style="border: 2px solid black;" height="150"/>
 </p>
