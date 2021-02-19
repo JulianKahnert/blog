@@ -14,12 +14,12 @@ struct PersonalWebsite: Website {
         var tags: String
     }
 
-    let url = URL(string: "https://juliankahnert.de")!
+    let url = URL(string: "https://test.juliankahnert.de")!
     let name = "ju ka"
     let description = "I will add blogposts about technology with focus on Swift and Kubernetes. 🤓 I would love to get in touch with you. If you have any feedback, questions, ideas, etc. just drop me a line! ✉️"
     let language: Language = .english
-    var imagePath: Path? { nil }
-    var favicon: Favicon? { Favicon(path: "favicon.ico", type: "image/x-icon") }
+    var imagePath: Path? { "img/memoji.png" }
+    var favicon: Favicon? { Favicon(path: "img/favicon.png", type: "image/png") }
     var tagHTMLConfig: TagHTMLConfiguration? { .default }
     
     // swiftlint:disable force_unwrapping
