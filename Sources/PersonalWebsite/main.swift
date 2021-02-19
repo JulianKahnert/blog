@@ -21,6 +21,6 @@ try PersonalWebsite().publish(using: [
     .generateHTML(withTheme: .customFoundation),
     .generateSiteMap(),
     .installPlugin(.addLegacyRedirectsHTML),
-    .installPlugin(.generateCNAME(with: "test.juliankahnert.de")),
+    .installPlugin(.generateCNAME(with: "juliankahnert.de")),
     .deploy(using: .gitHub("JulianKahnert/blog", branch: "main"))
 ])
