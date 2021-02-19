@@ -21,7 +21,7 @@ extension Plugin {
             let legacyItems = postsSection.items.filter { $0.date.year <= 2020 }
 
             for legacyItem in legacyItems {
-                guard let relativePath = legacyItem.path.string.components(separatedBy: "/").last else {
+                guard let relativePath = legacyItem.path.string.components(separatedBy: "/").last?.replacingOccurrences(of: "--", with: "-") else {
                     throw PublishingError(path: legacyItem.path,
                                           infoMessage: "Failed to create relative path for legacy item.")
                 }

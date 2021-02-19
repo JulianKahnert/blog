@@ -14,4 +14,6 @@ So entstehen Stücke deren Genres variieren und trotzdem über die Alben hinweg 
 
 Liebe Triosence, ich hoffe ihr behaltet die Freude an der Musik und eure Gelassenheit die das Publikum mit Begeisterung aufnimmt.
 
-<iframe src="https://tools.applemusic.com/embed/v1/album/1207845190?country=de" height="400px" width="100%" frameborder="0"></iframe>
+<p align="center">
+<iframe src="https://embed.music.apple.com/de/album/hidden-beauty/1207845190?app=music&amp;itsct=music_box&amp;itscg=30200&amp;ct=albums_hidden_beauty&amp;ls=1" height="450px" frameborder="0" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" allow="autoplay *; encrypted-media *;" style="width: 100%; max-width: 660px; overflow: hidden; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; background-color: transparent; background-position: initial initial; background-repeat: initial initial;"></iframe>
+</p>
