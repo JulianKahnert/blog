@@ -1,7 +1,7 @@
 ---
 date: 2018-12-20 00:00
 title: PDF Archiver auf dem 35c3
-description: Refreshing Memories. PDF Archiver users will meet at the Chaos Communication Congress in Leipzig.
+description: PDF Archiver users will meet at the Chaos Communication Congress in Leipzig. Contact me to get more information.
 tags: pdfarchiver, ccc
 ---
 

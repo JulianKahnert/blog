@@ -1,7 +1,7 @@
 ---
 date: 2017-10-24 00:00
 title: Triosence
-description: Eine musikalische Weltreise
+description: Just some thoughts after the great concert of Triosence. Let me know what you think about their new album 'Hidden Beauty'!
 tags: music
 ---
 

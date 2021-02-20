@@ -1,7 +1,7 @@
 ---
 date: 2018-03-03 00:00
 title: PDF Archiver
-description: A tool for tagging files and archiving tasks.
+description: In this blogpost we will discuss the nameing convention and background of PDF Archiver. A tool for tagging files and archiving tasks.
 tags: pdfarchiver
 ---
 
@@ -95,7 +95,7 @@ That's why I started [**PDF Archiver**](https://github.com/JulianKahnert/PDF-Arc
 It is an open source project, which helps to rename the scanned documents accordingly to the prior concept.
 The app can be installed with the commands from the [installation section](https://github.com/JulianKahnert/PDF-Archiver#floppy_disk-installation) of the GitHub repository or be downloaded directly from the [Mac App Store](https://apps.apple.com/app/pdf-archiver/id1352719750).
 In both cases: please talk to me about feature requests and/or general thoughts.
-Send me a [mail](mailto:PDF-Archiver@juliankahnert.de) or create a [GitHub issue](https://github.com/JulianKahnert/PDF-Archiver/issues)!
+Send me a [mail](mailto:support@PDF-Archiver.io) or create a [GitHub issue](https://github.com/JulianKahnert/PDF-Archiver/issues)!
 
 ## Benefits
 This leads to the benefits of saving the files digitally:

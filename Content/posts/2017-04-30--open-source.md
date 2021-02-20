@@ -1,7 +1,7 @@
 ---
 date: 2017-04-30 00:00
 title: Open Source
-description: Eine Meinung ...
+description: An opinion ...
 tags: opensource
 ---
 
