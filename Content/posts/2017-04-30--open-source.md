@@ -1,7 +1,7 @@
 ---
 date: 2017-04-30 00:00
 title: Open Source
-description: An opinion ...
+description: My opinion about Open Source projects and development.
 tags: opensource
 ---
 

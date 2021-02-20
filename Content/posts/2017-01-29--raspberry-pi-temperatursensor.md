@@ -1,8 +1,8 @@
 ---
 date: 2017-01-29 00:00
 title: Raspberry Pi Temperatursensor
-description: Adding some sensors to my home automation.
-tags: hacking
+description: Connecting a temperature sensor to a Raspberry Pi and publish values to my home automation.
+tags: hacking, python
 ---
 
 <p align="center">

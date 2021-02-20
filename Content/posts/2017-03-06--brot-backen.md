@@ -1,7 +1,7 @@
 ---
 date: 2017-03-06 00:00
 title: Brot backen
-description: CRE213 weckt Begeisterung!
+description: Here are some thoughts after hearing the podcast CRE213 about bread.
 tags: bread
 ---
 

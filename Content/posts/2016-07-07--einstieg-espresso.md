@@ -1,7 +1,7 @@
 ---
 date: 2016-07-07 00:00
 title: Einstieg Espresso
-description: Meine Grundausstattung für den eigenen Espresso.
+description: My basic equipment for a good espresso with a list of resources for more information.
 tags: coffee
 ---
 
