@@ -1,7 +1,7 @@
 ---
 date: 2018-10-16 00:00
 title: PDF Archive Viewer
-description: Scan it. Tag it. Find it.
+description: An update to the latest features of the macOS app and introduction of PDF Archive Viewer. This iOS app to browse your archive from your iPhone/iPad.
 tags: pdfarchiver
 ---
 
@@ -26,7 +26,7 @@ That said, please keep in mind to backup all your archived documents regularly t
 It is always more secure to have a copy of all documents independent of the scope of fancy iCloud syncing magic.
 The iCloud Drive feature (finally) brings me to the reason of this blogpost:
 
-PDF Archiver structures an archive of PDFs and you can find them quickly via the [naming convention](https://github.com/pdf-Archiver/pdf-archiver#scroll-convention) and the Finder tags.
+PDF Archiver structures an archive of PDFs and you can find them quickly via the [naming convention](https://juliankahnert.de/posts/2018-03-03--pdf-archiver/) and the Finder tags.
 But what if you need to lookup something, when you don't have your computer nearby?
 Your iPhone might be a device, which helps out in those cases.
 That's why I built the open source app [PDF Archive Viewer](https://github.com/PDF-Archiver/PDF-Archive-Viewer), which can be downloaded from the [App Store](https://apps.apple.com/de/app/pdf-archiver/id1352719750?mt=12) for free.

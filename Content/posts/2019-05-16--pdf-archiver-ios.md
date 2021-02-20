@@ -1,7 +1,7 @@
 ---
 date: 2019-05-16 00:00
 title: PDF Archiver iOS
-description: Scan it. Tag it. Find it. - macOS & iOS
+description: Scan it. Tag it. Find it. - macOS & iOS - Recently it has become a bit quieter around PDF Archiver - but that doesn't mean that nothing has happened. Let's dive into some new features.
 tags: pdfarchiver
 ---
 
