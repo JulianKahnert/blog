@@ -154,6 +154,7 @@ a {
     margin-bottom: 40px;
 }
 
+.content ol,
 .content ul {
     padding-left: 35px;
     padding-right: 35px;
