@@ -18,7 +18,7 @@ try PersonalWebsite().publish(using: [
     .installPlugin(.ensureAllItemsAreTagged),
     .installPlugin(.removeShouldSkipItems),
     .generateRSSFeed(including: [.posts],
-                     config: .default),
+                     config: .init(targetPath: "feed.xml")),
     .generateHTML(withTheme: .customFoundation),
     .generateSiteMap(),
     .installPlugin(.addLegacyRedirectsHTML),
