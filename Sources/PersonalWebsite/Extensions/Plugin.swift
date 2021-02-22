@@ -31,6 +31,16 @@ extension Plugin {
             }
         }
     }
+    
+    static var removeShouldSkipItems: Self {
+        Plugin(name: "Remove all items that contain a true shouldSkip metadata flag") { context in
+            context.mutateAllSections { section in
+                section.removeItems(matching: Predicate { item in
+                    (item.metadata as? PersonalWebsite.ItemMetadata)?.shouldSkip ?? false
+                })
+            }
+        }
+    }
 
     /// Source: https://github.com/JohnSundell/Publish
     static var ensureAllItemsAreTagged: Self {
