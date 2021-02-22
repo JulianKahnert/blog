@@ -188,6 +188,11 @@ footer {
     filter: invert(57%) sepia(16%) saturate(13%) hue-rotate(13deg) brightness(93%) contrast(90%);
 }
 
+figcaption {
+    margin: 15px 30px;
+    opacity: 0.5;
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #222;

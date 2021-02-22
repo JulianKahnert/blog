@@ -12,6 +12,7 @@ struct PersonalWebsite: Website {
         var description: String
         var date: Date
         var tags: String
+        var shouldSkip: Bool?
     }
 
     let url = URL(string: "https://juliankahnert.de")!
