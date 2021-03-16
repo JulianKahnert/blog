@@ -25,18 +25,16 @@ jobs:
         rm -rf chia/
         /usr/local/bin/chia --config .chia.yml
 
-    - name: Build Publish
-      run: |
-        git clone https://github.com/JohnSundell/Publish.git
-        cd Publish
-        make
+    # - name: Build Publish
+    #   run: |
+    #     git clone https://github.com/JohnSundell/Publish.git
+    #     cd Publish
+    #     make
 
     - name: Build the site with Publish
       run: |
+        brew install publish
         publish generate
-
-    # - name: Move files to 'page' folder
-    #   run: mkdir page && cp -R _site/* page/ && cp CNAME page/ && touch page/.nojekyll && cp -r .well-known page/
 
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@3.7.1
