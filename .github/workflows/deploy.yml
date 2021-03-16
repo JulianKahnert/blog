@@ -3,50 +3,46 @@ name: Deploy with Publish
 on:
   push:
     branches:
-    - author
+      - author
 
 jobs:
   build:
-
     runs-on: macos-latest
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Build and run chia
-      run: |
-        # TODO: download chia binary directly would improve build times
-        git clone https://github.com/worldiety/chia 
-        cd chia
-        swift build --configuration release
-        mv `swift build --configuration release --show-bin-path`/chia /usr/local/bin
-        cd ..
-        rm -rf chia/
-        /usr/local/bin/chia --config .chia.yml
+      - name: Build and run chia
+        run: |
+          # TODO: download chia binary directly would improve build times
+          git clone https://github.com/worldiety/chia 
+          cd chia
+          swift build --configuration release
+          mv `swift build --configuration release --show-bin-path`/chia /usr/local/bin
+          cd ..
+          rm -rf chia/
+          /usr/local/bin/chia --config .chia.yml
 
-    # - name: Build Publish
-    #   run: |
-    #     git clone https://github.com/JohnSundell/Publish.git
-    #     cd Publish
-    #     make
+      - name: Build the site with Publish
+        run: |
+          brew install publish
+          publish generate
 
-    - name: Build the site with Publish
-      run: |
-        brew install publish
-        publish generate
-
-    - name: Build and Deploy
-      uses: JamesIves/github-pages-deploy-action@3.7.1
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: main # The branch the action should deploy to.
-        FOLDER: Output # The folder the action should deploy.
-        CLEAN: true # Automatically remove deleted files from the deploy branch
-
-    - name: Purge cache
-      uses: nathanvaughn/actions-cloudflare-purge@master
-      if: success()
-      env:
-        CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
-        CLOUDFLARE_AUTH_KEY: ${{ secrets.CLOUDFLARE_AUTH_KEY }}
+      - name: Build and Deploy
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: main # The branch the action should deploy to.
+          FOLDER: Output # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
+    
+  purge-cache:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge cache
+        uses: nathanvaughn/actions-cloudflare-purge@master
+        if: success()
+        env:
+          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+          CLOUDFLARE_AUTH_KEY: ${{ secrets.CLOUDFLARE_AUTH_KEY }}
