@@ -24,9 +24,7 @@ jobs:
           /usr/local/bin/chia --config .chia.yml
 
   build-and-deploy:
-    runs-on: ubuntu-latest
-    container:
-      image: "swift:5.4"
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
