@@ -6,7 +6,7 @@ on:
       - author
 
 jobs:
-  validate:
+  build-and-deploy:
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -23,20 +23,10 @@ jobs:
           rm -rf chia/
           /usr/local/bin/chia --config .chia.yml
 
-  build-and-deploy:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Build Publish
+      - name: Build the site with Publish
         run: |
-          git clone https://github.com/JohnSundell/Publish.git
-          cd Publish
-          make
-
-      - name: Generate Site
-        run: publish generate
+          brew install publish
+          publish generate
 
       - name: Build and Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.4
