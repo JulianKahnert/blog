@@ -16,7 +16,7 @@ try PersonalWebsite().publish(using: [
     .copyFiles(at: "root-resources"),
     .addMarkdownFiles(),
     .sortItems(by: \.date, order: .descending),
-		.installPlugin(.readingTime()),
+    .installPlugin(.readingTime()),
     .installPlugin(.ensureAllItemsAreTagged),
     .installPlugin(.removeShouldSkipItems),
     .generateRSSFeed(including: [.posts],
