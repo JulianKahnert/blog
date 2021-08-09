@@ -16,7 +16,7 @@ let package = Package(
     targets: [
         .target(
             name: "PersonalWebsite",
-            dependencies: ["Publish", "SplashPublishPlugin", "CNAMEPublishPlugin", "ReadTimePublishPlugin"]
+            dependencies: ["Publish", "SplashPublishPlugin", "CNAMEPublishPlugin", "ReadingTimePublishPlugin"]
         )
     ]
 )
