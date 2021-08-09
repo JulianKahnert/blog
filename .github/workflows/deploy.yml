@@ -75,9 +75,9 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           folder: 'site' # The deployment folder should match the name of the artifact. Even though our project builds into the 'build' folder the artifact name of 'site' must be placed here.
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: main # The branch the action should deploy to.
-          #CLEAN: true # Automatically remove deleted files from the deploy branch
+          
+          branch: main # The branch the action should deploy to.
+          #clean: true # Automatically remove deleted files from the deploy branch
 
   purge-cache:
     needs: deploy
