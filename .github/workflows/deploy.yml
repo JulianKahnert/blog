@@ -46,6 +46,7 @@ jobs:
         run: |
           which git
           echo "$(pwd)"
+          ls -lah ..
           ls -lah .
           ls -lah Output
 
