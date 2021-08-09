@@ -39,13 +39,15 @@ jobs:
           make
           cd ..
 
-      - name: Build Publish
+      - name: Generate Site
+        run: publish generate
+
+      - name: Debugging Step
         run: |
           which git
           echo "$(pwd)"
-
-      - name: Generate Site
-        run: publish generate
+          ls -lah .
+          ls -lah Output
 
       - name: Build and Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.4
