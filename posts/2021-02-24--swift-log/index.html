@@ -4,11 +4,11 @@
 </code></pre><p>I didn't want to repeat the <code>Logger</code> creation code so I came up with a little <code>protocol</code> and this default implementation:</p><pre><code><span class="keyword">import</span> Logging
 
 <span class="keyword">public protocol</span> Log {
-    <span class="keyword">var</span> log: <span class="type">Logger</span> { <span class="keyword">get</span> }
+    <span class="keyword">static var</span> log: <span class="type">Logger</span> { <span class="keyword">get</span> }
 }
 
 <span class="keyword">public extension</span> <span class="type">Log</span> {
-    <span class="keyword">static let</span> log: <span class="type">Logger</span> {
+    <span class="keyword">static var</span> log: <span class="type">Logger</span> {
         <span class="type">Logger</span>(label: <span class="type">String</span>(describing: <span class="keyword">self</span>))
     }
 
