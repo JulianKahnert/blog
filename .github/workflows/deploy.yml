@@ -39,6 +39,11 @@ jobs:
           make
           cd ..
 
+      - name: Build Publish
+        run: |
+          which git
+          echo "$(pwd)"
+
       - name: Generate Site
         run: publish generate
 
