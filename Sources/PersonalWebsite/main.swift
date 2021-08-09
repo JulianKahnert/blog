@@ -8,6 +8,7 @@
 import CNAMEPublishPlugin
 import Publish
 import SplashPublishPlugin
+import ReadingTimePublishPlugin
 
 try PersonalWebsite().publish(using: [
     .installPlugin(.splash(withClassPrefix: "")),
@@ -15,6 +16,7 @@ try PersonalWebsite().publish(using: [
     .copyFiles(at: "root-resources"),
     .addMarkdownFiles(),
     .sortItems(by: \.date, order: .descending),
+    .installPlugin(.readingTime()),
     .installPlugin(.ensureAllItemsAreTagged),
     .installPlugin(.removeShouldSkipItems),
     .generateRSSFeed(including: [.posts],

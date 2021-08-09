@@ -1,7 +1,7 @@
 ---
-date: 2021-05-30 00:00
+date: 2021-08-09 00:00
 title: Network debugging on macOS
-description: There are several tools on macOS which help you debug your network connection. Let's have a look at them.
+description: There are several tools on macOS which help you debug your network connection. Let's have a look at them while creating a checklist for your next debugging session.
 shouldSkip: false
 tags: hacking, network, macos
 ---

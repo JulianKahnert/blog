@@ -8,7 +8,6 @@
 import Foundation
 import Plot
 import Publish
-import ReadTimePublishPlugin
 
 public extension Theme {
     /// The default "Foundation" theme that Publish ships with, a very
@@ -218,7 +217,7 @@ private extension Node where Context == HTML.BodyContext {
                     .div(
                         .class("metadata-header"),
                         .span(.text(formatter.string(from: item.date))),
-                        .unwrap(item.readTime().time, { .span("\($0) min") })
+                        .unwrap(item.readingTime.minutes, { .span("\($0) min") })
                     ),
                     .h1(.a(
                         .href(item.path),
