@@ -8,6 +8,7 @@
 import CNAMEPublishPlugin
 import Publish
 import SplashPublishPlugin
+import PublishReadingTime
 
 try PersonalWebsite().publish(using: [
     .installPlugin(.splash(withClassPrefix: "")),
