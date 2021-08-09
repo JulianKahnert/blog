@@ -49,6 +49,7 @@ jobs:
           ls -lah ..
           ls -lah .
           ls -lah Output
+          git init
 
       - name: Build and Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.4
