@@ -7,7 +7,7 @@ on:
       - testing # TODO: remove this
 
 jobs:
-   validate:
+  validate:
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -23,7 +23,6 @@ jobs:
           cd ..
           rm -rf chia/
           /usr/local/bin/chia --config .chia.yml
-
 
   build-and-deploy:
     runs-on: ubuntu-latest
