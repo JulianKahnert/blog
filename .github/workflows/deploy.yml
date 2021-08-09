@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - author
+      - testing # TODO: remove this
 
 jobs:
   build-and-deploy:
