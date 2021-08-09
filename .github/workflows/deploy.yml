@@ -32,6 +32,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Debugging Step ONE
+        run: |
+          echo "$(pwd)"
+          ls -lah .
+
       - name: Build Publish
         run: |
           git clone https://github.com/JohnSundell/Publish.git
@@ -44,11 +49,8 @@ jobs:
 
       - name: Debugging Step
         run: |
-          which git
           echo "$(pwd)"
-          ls -lah ..
           ls -lah .
-          ls -lah Output
           git init
 
       - name: Build and Deploy
