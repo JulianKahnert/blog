@@ -1,0 +1,272 @@
+/**
+*  Publish Foundation theme
+*  Copyright (c) John Sundell 2019
+*  MIT license, see LICENSE file for details
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Lato, Helvetica, Arial;
+}
+
+body {
+    background: #fff;
+    color: #000;
+    text-align: center;
+}
+
+.wrapper {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px 40px 10px 40px;
+    text-align: left;
+}
+
+header {
+/*    background-color: #eee;*/
+/*    border-bottom: solid 1px;*/
+/*    width: 85%;*/
+/*    margin: auto;*/
+}
+
+hr {
+    width: 85%;
+    margin: auto;
+    opacity: 0.4;
+}
+
+header .wrapper {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+header a {
+    text-decoration: none;
+}
+
+header .site-name {
+    color: #000;
+    font-weight: bold;
+    font-size: 4rem;
+}
+
+nav {
+    margin-top: 10px;
+    opacity: 0.4;
+}
+
+nav li {
+    display: inline-block;
+    margin: 0 7px;
+    font-size: 1.3rem;
+/*    line-height: 2rem;*/
+}
+
+nav li a.selected {
+    text-decoration: underline;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+h2 {
+    margin: 20px 0;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+a {
+    color: inherit;
+}
+
+.description {
+    margin-bottom: 40px;
+}
+
+.item-list .metadata-header {
+    opacity: 0.5;
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.item-list > li {
+    display: block;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #eee;
+    margin-bottom: 20px;
+}
+
+.item-list > li:last-child {
+    margin-bottom: 0;
+}
+
+.item-list h1 {
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+
+.item-list p {
+    margin-bottom: 10px;
+}
+
+.tag-list {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.tag-list li,
+.tag {
+    display: inline-block;
+    background-color: #000;
+    color: #eee;
+    padding: 4px 6px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.tag-list a,
+.tag a {
+    text-decoration: none;
+}
+
+.item-page .tag-list {
+    display: inline-block;
+}
+
+.content {
+    margin-bottom: 40px;
+}
+
+.content ol,
+.content ul {
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+.browse-all {
+    display: block;
+    margin-bottom: 30px;
+}
+
+.all-tags li {
+    font-size: 1.4rem;
+    padding: 6px 10px;
+    margin: 5px 5px;
+}
+
+footer {
+    color: #8a8a8a;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.rounded-circle {
+    border-radius: 50%!important;
+    max-width: 200px;
+}
+
+.social-icon {
+    margin: 0 5px;
+    filter: invert(57%) sepia(16%) saturate(13%) hue-rotate(13deg) brightness(93%) contrast(90%);
+}
+
+figcaption {
+    margin: 15px 30px;
+    opacity: 0.5;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #222;
+    }
+
+    body,
+    header .site-name {
+        color: #eee;
+    }
+
+    .item-list > li {
+        background-color: #333;
+    }
+
+/*    header {*/
+/*        background-color: #000;*/
+/*    }*/
+}
+
+@media(max-width: 600px) {
+    .wrapper {
+        padding: 40px 20px;
+    }
+}
+
+div .tag-red,
+.tag .tag-red {
+    background-color: rgb(255, 59, 48)
+}
+
+div .tag-orange,
+.tag .tag-orange {
+    background-color: rgb(255, 149, 0)
+}
+
+div .tag-blue,
+.tag .tag-blue {
+    background-color: rgb(0, 122, 255)
+}
+
+div .tag-green,
+.tag .tag-green {
+    background-color: rgb(52, 199, 89)
+}
+
+div .tag-indigo,
+.tag .tag-indigo {
+    background-color: rgb(88, 86, 214)
+}
+
+@media (prefers-color-scheme: dark) {
+    div .tag-red,
+    .tag .tag-red {
+        background-color: rgb(255, 69, 58)
+    }
+
+    div .tag-orange,
+    .tag .tag-orange {
+        background-color: rgb(255, 159, 10)
+    }
+
+    div .tag-blue,
+    .tag .tag-blue {
+        background-color: rgb(10, 132, 255)
+    }
+
+    div .tag-green,
+    .tag .tag-green {
+        background-color: rgb(48, 209, 88)
+    }
+
+    div .tag-indigo,
+    .tag .tag-indigo {
+        background-color: rgb(94, 92, 230)
+    }
+}
