@@ -60,7 +60,7 @@ jobs:
           name: site
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.3.2
+        uses: JamesIves/github-pages-deploy-action@v4.3.4
         with:
           folder: .
           branch: main
