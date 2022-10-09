@@ -42,7 +42,6 @@ jobs:
         run: publish generate
 
       - name: Upload Artifacts 🔺 # The project is then uploaded as an artifact named 'site'.
-
         uses: actions/upload-artifact@v3
         with:
           name: site
