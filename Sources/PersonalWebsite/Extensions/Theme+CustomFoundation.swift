@@ -252,6 +252,7 @@ private extension Node where Context == HTML.BodyContext {
             .unwrap(site as? PersonalWebsite) { site in
                 .p(
                     .a(.class("social-icon"), .target(.blank), .href("/feed.rss"), .img(.src("/img/logo-rss.svg"))),
+                    .a(.class("social-icon"), .target(.blank), .attribute(named: "rel", value: "me"), .href(site.mastodonURL.absoluteString), .img(.src("/img/logo-mastodon.svg"))),
                     .a(.class("social-icon"), .target(.blank), .href(site.twitterURL.absoluteString), .img(.src("/img/logo-twitter.svg"))),
                     .a(.class("social-icon"), .target(.blank), .href(site.githubURL.absoluteString), .img(.src("/img/logo-github.svg"))),
                     .a(.class("social-icon"), .target(.blank), .href(site.xingURL.absoluteString), .img(.src("/img/logo-xing.svg")))
