@@ -131,6 +131,10 @@ a {
     justify-content: flex-end;
 }
 
+.verification-links {
+    display: none;
+}
+
 .tag-list li,
 .tag {
     display: inline-block;

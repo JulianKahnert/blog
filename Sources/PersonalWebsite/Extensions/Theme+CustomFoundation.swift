@@ -242,6 +242,13 @@ private extension Node where Context == HTML.BodyContext {
 
     static func footer<T: Website>(for site: T) -> Node {
         return .footer(
+            .div(
+                .class("verification-links"),
+                 .a(
+                    .attribute(named: "rel", value: "me"),
+                    .href("https://chaos.social/@jtk"),
+                    .text("Mastodon"))
+            ),
             .p(
                 .text("Generated using "),
                 .a(
