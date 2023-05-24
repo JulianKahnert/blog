@@ -156,6 +156,8 @@ a {
 
 .content {
     margin-bottom: 40px;
+    font-size: 1.05em;
+    line-height: 1.5;
 }
 
 .content ol,
