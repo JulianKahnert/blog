@@ -59,7 +59,7 @@ jobs:
           path: Output
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
 
   purge-cache:
     needs: build
