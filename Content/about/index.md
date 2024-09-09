@@ -25,4 +25,12 @@ I would love to get in touch with you.
 Whether it is feedback, some more/deeper information or critic.
 Just get in touch and let me know! 🙃
 
-You can contact me via [Twitter](https://twitter.com/JulianKahnert), [Xing](https://www.xing.com/profile/Julian_Kahnert) or [Mail](mailto:mail@juliankahnert.de).
+You can contact me via [Mastodon](https://chaos.social/@jtk), [LinkedIn](https://www.linkedin.com/in/julian-kahnert-6b08071b4/) or [Mail](mailto:mail@juliankahnert.de).
+
+
+## Legal Stuff (Imprint)
+
+Julian Kahnert<br>
+Postfach 53 29<br>
+26043 Oldenburg<br>
+Germany
