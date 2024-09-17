@@ -8,7 +8,6 @@ open Package.swift
 publish run
 ```
 
-
 ### Thanks
 
 * [JohnSundell Publish](https://github.com/johnsundell/publish)
