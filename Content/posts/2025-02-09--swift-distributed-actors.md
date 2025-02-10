@@ -11,12 +11,16 @@ I created a proof of concept with the basic concepts and documented my learnings
 
 ## Introduction
 
-The Swift programming language includes the [Actor](https://developer.apple.com/documentation/swift/actor) language feature, which is a reference type that protects its mutable state by ensuring that its properties and methods are accessed only from a single thread at a time. This prevents data races in concurrent code.
-The [Distributed](https://developer.apple.com/documentation/Distributed) framework enables the creation of distributed actors that can communicate across process or network boundaries, allowing for scalable and secure distributed systems.
+The Swift programming language includes the [Actor](https://developer.apple.com/documentation/swift/actor) language feature, which is a reference type that protects its mutable state by ensuring that its properties and methods are accessed only from a single thread at a time.
+This prevents data races in concurrent code.
+
+The [`distributed actor`](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0336-distributed-actor-isolation.md) language feature is based on this and has [location transparency](https://en.wikipedia.org/wiki/Location_transparency) as its goal.
+The focus here is on the resources (the implementation of a distributed actor) instead of the location/implementation where it is located in a distributed system.
 In this blog post, I don’t want to simply copy the [documentation](https://swiftpackageindex.com/apple/swift-distributed-actors/main/documentation/distributedcluster), but instead provide a hands-on example.
 
 Let’s assume we have a macOS Catalyst app and a Vapor server that need to communicate with each other.
-Each component should push information (e.g., events and commands) to the other.
+In the context of this blog post, we assume that both components are running permanently and should be statically connected to each other and therefore the use of distributed actors can be useful.
+Each component should send information (e.g. events and commands) to the other.
 We will break down the following sequence of events and clarify each step:
 
 [//]: #```mermaid
@@ -118,6 +122,7 @@ In [this example repo](https://github.com/JulianKahnert/DistributedHomeAutomatio
 Thank you for reading! I’m looking forward to your feedback.
 
 ## Useful Links
+
 *	The different repositories of [Jaleel on GitHub](https://github.com/akbashev)
 *	[GitHub Repo with Spike](https://github.com/younata/DistributedClusterSpike/) from Rachel
 *	Basic Concepts: [DistributedCluster Documentation](https://swiftpackageindex.com/apple/swift-distributed-actors/main/documentation/distributedcluster)
