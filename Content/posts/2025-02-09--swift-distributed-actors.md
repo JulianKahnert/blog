@@ -1,5 +1,5 @@
 ---
-date: 2025-05-09 00:00
+date: 2025-02-09 00:00
 title: Swift Distributed Actors
 description: Hands on example with macOS catalyst App and a local Vapor server.
 shouldSkip: false
