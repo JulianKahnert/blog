@@ -1,6 +1,6 @@
 //
 //  CustomFoundationTheme.swift
-//  
+//
 //
 //  Created by Julian Kahnert on 28.01.21.
 //
@@ -125,13 +125,13 @@ private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
                     .ul(
                         .class("all-tags"),
                         .forEach(page.tags.sorted()) { tag in
-                            .li(
-                                .class("tag \(TagColor.getColorClass(for: tag.string).cssClass)"),
-                                .a(
-                                    .href(context.site.path(for: tag)),
-                                    .text(tag.string)
+                                .li(
+                                    .class("tag \(TagColor.getColorClass(for: tag.string).cssClass)"),
+                                    .a(
+                                        .href(context.site.path(for: tag)),
+                                        .text(tag.string)
+                                    )
                                 )
-                            )
                         }
                     )
                 ),
@@ -191,11 +191,11 @@ private extension Node where Context == HTML.BodyContext {
                 .if(sectionIDs.count > 1,
                     .nav(
                         .ul(.forEach(sectionIDs) { section in
-                            .li(.a(
-                                .class(section == selectedSection ? "selected" : ""),
-                                .href(context.sections[section].path),
-                                .text(context.sections[section].title)
-                            ))
+                                .li(.a(
+                                    .class(section == selectedSection ? "selected" : ""),
+                                    .href(context.sections[section].path),
+                                    .text(context.sections[section].title)
+                                ))
                         })
                     )
                 )
@@ -213,30 +213,30 @@ private extension Node where Context == HTML.BodyContext {
         return .ul(
             .class("item-list"),
             .forEach(items) { item in
-                .li(.article(
-                    .div(
-                        .class("metadata-header"),
-                        .span(.text(formatter.string(from: item.date))),
-                        .unwrap(item.readingTime.minutes, { .span("\($0) min") })
-                    ),
-                    .h1(.a(
-                        .href(item.path),
-                        .text(item.title)
-                    )),
-                    .p(.text(item.description)),
-                    .tagList(for: item, on: site)
-                ))
+                    .li(.article(
+                        .div(
+                            .class("metadata-header"),
+                            .span(.text(formatter.string(from: item.date))),
+                            .unwrap(item.readingTime.minutes, { .span("\($0) min") })
+                        ),
+                        .h1(.a(
+                            .href(item.path),
+                            .text(item.title)
+                        )),
+                        .p(.text(item.description)),
+                        .tagList(for: item, on: site)
+                    ))
             }
         )
     }
 
     static func tagList<T: Website>(for item: Item<T>, on site: T) -> Node {
         return .ul(.class("tag-list"), .forEach(item.tags.sorted { $0.string < $1.string }) { tag in
-            .li(.class(TagColor.getColorClass(for: tag.string).cssClass),
-                .a(
-                    .href(site.path(for: tag)),
-                    .text(tag.string)
-            ))
+                .li(.class(TagColor.getColorClass(for: tag.string).cssClass),
+                    .a(
+                        .href(site.path(for: tag)),
+                        .text(tag.string)
+                    ))
         })
     }
 
@@ -244,30 +244,26 @@ private extension Node where Context == HTML.BodyContext {
         return .footer(
             .div(
                 .class("verification-links"),
-                 .a(
+                .a(
                     .attribute(named: "rel", value: "me"),
                     .href("https://chaos.social/@jtk"),
                     .text("Mastodon"))
             ),
-            .p(
-                .text("Generated using "),
-                .a(
-                    .text("Publish"),
-                    .href("https://github.com/johnsundell/publish")
-                )
-            ),
             .unwrap(site as? PersonalWebsite) { site in
-                .p(
-                    .a(.class("social-icon"), .target(.blank), .href("/feed.xml"), .img(.src("/img/logo-rss.svg"))),
-                    .a(.class("social-icon"), .target(.blank), .href(site.mastodonURL.absoluteString), .img(.src("/img/logo-mastodon.svg"))),
-                    .a(.class("social-icon"), .target(.blank), .href(site.githubURL.absoluteString), .img(.src("/img/logo-github.svg"))),
-                    .a(.class("social-icon"), .target(.blank), .href(site.linkedInURL.absoluteString), .img(.src("/img/logo-linkedin.svg")))
-                )
-            }
+                    .p(
+                        .a(.class("social-icon"), .target(.blank), .href("/feed.xml"), .img(.src("/img/logo-rss.svg"))),
+                        .a(.class("social-icon"), .target(.blank), .href(site.mastodonURL.absoluteString), .img(.src("/img/logo-mastodon.svg"))),
+                        .a(.class("social-icon"), .target(.blank), .href(site.githubURL.absoluteString), .img(.src("/img/logo-github.svg"))),
+                        .a(.class("social-icon"), .target(.blank), .href(site.linkedInURL.absoluteString), .img(.src("/img/logo-linkedin.svg")))
+                    )
+            },
+            .p(
+                .a(.class("legal-link"), .text("Privacy"), .href("/privacy")),
+                .a(.class("legal-link"), .text("Imprint"), .href("/imprint"))
+            )
         )
     }
 }
-
 
 public extension Node where Context == HTML.DocumentContext {
     /// Add an HTML `<head>` tag within the current context, based
@@ -311,7 +307,7 @@ public extension Node where Context == HTML.DocumentContext {
             .title(title),
             .description(description),
             .unwrap(site.imagePath?.absoluteString) { path in
-                .meta(.name("og:image"), .content(path + "favicon.png"))
+                    .meta(.name("og:image"), .content(path + "favicon.png"))
             },
             .twitterCardType(location.imagePath == nil ? .summary : .summaryLargeImage),
             .forEach(stylesheetPaths, { .stylesheet($0) }),
@@ -329,7 +325,7 @@ public extension Node where Context == HTML.DocumentContext {
     }
 }
 //
-//public extension Node where Context == HTML.HeadContext {
+// public extension Node where Context == HTML.HeadContext {
 //    /// Link the HTML page to an external CSS stylesheet.
 //    /// - parameter path: The absolute path of the stylesheet to link to.
 //    static func stylesheet(_ path: Path) -> Node {
@@ -341,9 +337,9 @@ public extension Node where Context == HTML.DocumentContext {
 //    static func favicon(_ favicon: Favicon) -> Node {
 //        .favicon(favicon.path.absoluteString, type: favicon.type)
 //    }
-//}
+// }
 //
-//public extension Node where Context: HTML.BodyContext {
+// public extension Node where Context: HTML.BodyContext {
 //    /// Render a location's `Content.Body` as HTML within the current context.
 //    /// - parameter body: The body to render.
 //    static func contentBody(_ body: Content.Body) -> Node {
@@ -390,25 +386,25 @@ public extension Node where Context == HTML.DocumentContext {
 //            return .iframeVideoPlayer(forURL: url)
 //        }
 //    }
-//}
+// }
 //
-//public extension Node where Context: HTMLLinkableContext {
+// public extension Node where Context: HTMLLinkableContext {
 //    /// Assign a path to link the element to, using its `href` attribute.
 //    /// - parameter path: The absolute path to assign.
 //    static func href(_ path: Path) -> Node {
 //        .href(path.absoluteString)
 //    }
-//}
+// }
 //
-//public extension Attribute where Context: HTMLSourceContext {
+// public extension Attribute where Context: HTMLSourceContext {
 //    /// Assign a source to the element, using its `src` attribute.
 //    /// - parameter path: The source path to assign.
 //    static func src(_ path: Path) -> Attribute {
 //        .src(path.absoluteString)
 //    }
-//}
+// }
 //
-//internal extension Node where Context: RSSItemContext {
+// internal extension Node where Context: RSSItemContext {
 //    static func guid<T>(for item: Item<T>, site: T) -> Node {
 //        return .guid(
 //            .text(item.rssProperties.guid ?? site.url(for: item).absoluteString),
@@ -452,9 +448,9 @@ public extension Node where Context == HTML.DocumentContext {
 //
 //        return content(html)
 //    }
-//}
+// }
 //
-//internal extension Node where Context == PodcastFeed.ItemContext {
+// internal extension Node where Context == PodcastFeed.ItemContext {
 //    static func duration(_ duration: Audio.Duration) -> Node {
 //        return .duration(
 //            hours: duration.hours,
@@ -462,9 +458,9 @@ public extension Node where Context == HTML.DocumentContext {
 //            seconds: duration.seconds
 //        )
 //    }
-//}
+// }
 //
-//private extension Node where Context: HTML.BodyContext {
+// private extension Node where Context: HTML.BodyContext {
 //    static func iframeVideoPlayer(forURL url: String) -> Node {
 //        return .iframe(
 //            .frameborder(false),
@@ -473,4 +469,4 @@ public extension Node where Context == HTML.DocumentContext {
 //            .src(url)
 //        )
 //    }
-//}
+// }

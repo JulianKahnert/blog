@@ -22,7 +22,7 @@ struct PersonalWebsite: Website {
     var imagePath: Path? { "img/memoji.png" }
     var favicon: Favicon? { Favicon(path: "img/favicon.png", type: "image/png") }
     var tagHTMLConfig: TagHTMLConfiguration? { .default }
-    
+
     // swiftlint:disable force_unwrapping
     let mastodonURL = URL(string: "https://chaos.social/@jtk")!
     let twitterURL = URL(string: "https://twitter.com/JulianKahnert")!

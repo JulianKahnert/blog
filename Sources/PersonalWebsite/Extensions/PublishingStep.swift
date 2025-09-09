@@ -9,18 +9,17 @@ import Foundation
 import Publish
 
 extension PublishingStep {
-    
+
     /// Copy the "Resources" folder to the "Output" folder.
     static func copyAllResources() -> Self {
         step(named: "Copy all resources") { context in
             let resourcesfolder = try context.folder(at: "Resources")
             let outputfolder = try context.folder(at: "Output")
-            
+
             try copyFolder(from: resourcesfolder.url, to: outputfolder.url)
         }
     }
 }
-
 
 private func copyFolder(from sourceURL: URL, to destinationURL: URL) throws {
     let fileManager = FileManager.default
@@ -49,4 +48,3 @@ private func copyFolder(from sourceURL: URL, to destinationURL: URL) throws {
         }
     }
 }
-

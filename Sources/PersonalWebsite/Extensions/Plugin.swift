@@ -31,7 +31,7 @@ extension Plugin {
             }
         }
     }
-    
+
     static var removeShouldSkipItems: Self {
         Plugin(name: "Remove all items that contain a true shouldSkip metadata flag") { context in
             context.mutateAllSections { section in
