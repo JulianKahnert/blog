@@ -12,7 +12,7 @@ import ReadingTimePublishPlugin
 
 try PersonalWebsite().publish(using: [
     .installPlugin(.splash(withClassPrefix: "")),
-    .copyResources(),
+    .copyAllResources(),
     .copyFiles(at: "root-resources"),
     .addMarkdownFiles(),
     .sortItems(by: \.date, order: .descending),

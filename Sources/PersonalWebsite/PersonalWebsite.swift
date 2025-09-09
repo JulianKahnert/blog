@@ -27,5 +27,5 @@ struct PersonalWebsite: Website {
     let mastodonURL = URL(string: "https://chaos.social/@jtk")!
     let twitterURL = URL(string: "https://twitter.com/JulianKahnert")!
     let githubURL = URL(string: "https://github.com/JulianKahnert")!
-    let xingURL = URL(string: "https://www.xing.com/profile/Julian_Kahnert")!
+    let linkedInURL = URL(string: "https://www.linkedin.com/in/julian-kahnert-6b08071b4/")!
 }

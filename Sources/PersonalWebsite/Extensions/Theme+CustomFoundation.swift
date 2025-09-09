@@ -258,11 +258,10 @@ private extension Node where Context == HTML.BodyContext {
             ),
             .unwrap(site as? PersonalWebsite) { site in
                 .p(
-                    .a(.class("social-icon"), .target(.blank), .href("/feed.rss"), .img(.src("/img/logo-rss.svg"))),
+                    .a(.class("social-icon"), .target(.blank), .href("/feed.xml"), .img(.src("/img/logo-rss.svg"))),
                     .a(.class("social-icon"), .target(.blank), .href(site.mastodonURL.absoluteString), .img(.src("/img/logo-mastodon.svg"))),
-                    .a(.class("social-icon"), .target(.blank), .href(site.twitterURL.absoluteString), .img(.src("/img/logo-twitter.svg"))),
                     .a(.class("social-icon"), .target(.blank), .href(site.githubURL.absoluteString), .img(.src("/img/logo-github.svg"))),
-                    .a(.class("social-icon"), .target(.blank), .href(site.xingURL.absoluteString), .img(.src("/img/logo-xing.svg")))
+                    .a(.class("social-icon"), .target(.blank), .href(site.linkedInURL.absoluteString), .img(.src("/img/logo-linkedin.svg")))
                 )
             }
         )
