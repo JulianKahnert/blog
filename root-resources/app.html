@@ -8,10 +8,10 @@
                 navigator.userAgent || navigator.vendor || window.opera;
             if (/android/i.test(userAgent)) {
                 window.location.href =
-                    "https://apps.apple.com/de/app/ewe-go/id1632031984";
+                    "https://play.google.com/store/apps/details?id=de.ewe.go.app";
             } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                 window.location.href =
-                    "https://play.google.com/store/apps/details?id=de.ewe.go.app";
+                    "https://apps.apple.com/de/app/ewe-go/id1632031984";
             } else {
                 window.location.href = "https://app.ewe-go.de"; // Fallback
             }
