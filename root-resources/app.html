@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <title>EWE Go App</title>
+        <script>
+            const userAgent =
+                navigator.userAgent || navigator.vendor || window.opera;
+            if (/android/i.test(userAgent)) {
+                window.location.href =
+                    "https://apps.apple.com/de/app/ewe-go/id1632031984";
+            } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                window.location.href =
+                    "https://play.google.com/store/apps/details?id=de.ewe.go.app";
+            } else {
+                window.location.href = "https://app.ewe-go.de"; // Fallback
+            }
+        </script>
+    </head>
+    <body></body>
+</html>
