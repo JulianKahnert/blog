@@ -25,13 +25,13 @@ In diesem Blogpost erfährst du, wie du diese Funktion nutzen kannst, um deine P
 
 Der Quellcode der App ist auf [GitHub einsehbar](https://github.com/PDF-Archiver/pdf-archiver), wodurch Entwickler und interessierte Nutzer den Code einsehen, Forks erstellen und zur Weiterentwicklung beitragen können.
 Dieses neue Feature, das es ermöglicht, den Archivordner zu teilen, wurde von [Robert Hahn](https://github.com/Maschina) entwickelt, der einen Pull Request eingereicht hat, um die Funktion in PDF Archiver zu integrieren.
-Ich möchte Robert für seine Beitrag danken und freue mich die *OpenSource* Aspekte des Projektes weiter mit Leben zu füllen.
+Ich möchte Robert für seinen Beitrag danken und freue mich die *OpenSource* Aspekte des Projektes weiter mit Leben zu füllen.
 
 ## Sicherheitshinweis
 
 Bevor du Änderungen an deinem Archiv vornimmst, ist es ratsam, ein Backup deiner Daten zu erstellen.
 Dadurch kannst du sicherstellen, dass deine wertvollen Dokumente geschützt sind.
-Grundsätlich sollten Backups in regelmäßigen Abständen erstellt werden, um potenziellen Datenverlust zu vermeiden.
+Grundsätzlich sollten Backups in regelmäßigen Abständen erstellt werden, um potenziellen Datenverlust zu vermeiden.
 
 ## Fazit
 

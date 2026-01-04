@@ -12,10 +12,10 @@ Nice to have you here! 👐
 
 And now I should say something about me ... I guess 🤓 ... I'm interested in podcasts, music, cooking and of course programming.
 
-Most of my projects can be found an [GitHub](https://github.com/JulianKahnert).
+Most of my projects can be found on [GitHub](https://github.com/JulianKahnert).
 Currently [Swift](https://swift.org) is my first choice! 🤓
 
-In the last years I also started using Kubernetes, Helm and some the other nice little helpers in the DevOps corner of GitHub.
+In the last years I also started using Kubernetes, Helm and some of the other nice little helpers in the DevOps corner of GitHub.
 
 In my spare time I develop [PDF Archiver](http://ios.pdf-archiver.io).
 An iOS & macOS App that helps you to scan 🔎 and organize 🗃 your documents.

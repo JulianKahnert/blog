@@ -1,7 +1,7 @@
 ---
 date: 2018-03-03 00:00
 title: PDF Archiver
-description: In this blogpost we will discuss the nameing convention and background of PDF Archiver. A tool for tagging files and archiving tasks.
+description: In this blogpost we will discuss the naming convention and background of PDF Archiver. A tool for tagging files and archiving tasks.
 tags: pdfarchiver
 ---
 

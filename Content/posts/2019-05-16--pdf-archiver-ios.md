@@ -83,7 +83,7 @@ So all you have to do is enter a description and click save (or `⌘ s` 😊).
 The automatic date and tag suggestions were the basis for the next step of the [PDF Archiver Project](http://github.com/pdf-Archiver/).
 The iPhone has a smaller display (compared to Macs), but we always carry it with us.
 I'm very happy to announce that there will be an iOS version of PDF Archiver soon.
-With it the slogan **"Scan it. Day it. Find it."** now finally is fully reached!
+With it the slogan **"Scan it. Tag it. Find it."** now finally is fully reached!
 
 ### Scan it.
 New documents can be easily scanned.
