@@ -10,7 +10,7 @@ The last time someone asked _My internet is broken, can you help me?_ I thought 
 
 In this post I want to show some tips and tricks on how to find common networking problems.
 
-When I approach a networking problem, I try to get some structure in my debugging workingflow by using the [OSI model](https://en.wikipedia.org/wiki/OSI_model).
+When I approach a networking problem, I try to get some structure in my debugging workflow by using the [OSI model](https://en.wikipedia.org/wiki/OSI_model).
 We will have a look at each layer and try to isolate the problem layer by layer.
 
 ## OSI layers
@@ -29,18 +29,18 @@ It is intended to be a short checklist and therefore does not include more in-de
 
 ### **3** Network
 
-- Is the cloudflare namesever reachable: `ping 1.1` (aka. `ping 1.0.0.1`)
+- Is the cloudflare nameserver reachable: `ping 1.1` (aka. `ping 1.0.0.1`)
 - Do I have the right `IP address`?
-  - `169.254.0.0/16` are link local addresses ([RFC5735](https://datatracker.ietf.org/doc/html/rfc5735)) that might be self assigned by your machine -> DHCP servier not reachable.
+  - `169.254.0.0/16` are link local addresses ([RFC5735](https://datatracker.ietf.org/doc/html/rfc5735)) that might be self assigned by your machine -> DHCP server not reachable.
   - IP address of guest network?
 
 ### **4-7** Transport, Session, Presentation, Application
 
 - Is the DNS resolution working properly?
   - Get DNS record `$ dig A juliankahnert.de`
-  - Ask a specific namesever: `$ dig A juliankahnert.de @1.1`
+  - Ask a specific nameserver: `$ dig A juliankahnert.de @1.1`
 - Response correct (HTTP status code etc.) `$ curl -I http://juliankahnert.de`
-- Validate the [certifcate](https://serverfault.com/a/749381):
+- Validate the [certificate](https://serverfault.com/a/749381):
   `$ curl --insecure -vvI https://juliankahnert.de/ 2>&1 | awk 'BEGIN { cert=0 } /^\* SSL connection/ { cert=1 } /^\*/ { if (cert) print }'`
 
 ## Other Use Cases
@@ -52,7 +52,7 @@ This can reveal the hoster (e.g. _Hetzner_ or _Uberspace_).
 
 ### Where can I change the DNS records?
 
-You might have more than one registrar and want to find to namesever responsible for a (sub)domain.
+You might have more than one registrar and want to find to nameserver responsible for a (sub)domain.
 
 ```
 $ dig NS juliankahnert.de
@@ -67,7 +67,7 @@ If you have changed DNS records and you can clear the cache of some nameservers:
 - [Cloudflare](https://1.1.1.1/purge-cache/)
 - [Google](https://developers.google.com/speed/public-dns/cache)
 
-You can use a [DNS Checker](https://dnschecker.org) to valide DNS changes.
+You can use a [DNS Checker](https://dnschecker.org) to validate DNS changes.
 
 Tip: Set a short DNS record TTL some time before you make changes. This will speed up the DNS propagation and your testing afterwards.
 
