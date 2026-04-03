@@ -1,6 +1,7 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
-    "github>worldiety/renovate-config:automerge-minor-updates"
+    "config:recommended",
+    "group:all"
   ]
 }
