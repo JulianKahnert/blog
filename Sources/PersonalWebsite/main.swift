@@ -23,6 +23,7 @@ try PersonalWebsite().publish(using: [
                      config: .init(targetPath: "feed.xml")),
     .generateHTML(withTheme: .customFoundation),
     .generateSiteMap(),
+    .installPlugin(.addStandalonePagesToSiteMap(["codereview"])),
     .installPlugin(.addLegacyRedirectsHTML),
     .installPlugin(.generateCNAME(with: "juliankahnert.de")),
     .deploy(using: .gitHub("JulianKahnert/blog", branch: "main"))

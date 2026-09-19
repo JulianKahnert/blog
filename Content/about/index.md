@@ -21,6 +21,9 @@ In my spare time I develop [PDF Archiver](http://ios.pdf-archiver.io).
 An iOS & macOS App that helps you to scan 🔎 and organize 🗃 your documents.
 You can find the background story of the project in [this blogpost](https://juliankahnert.de/posts/2018-03-03--pdf-archiver/).
 
+I also build [CodeReview](/codereview/).
+A macOS app that makes your code reviews faster and more thorough ⌨️ — it walks you through every hunk one keystroke at a time, so nothing gets skimmed past.
+
 I would love to get in touch with you.
 Whether it is feedback, some more/deeper information or critic.
 Just get in touch and let me know! 🙃

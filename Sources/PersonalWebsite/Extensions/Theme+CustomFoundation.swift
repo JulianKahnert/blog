@@ -190,13 +190,18 @@ private extension Node where Context == HTML.BodyContext {
                 .a(.class("site-name"), .href("/"), .text(context.site.name)),
                 .if(sectionIDs.count > 1,
                     .nav(
-                        .ul(.forEach(sectionIDs) { section in
+                        .ul(
+                            .forEach(sectionIDs) { section in
                                 .li(.a(
                                     .class(section == selectedSection ? "selected" : ""),
                                     .href(context.sections[section].path),
                                     .text(context.sections[section].title)
                                 ))
-                        })
+                            },
+                            // Standalone page copied from `root-resources`, so it has no
+                            // SectionID the loop above could pick up.
+                            .li(.a(.href("/codereview/"), .text("Code Review")))
+                        )
                     )
                 )
             )

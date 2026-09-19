@@ -32,6 +32,24 @@ extension Plugin {
         }
     }
 
+    /// Pages copied verbatim from `root-resources` are invisible to `generateSiteMap`,
+    /// which only walks the sections Publish generated itself.
+    static func addStandalonePagesToSiteMap(_ paths: [String]) -> Self {
+        Plugin(name: "Add standalone pages to the site map") { context in
+            let siteMap = try context.outputFile(at: "sitemap.xml")
+            let entries = paths.map { path in
+                "<url><loc>\(context.site.url.absoluteString)/\(path)/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>"
+            }.joined()
+
+            let contents = try siteMap.readAsString()
+            guard contents.contains("</urlset>") else {
+                throw PublishingError(path: "sitemap.xml",
+                                      infoMessage: "Site map has no closing urlset tag.")
+            }
+            try siteMap.write(contents.replacingOccurrences(of: "</urlset>", with: entries + "</urlset>"))
+        }
+    }
+
     static var removeShouldSkipItems: Self {
         Plugin(name: "Remove all items that contain a true shouldSkip metadata flag") { context in
             context.mutateAllSections { section in

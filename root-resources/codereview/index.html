@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CodeReview — keyboard-first diff review for macOS</title>
+<meta name="description" content="Read every hunk of your working tree or a pull request without touching the mouse — and write the finding down where the fix has to happen.">
+<link rel="canonical" href="https://juliankahnert.de/codereview/">
+<link rel="shortcut icon" href="/img/favicon.png" type="image/png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ju ka">
+<meta property="og:url" content="https://juliankahnert.de/codereview/">
+<meta property="og:title" content="CodeReview — keyboard-first diff review for macOS">
+<meta property="og:description" content="Read every hunk of your working tree or a pull request without touching the mouse — and write the finding down where the fix has to happen.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CodeReview — keyboard-first diff review for macOS">
+<meta name="twitter:description" content="Read every hunk of your working tree or a pull request without touching the mouse — and write the finding down where the fix has to happen.">
+<!-- TODO: add a 1200x630 app screenshot as og:image / twitter:image and switch the card to
+     summary_large_image — until then every share renders without a preview picture. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CodeReview",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "macOS 26 or later",
+  "url": "https://juliankahnert.de/codereview/",
+  "downloadUrl": "https://testflight.apple.com/join/bJQhUAFQ",
+  "description": "Read every hunk of your working tree or a pull request without touching the mouse — and write the finding down where the fix has to happen.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "author": { "@type": "Person", "name": "Julian Kahnert", "url": "https://juliankahnert.de" }
+}
+</script>
+<style>
+  :root{
+    /* Theme.Colors.light, read straight out of Theme.swift */
+    --pane:        #FFFFFF;
+    --sidebar:     #F6F8FA;
+    --hunk-bg:     #EFF2F5;
+    --hunk-fg:     #57606A;
+    --ink:         #1F2328;
+    --secondary:   #57606A;
+    --keycap-bg:   #E6EAEF;
+    --add-bg:      #DAFBE1;
+    --add-strong:  #1A7F37;
+    --del-bg:      #FFEBE9;
+    --del-strong:  #CF222E;
+    --mod-strong:  #9A6700;
+    --moved-strong:#8250DF;
+    --syn-comment: #57606A;
+    --focus:       #0A84FF;
+    --focus-tint:  rgba(10,132,255,0.16);
+    --backdrop:    #DBE0E5;
+    --border:      #D8DEE4;
+
+    --sans:  -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono:  ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html, body{ height:100%; overflow:hidden; }
+
+  body{
+    margin:0;
+    background:var(--backdrop);
+    color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px 16px;
+  }
+
+  .mono{ font-family:var(--mono); }
+  svg{ display:block; }
+
+  a{ color:var(--focus); }
+  a:hover{ color:var(--ink); }
+  button{ font:inherit; color:inherit; }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--focus);
+    outline-offset:2px;
+    border-radius:3px;
+  }
+
+  /* ================= the window ================= */
+
+  .window{
+    width:100%;
+    max-width:960px;
+    height:min(700px, calc(100vh - 56px));
+    background:var(--pane);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 6px 20px rgba(31,35,40,0.24);
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* -- unified toolbar: traffic lights inset over the sidebar's own width -- */
+
+  .toolbar{
+    flex:none;
+    display:flex;
+    border-bottom:1px solid var(--border);
+    background:var(--sidebar);
+  }
+  .toolbar-left{
+    width:220px;
+    flex:none;
+    display:flex;
+    align-items:center;
+    padding-left:16px;
+  }
+  .traffic{ display:flex; gap:8px; }
+  .traffic span{ width:11px; height:11px; border-radius:50%; display:inline-block; }
+  .traffic .r{ background:#FF5F57; }
+  .traffic .y{ background:#FEBC2E; }
+  .traffic .g{ background:#28C840; }
+
+  .toolbar-right{
+    flex:1;
+    min-width:0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:11px 18px;
+    border-left:1px solid var(--border);
+    background:var(--pane);
+  }
+  .tb-info{ display:flex; align-items:center; gap:10px; min-width:0; }
+  .tb-icon{ flex:none; width:26px; height:26px; border-radius:50%; background:var(--keycap-bg); display:flex; align-items:center; justify-content:center; }
+  .tb-text{ min-width:0; }
+  .tb-title{ margin:0; font-size:14px; font-weight:650; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .tb-sub{ font-size:12px; color:var(--secondary); margin-top:1px; }
+
+  .tb-progress{ display:flex; align-items:center; gap:10px; flex:none; }
+  .tb-frac{ font-size:12px; color:var(--secondary); white-space:nowrap; }
+  .tb-bar{ width:70px; height:5px; border-radius:3px; background:var(--keycap-bg); overflow:hidden; }
+  .tb-bar-fill{ height:100%; background:var(--add-strong); width:0%; transition:width 0.35s ease; }
+  /* ================= body: sidebar + diff pane ================= */
+
+  .appbody{ flex:1; min-height:0; display:flex; }
+
+  .sidebar{
+    width:220px;
+    flex:none;
+    background:var(--sidebar);
+    border-right:1px solid var(--border);
+    padding:8px 0;
+    overflow-y:auto;
+  }
+  .frow-folder{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    height:24px;
+    padding-right:10px;
+    font-size:12.5px;
+    color:var(--secondary);
+    white-space:nowrap;
+  }
+  .frow-folder svg{ flex:none; opacity:0.7; }
+  .frow-folder .name{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; }
+
+  .frow{
+    all:unset;
+    box-sizing:border-box;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    width:100%;
+    height:24px;
+    padding-right:10px;
+    font-size:12.5px;
+    color:var(--secondary);
+    white-space:nowrap;
+    cursor:pointer;
+    border-radius:5px;
+  }
+  .frow .status{ flex:none; width:13px; font-family:var(--mono); font-weight:700; font-size:11.5px; text-align:center; }
+  .status-a{ color:var(--add-strong); }
+  .status-m{ color:var(--mod-strong); }
+  .status-r{ color:var(--moved-strong); }
+  .status-d{ color:var(--del-strong); }
+  .frow .name{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .frow .spacer{ flex:none; }
+  .frow:hover{ background:rgba(31,35,40,0.05); }
+  .frow.is-active{ background:var(--focus-tint); color:var(--ink); font-weight:600; }
+
+  .mark{ flex:none; width:12px; height:12px; }
+  .mark rect{ fill:none; stroke:var(--border); transition:stroke 0.2s, fill 0.2s; }
+  .mark path{ stroke:transparent; transition:stroke 0.2s; fill:none; stroke-width:1.4; }
+  .frow.is-viewed .mark rect{ fill:var(--add-strong); stroke:var(--add-strong); }
+  .frow.is-viewed .mark path{ stroke:#fff; }
+
+  [data-depth="0"]{ padding-left:14px; }
+  [data-depth="1"]{ padding-left:28px; }
+  [data-depth="2"]{ padding-left:42px; }
+
+  /* ================= diff column ================= */
+
+  .diffcol{ flex:1; min-width:0; position:relative; display:flex; flex-direction:column; }
+
+  .breadcrumb{
+    flex:none;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 16px;
+    background:var(--pane);
+    border-bottom:1px solid var(--border);
+    font-size:12.5px;
+    color:var(--secondary);
+  }
+  .breadcrumb .status{ font-family:var(--mono); font-weight:700; font-size:11.5px; }
+  .breadcrumb .path{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }
+  .breadcrumb .path b{ color:var(--ink); font-weight:600; }
+  .breadcrumb .spacer{ flex:1; }
+  .ctx-icons{ display:flex; gap:8px; flex:none; }
+  .ctx-icons svg{ opacity:0.55; }
+  .file-mark{ flex:none; width:13px; height:13px; margin-left:4px; }
+  .file-mark rect{ fill:none; stroke:var(--border); }
+
+  .diffpane{
+    flex:1;
+    min-height:0;
+    overflow-y:auto;
+    position:relative;
+    scroll-behavior:smooth;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .diffpane{ scroll-behavior:auto; }
+  }
+
+  .rename-note{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--moved-strong);
+    padding:8px 16px;
+    background:var(--hunk-bg);
+    border-bottom:1px solid var(--border);
+  }
+
+  .hunk-band{
+    font-family:var(--mono);
+    font-size:12px;
+    background:var(--hunk-bg);
+    color:var(--hunk-fg);
+    padding:6px 16px;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:1;
+  }
+  .hunk-band .heading{ opacity:0.75; }
+
+  .dline{ display:flex; font-family:var(--mono); font-size:13px; line-height:21px; }
+  .dline.prose .code{ font-family:var(--sans); font-size:14.5px; color:var(--syn-comment); padding:1px 16px 1px 0; }
+  .dline .marker{ flex:none; width:22px; text-align:center; color:var(--secondary); user-select:none; }
+  .dline .code{ flex:1; min-width:0; padding:0 16px 0 0; white-space:pre-wrap; }
+  .dline.add{ background:var(--add-bg); }
+  .dline.add .marker{ color:var(--add-strong); }
+  .dline.del{ background:var(--del-bg); }
+  .dline.del .marker{ color:var(--del-strong); }
+
+  /* Inline styling inside the prose lines: the sans comment voice can still
+     carry a bold claim, a key cap, or a real identifier in the code font. */
+  .dline.prose .code strong{ font-weight:680; color:var(--ink); }
+  .dline.prose .code em{ font-style:italic; }
+  .dline.prose .code .m{ font-family:var(--mono); font-size:0.92em; color:var(--ink); }
+  .dline.prose .code .term{ display:inline-block; width:6em; }
+  .dline.prose .code kbd{
+    font-family:var(--mono);
+    font-size:0.85em;
+    font-weight:600;
+    line-height:1;
+    color:var(--ink);
+    background:var(--keycap-bg);
+    border:1px solid var(--border);
+    border-bottom-width:2px;
+    border-radius:4px;
+    padding:2px 5px;
+  }
+
+  .md-block{ padding:18px 16px 22px; }
+  .md-block h2{ margin:0 0 8px; font-size:1.2rem; font-weight:750; letter-spacing:-0.01em; }
+  .md-block p{ margin:0 0 14px; color:var(--secondary); max-width:44ch; }
+  .btn{
+    display:inline-block;
+    background:var(--focus);
+    color:#fff;
+    padding:8px 14px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:600;
+    text-decoration:none;
+  }
+  .btn:hover{ background:#0972DD; color:#fff; }
+
+  .ascii-block{ padding:6px 16px 20px; }
+  .ascii-block pre{
+    margin:8px 0 0;
+    font-family:var(--mono);
+    font-size:13px;
+    line-height:1.4;
+    color:var(--ink);
+    white-space:pre;
+  }
+
+  .page-foot{ padding:14px 16px 0; font-size:12.5px; color:var(--secondary); }
+  .page-foot a{ color:var(--secondary); text-decoration:underline; }
+  .page-foot a:hover{ color:var(--ink); }
+
+  .end-pad{ height:30vh; }
+
+  /* ================= responsive ================= */
+
+  @media (max-width:700px){
+    body{ padding:0; align-items:stretch; }
+    .window{ height:100vh; max-width:none; border-radius:0; }
+    .toolbar-left{ width:120px; }
+    .sidebar{ width:120px; }
+    .tb-sub, .tb-progress .tb-frac{ display:none; }
+    .frow{ padding-left:10px !important; font-size:11px; }
+    [data-depth="1"]{ padding-left:20px; }
+    [data-depth="2"]{ padding-left:30px; }
+    .dline{ font-size:12px; }
+    .dline.prose .code{ font-size:13px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="window">
+  <div class="toolbar">
+    <div class="toolbar-left"><div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div></div>
+    <div class="toolbar-right">
+      <div class="tb-info">
+        <div class="tb-icon"><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="none" stroke="#57606A" stroke-width="1.3"/><path d="M7 3.6V7l2.4 1.4" fill="none" stroke="#57606A" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+        <div class="tb-text">
+          <h1 class="tb-title">A tour of CodeReview</h1>
+          <div class="tb-sub">~/GIT/CodeReview · working tree</div>
+        </div>
+      </div>
+      <div class="tb-progress">
+        <span class="tb-frac" id="tbFrac">0/11 viewed</span>
+        <div class="tb-bar"><div class="tb-bar-fill" id="tbFill"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="appbody">
+    <nav class="sidebar" id="sidebar" aria-label="Reviewed files">
+      <div class="frow-folder" data-depth="0"><svg width="13" height="11" viewBox="0 0 13 11"><path d="M0.5 1.5h4l1.2 1.4H12.5v7H0.5z" fill="none" stroke="#57606A" stroke-width="1"/></svg><span class="name">Features/App</span></div>
+      <button class="frow" data-depth="1" data-target="s-app"><span class="status status-a">A</span><span class="name">AppFeature.swift</span><span class="spacer"></span><svg class="mark" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="2.5"/><path d="M3 6.2 L5.1 8.3 L9 4"/></svg></button>
+
+      <div class="frow-folder" data-depth="0"><svg width="13" height="11" viewBox="0 0 13 11"><path d="M0.5 1.5h4l1.2 1.4H12.5v7H0.5z" fill="none" stroke="#57606A" stroke-width="1"/></svg><span class="name">Features/Review</span></div>
+      <button class="frow" data-depth="1" data-target="s-review"><span class="status status-m">M</span><span class="name">ReviewFeature.swift</span><span class="spacer"></span><svg class="mark" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="2.5"/><path d="M3 6.2 L5.1 8.3 L9 4"/></svg></button>
+
+      <div class="frow-folder" data-depth="0"><svg width="13" height="11" viewBox="0 0 13 11"><path d="M0.5 1.5h4l1.2 1.4H12.5v7H0.5z" fill="none" stroke="#57606A" stroke-width="1"/></svg><span class="name">Features/Modes</span></div>
+      <button class="frow" data-depth="1" data-target="s-modes"><span class="status status-a">A</span><span class="name">ModesFeature.swift</span><span class="spacer"></span><svg class="mark" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="2.5"/><path d="M3 6.2 L5.1 8.3 L9 4"/></svg></button>
+
+      <div class="frow-folder" data-depth="0"><svg width="13" height="11" viewBox="0 0 13 11"><path d="M0.5 1.5h4l1.2 1.4H12.5v7H0.5z" fill="none" stroke="#57606A" stroke-width="1"/></svg><span class="name">Features/Keyboard</span></div>
+      <button class="frow" data-depth="1" data-target="s-keys"><span class="status status-m">M</span><span class="name">KeymapFeature.swift</span><span class="spacer"></span><svg class="mark" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="2.5"/><path d="M3 6.2 L5.1 8.3 L9 4"/></svg></button>
+
+      <div class="frow-folder" data-depth="0"><svg width="13" height="11" viewBox="0 0 13 11"><path d="M0.5 1.5h4l1.2 1.4H12.5v7H0.5z" fill="none" stroke="#57606A" stroke-width="1"/></svg><span class="name">Features/Diff</span></div>
+      <div class="frow-folder" data-depth="1"><svg width="13" height="11" viewBox="0 0 13 11"><path d="M0.5 1.5h4l1.2 1.4H12.5v7H0.5z" fill="none" stroke="#57606A" stroke-width="1"/></svg><span class="name">Comments</span></div>
+      <button class="frow" data-depth="2" data-target="s-comments"><span class="status status-r">R</span><span class="name">CommentsFeature.swift</span><span class="spacer"></span><svg class="mark" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="2.5"/><path d="M3 6.2 L5.1 8.3 L9 4"/></svg></button>
+      <button class="frow" data-depth="1" data-target="s-diff"><span class="status status-m">M</span><span class="name">DiffFeature.swift</span><span class="spacer"></span><svg class="mark" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="2.5"/><path d="M3 6.2 L5.1 8.3 L9 4"/></svg></button>
+
+      <div class="frow-folder" data-depth="0"><svg width="13" height="11" viewBox="0 0 13 11"><path d="M0.5 1.5h4l1.2 1.4H12.5v7H0.5z" fill="none" stroke="#57606A" stroke-width="1"/></svg><span class="name">Sources/Git</span></div>
+      <button class="frow" data-depth="1" data-target="s-repo"><span class="status status-m">M</span><span class="name">RepositoryClient.swift</span><span class="spacer"></span><svg class="mark" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="2.5"/><path d="M3 6.2 L5.1 8.3 L9 4"/></svg></button>
+      <button class="frow" data-depth="1" data-target="s-progress"><span class="status status-m">M</span><span class="name">Progress.swift</span><span class="spacer"></span><svg class="mark" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="2.5"/><path d="M3 6.2 L5.1 8.3 L9 4"/></svg></button>
+
+      <button class="frow" data-depth="0" data-target="s-nongoals"><span class="status status-d">D</span><span class="name">NonGoals.swift</span><span class="spacer"></span><svg class="mark" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="2.5"/><path d="M3 6.2 L5.1 8.3 L9 4"/></svg></button>
+
+      <div class="frow-folder" data-depth="0"><svg width="13" height="11" viewBox="0 0 13 11"><path d="M0.5 1.5h4l1.2 1.4H12.5v7H0.5z" fill="none" stroke="#57606A" stroke-width="1"/></svg><span class="name">ReviewUI.docc/Start</span></div>
+      <button class="frow" data-depth="1" data-target="s-install"><span class="status status-a">A</span><span class="name">Installing.md</span><span class="spacer"></span><svg class="mark" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="2.5"/><path d="M3 6.2 L5.1 8.3 L9 4"/></svg></button>
+
+      <button class="frow" data-depth="0" data-target="s-lgtm"><span class="status status-a">A</span><span class="name">LGTM.txt</span><span class="spacer"></span><svg class="mark" viewBox="0 0 12 12"><rect x="0.5" y="0.5" width="11" height="11" rx="2.5"/><path d="M3 6.2 L5.1 8.3 L9 4"/></svg></button>
+    </nav>
+
+    <div class="diffcol">
+      <div class="breadcrumb" id="breadcrumb">
+        <span class="status status-a mono">A</span>
+        <span class="path mono">Features/App › <b>AppFeature.swift</b></span>
+        <span class="spacer"></span>
+        <span class="ctx-icons">
+          <svg width="15" height="11" viewBox="0 0 15 11"><rect y="0" width="15" height="2" fill="#57606A"/><rect y="4.5" width="15" height="2" fill="#57606A"/><rect y="9" width="15" height="2" fill="#57606A"/></svg>
+          <svg width="15" height="11" viewBox="0 0 15 11"><rect y="0" width="10" height="2" fill="#57606A"/><rect y="4.5" width="15" height="2" fill="#57606A"/><rect y="9" width="10" height="2" fill="#57606A"/></svg>
+        </span>
+        <svg class="file-mark" viewBox="0 0 13 13"><rect x="0.5" y="0.5" width="12" height="12" rx="2.5"/></svg>
+      </div>
+
+      <div class="diffpane" id="diffpane">
+
+        <section class="file-section" id="s-app" data-status="a" data-path="Features/App › <b>AppFeature.swift</b>">
+          <div class="hunk">
+            <div class="hunk-band mono"><span>@@</span> -0,0 +1,3 <span>@@</span> <span class="heading">AppFeature.swift</span></div>
+            <div class="hunk-body">
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// Review a lot of code you did not write.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// <strong>Judge every change</strong>. Write the finding where the fix belongs.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// Without leaving the keyboard.</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="file-section" id="s-review" data-status="m" data-path="Features/Review › <b>ReviewFeature.swift</b>">
+          <div class="hunk">
+            <div class="hunk-band mono"><span>@@</span> -4,0 +4,3 <span>@@</span> <span class="heading">the problem</span></div>
+            <div class="hunk-body">
+              <div class="dline prose"><span class="marker"> </span><span class="code">// You <strong>review more code than ever</strong>.</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// Most of it, an agent wrote in seconds.</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// Scroll, skim, approve — and nobody actually read it.</span></div>
+            </div>
+          </div>
+          <div class="hunk">
+            <div class="hunk-band mono"><span>@@</span> -0,0 +9,5 <span>@@</span> <span class="heading">the fix</span></div>
+            <div class="hunk-body">
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// CodeReview hands you <strong>one hunk at a time</strong>, one keystroke apart.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// - No scrollbar to skim past, so nothing slips through.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// - It writes no findings and applies no fixes.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">//   <strong>The judgment stays yours</strong> — the app just makes it fast.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// - A hundred-file change still means a hundred files <em>read</em>.</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="file-section" id="s-modes" data-status="a" data-path="Features/Modes › <b>ModesFeature.swift</b>">
+          <div class="hunk">
+            <div class="hunk-band mono"><span>@@</span> -0,0 +1,7 <span>@@</span> <span class="heading">one cursor, three depths</span></div>
+            <div class="hunk-body">
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// A review is one cursor that goes inward and comes back out.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// <kbd>l</kbd> steps in, <kbd>h</kbd> steps out, and the depth decides what a key means.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">//</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// <span class="term"><em>file-mode</em></span> the changed files. Dismiss a generated one whole.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// <span class="term"><em>hunk-mode</em></span> the ordinary unit, where most of the reading happens.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// <span class="term"><em>line-mode</em></span> one hunk's changed lines, context skipped, for when</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// <span class="term"></span> two changes got tangled into a single hunk.</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="file-section" id="s-keys" data-status="m" data-path="Features/Keyboard › <b>KeymapFeature.swift</b>">
+          <div class="hunk">
+            <div class="hunk-band mono"><span>@@</span> -30,5 +30,8 <span>@@</span> <span class="heading">every key, one hand</span></div>
+            <div class="hunk-body">
+              <div class="dline prose"><span class="marker"> </span><span class="code">// Same keys at every depth. <strong>You pick the grain by moving</strong>, not with a tool.</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// <span class="term"><kbd>j</kbd> / <kbd>k</kbd></span> next and previous. What "next" is depends on</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// <span class="term"></span> the depth, and always the obvious thing. Past a file's last hunk,</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// <span class="term"></span> <kbd>j</kbd> rolls into the next file: one stream, first hunk to last.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// <span class="term"><kbd>Space</kbd></span> mark whatever you are on as dealt with.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// <span class="term"><kbd>i</kbd></span> edit the real file, on the line you are reading.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// <span class="term"><kbd>t</kbd></span> leave a review TODO above the change, marker in place.</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// <span class="term"><kbd>?</kbd></span> every keybinding, from anywhere.</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="file-section" id="s-comments" data-status="r" data-path="Features/Diff › Comments › <b>CommentsFeature.swift</b>">
+          <div class="rename-note">R  renamed  ReviewCommentFeature.swift → CommentsFeature.swift</div>
+          <div class="hunk">
+            <div class="hunk-band mono"><span>@@</span> -12,6 +12,7 <span>@@</span> <span class="heading">CommentsFeature.swift</span></div>
+            <div class="hunk-body">
+              <div class="dline"><span class="marker"> </span><span class="code">func validate(_ token: Token) -&gt; Bool {</span></div>
+              <div class="dline add"><span class="marker">+</span><span class="code">    // TODO(review): this still lets an empty string through</span></div>
+              <div class="dline"><span class="marker"> </span><span class="code">    return token.value != nil</span></div>
+              <div class="dline"><span class="marker"> </span><span class="code">}</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// - Deliberately distinct from an ordinary TODO, so a review's</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">//   own notes stay <strong>findable afterwards</strong>.</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// - On a pull request, <kbd>t</kbd> writes a comment instead.</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="file-section" id="s-diff" data-status="m" data-path="Features/Diff › <b>DiffFeature.swift</b>">
+          <div class="hunk">
+            <div class="hunk-band mono"><span>@@</span> -20,2 +20,3 <span>@@</span> <span class="heading">DiffFeature.swift</span></div>
+            <div class="hunk-body">
+              <div class="dline prose"><span class="marker"> </span><span class="code">// Found the problem? Don't go hunting for the file.</span></div>
+              <div class="dline prose del"><span class="marker">−</span><span class="code">// TODO: find the line again by hand</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// <span class="term"><kbd>o</kbd></span> <strong>Xcode opens it</strong>, on the line you were just reading.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// Fix it while you still have the context.</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="file-section" id="s-repo" data-status="m" data-path="Sources/Git › <b>RepositoryClient.swift</b>">
+          <div class="hunk">
+            <div class="hunk-band mono"><span>@@</span> -8,5 +8,7 <span>@@</span> <span class="heading">where the marks live</span></div>
+            <div class="hunk-body">
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// On a working tree, <strong>a viewed hunk is a staged hunk</strong> — the mark goes</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// into git's index, not into a database this app keeps on the side.</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// So it survives a quit, a crash, even deleting the app. And</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// <span class="m">git add -p</span> in a terminal reads as review progress here.</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// Change a line and its mark clears: that judgment was about text</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// that no longer exists. Its neighbours stay settled.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// A review that reaches the last hunk has assembled the commit</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// on the way.</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="file-section" id="s-progress" data-status="m" data-path="Sources/Git › <b>Progress.swift</b>">
+          <div class="hunk">
+            <div class="hunk-band mono"><span>@@</span> -2,2 +2,3 <span>@@</span> <span class="heading">what the number claims</span></div>
+            <div class="hunk-body">
+              <div class="dline prose"><span class="marker"> </span><span class="code">// The count up in the title bar is files viewed over files changed.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// A file ticks itself off only once every one of its hunks is marked.</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// <span class="term"><kbd>f</kbd></span> hide everything you have already dealt with.</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="file-section" id="s-nongoals" data-status="d" data-path="<b>NonGoals.swift</b>">
+          <div class="hunk">
+            <div class="hunk-band mono"><span>@@</span> -1,3 +1,1 <span>@@</span> <span class="heading">on purpose</span></div>
+            <div class="hunk-body">
+              <div class="dline prose"><span class="marker"> </span><span class="code">// Some of the best parts are the ones that <strong>aren't there</strong>.</span></div>
+              <div class="dline prose del"><span class="marker">−</span><span class="code">// telemetry, analytics, crash reporting — none, to anyone.</span></div>
+              <div class="dline prose del"><span class="marker">−</span><span class="code">// a network call on a working tree — not one.</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="file-section" id="s-install" data-status="a" data-path="ReviewUI.docc/Start › <b>Installing.md</b>">
+          <div class="hunk">
+            <div class="hunk-band mono"><span>@@</span> -0,0 +1,3 <span>@@</span> <span class="heading">Installing.md</span></div>
+            <div class="hunk-body">
+              <div class="md-block">
+                <h2>Try it on your next review</h2>
+                <p>Public beta on TestFlight — free, no waitlist. Requires macOS 26 or later. Reviewing your own working tree needs no account and no network.</p>
+                <a class="btn" href="https://testflight.apple.com/join/bJQhUAFQ">Get the beta on TestFlight</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="file-section" id="s-lgtm" data-status="a" data-path="<b>LGTM.txt</b>">
+          <div class="hunk">
+            <div class="hunk-band mono"><span>@@</span> -0,0 +1,10 <span>@@</span> <span class="heading">LGTM.txt</span></div>
+            <div class="hunk-body">
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// <strong>read every hunk?</strong> that's the whole idea. questions,</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// bugs, or just to say hi: <a href="mailto:codereview@juliankahnert.de" style="color:inherit;">codereview@juliankahnert.de</a></span></div>
+              <div class="ascii-block">
+<pre> ________
+&lt; LGTM! &gt;
+ --------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||</pre>
+              </div>
+              <div class="page-foot">
+                <a href="/">juliankahnert.de</a> · <a href="/imprint">Imprint</a> · <a href="/privacy">Privacy</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="end-pad" id="endPad" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var pane = document.getElementById('diffpane');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.frow'));
+  var sections = rows.map(function(row){ return document.getElementById(row.dataset.target); });
+  var breadcrumb = document.getElementById('breadcrumb');
+  var bcStatus = breadcrumb.querySelector('.status');
+  var bcPath = breadcrumb.querySelector('.path');
+  var tbFrac = document.getElementById('tbFrac');
+  var tbFill = document.getElementById('tbFill');
+  var endPad = document.getElementById('endPad');
+  var TOTAL = sections.length;
+  var TRIGGER = 34;
+  var ticking = false;
+  var lastActive = -1;
+
+  function measure(){
+    // Enough trailing room that the last section's bottom can still reach
+    // the trigger line — without this, the last file could never scroll
+    // far enough to be marked viewed.
+    endPad.style.height = pane.clientHeight + 'px';
+  }
+
+  function update(){
+    var paneTop = pane.getBoundingClientRect().top + TRIGGER;
+
+    var activeIndex = 0;
+    sections.forEach(function(sec, i){
+      if (sec.getBoundingClientRect().top <= paneTop) activeIndex = i;
+    });
+    // Past the very last section entirely: nothing is "current" any more,
+    // so let every row — including the last — read as viewed.
+    if (sections[TOTAL - 1].getBoundingClientRect().bottom <= paneTop){
+      activeIndex = TOTAL;
+    }
+
+    rows.forEach(function(row, i){
+      row.classList.toggle('is-viewed', i < activeIndex);
+      row.classList.toggle('is-active', i === activeIndex);
+    });
+
+    var currentIndex = Math.min(activeIndex, TOTAL - 1);
+    if (currentIndex !== lastActive){
+      lastActive = currentIndex;
+      var sec = sections[currentIndex];
+      bcStatus.className = 'status mono status-' + sec.dataset.status;
+      bcStatus.textContent = sec.dataset.status.toUpperCase();
+      bcPath.innerHTML = sec.dataset.path;
+    }
+    tbFrac.textContent = activeIndex + '/' + TOTAL + ' viewed';
+    tbFill.style.width = Math.round((activeIndex / TOTAL) * 100) + '%';
+
+    ticking = false;
+  }
+
+  function onScroll(){
+    if (!ticking){
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  rows.forEach(function(row){
+    row.addEventListener('click', function(){
+      var target = document.getElementById(row.dataset.target);
+      var offset = target.offsetTop - 10;
+      pane.scrollTo({ top: offset, behavior: reducedMotion ? 'auto' : 'smooth' });
+    });
+  });
+
+  window.addEventListener('load', function(){
+    measure();
+    update();
+  });
+  window.addEventListener('resize', measure);
+  pane.addEventListener('scroll', onScroll);
+})();
+</script>
+
+</body>
+</html>
