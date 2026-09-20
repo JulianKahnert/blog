@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CodeReview — keyboard-first diff review for macOS</title>
-<meta name="description" content="Read every hunk of your working tree or a pull request without touching the mouse — and write the finding down where the fix has to happen.">
+<title>CodeReview, keyboard-first diff review for macOS</title>
+<meta name="description" content="Read every hunk of your working tree or a pull request without touching the mouse. Write the finding down where the fix has to happen.">
 <link rel="canonical" href="https://juliankahnert.de/codereview/">
 <link rel="shortcut icon" href="/img/favicon.png" type="image/png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ju ka">
 <meta property="og:url" content="https://juliankahnert.de/codereview/">
-<meta property="og:title" content="CodeReview — keyboard-first diff review for macOS">
-<meta property="og:description" content="Read every hunk of your working tree or a pull request without touching the mouse — and write the finding down where the fix has to happen.">
+<meta property="og:title" content="CodeReview, keyboard-first diff review for macOS">
+<meta property="og:description" content="Read every hunk of your working tree or a pull request without touching the mouse. Write the finding down where the fix has to happen.">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CodeReview — keyboard-first diff review for macOS">
-<meta name="twitter:description" content="Read every hunk of your working tree or a pull request without touching the mouse — and write the finding down where the fix has to happen.">
+<meta name="twitter:title" content="CodeReview, keyboard-first diff review for macOS">
+<meta name="twitter:description" content="Read every hunk of your working tree or a pull request without touching the mouse. Write the finding down where the fix has to happen.">
 <!-- TODO: add a 1200x630 app screenshot as og:image / twitter:image and switch the card to
      summary_large_image — until then every share renders without a preview picture. -->
 <script type="application/ld+json">
@@ -26,7 +26,7 @@
   "operatingSystem": "macOS 26 or later",
   "url": "https://juliankahnert.de/codereview/",
   "downloadUrl": "https://testflight.apple.com/join/bJQhUAFQ",
-  "description": "Read every hunk of your working tree or a pull request without touching the mouse — and write the finding down where the fix has to happen.",
+  "description": "Read every hunk of your working tree or a pull request without touching the mouse. Write the finding down where the fix has to happen.",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
   "author": { "@type": "Person", "name": "Julian Kahnert", "url": "https://juliankahnert.de" }
 }
@@ -415,7 +415,7 @@
             <div class="hunk-body">
               <div class="dline prose"><span class="marker"> </span><span class="code">// You <strong>review more code than ever</strong>.</span></div>
               <div class="dline prose"><span class="marker"> </span><span class="code">// Most of it, an agent wrote in seconds.</span></div>
-              <div class="dline prose"><span class="marker"> </span><span class="code">// Scroll, skim, approve — and nobody actually read it.</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// Scroll, skim, approve. Nobody actually read it.</span></div>
             </div>
           </div>
           <div class="hunk">
@@ -424,7 +424,7 @@
               <div class="dline prose add"><span class="marker">+</span><span class="code">// CodeReview hands you <strong>one hunk at a time</strong>, one keystroke apart.</span></div>
               <div class="dline prose add"><span class="marker">+</span><span class="code">// - No scrollbar to skim past, so nothing slips through.</span></div>
               <div class="dline prose add"><span class="marker">+</span><span class="code">// - It writes no findings and applies no fixes.</span></div>
-              <div class="dline prose add"><span class="marker">+</span><span class="code">//   <strong>The judgment stays yours</strong> — the app just makes it fast.</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">//   <strong>The judgment stays yours</strong>. The app just makes it fast.</span></div>
               <div class="dline prose add"><span class="marker">+</span><span class="code">// - A hundred-file change still means a hundred files <em>read</em>.</span></div>
             </div>
           </div>
@@ -493,11 +493,11 @@
           <div class="hunk">
             <div class="hunk-band mono"><span>@@</span> -8,5 +8,7 <span>@@</span> <span class="heading">where the marks live</span></div>
             <div class="hunk-body">
-              <div class="dline prose add"><span class="marker">+</span><span class="code">// On a working tree, <strong>a viewed hunk is a staged hunk</strong> — the mark goes</span></div>
+              <div class="dline prose add"><span class="marker">+</span><span class="code">// On a working tree, <strong>a viewed hunk is a staged hunk</strong>. The mark goes</span></div>
               <div class="dline prose add"><span class="marker">+</span><span class="code">// into git's index, not into a database this app keeps on the side.</span></div>
               <div class="dline prose"><span class="marker"> </span><span class="code">// So it survives a quit, a crash, even deleting the app. And</span></div>
               <div class="dline prose"><span class="marker"> </span><span class="code">// <span class="m">git add -p</span> in a terminal reads as review progress here.</span></div>
-              <div class="dline prose"><span class="marker"> </span><span class="code">// Change a line and its mark clears: that judgment was about text</span></div>
+              <div class="dline prose"><span class="marker"> </span><span class="code">// Change a line and its mark clears. That judgment was about text</span></div>
               <div class="dline prose"><span class="marker"> </span><span class="code">// that no longer exists. Its neighbours stay settled.</span></div>
               <div class="dline prose add"><span class="marker">+</span><span class="code">// A review that reaches the last hunk has assembled the commit</span></div>
               <div class="dline prose add"><span class="marker">+</span><span class="code">// on the way.</span></div>
@@ -521,8 +521,8 @@
             <div class="hunk-band mono"><span>@@</span> -1,3 +1,1 <span>@@</span> <span class="heading">on purpose</span></div>
             <div class="hunk-body">
               <div class="dline prose"><span class="marker"> </span><span class="code">// Some of the best parts are the ones that <strong>aren't there</strong>.</span></div>
-              <div class="dline prose del"><span class="marker">−</span><span class="code">// telemetry, analytics, crash reporting — none, to anyone.</span></div>
-              <div class="dline prose del"><span class="marker">−</span><span class="code">// a network call on a working tree — not one.</span></div>
+              <div class="dline prose del"><span class="marker">−</span><span class="code">// telemetry, analytics, crash reporting. None, to anyone.</span></div>
+              <div class="dline prose del"><span class="marker">−</span><span class="code">// a network call on a working tree. Not one.</span></div>
             </div>
           </div>
         </section>
@@ -533,7 +533,7 @@
             <div class="hunk-body">
               <div class="md-block">
                 <h2>Try it on your next review</h2>
-                <p>Public beta on TestFlight — free, no waitlist. Requires macOS 26 or later. Reviewing your own working tree needs no account and no network.</p>
+                <p>Public beta on TestFlight, free, no waitlist. Requires macOS 26 or later. Reviewing your own working tree needs no account and no network.</p>
                 <a class="btn" href="https://testflight.apple.com/join/bJQhUAFQ">Get the beta on TestFlight</a>
               </div>
             </div>
