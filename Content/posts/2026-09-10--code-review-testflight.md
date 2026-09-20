@@ -10,6 +10,10 @@ tags: app, macos, swift
 
 My new App [Code Review](/codereview) is available in [TestFlight](https://testflight.apple.com/join/bJQhUAFQ) – I would love to get your feedback! 😊
 
+<p align="center">
+<img src="/img/code-review-testflight-app.webp" width="100%"/>
+</p>
+
 ## Time spent in code reviews
 
 I work as a developer and see myself doing more and more Code Reviews.
