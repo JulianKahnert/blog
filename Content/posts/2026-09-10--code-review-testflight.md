@@ -56,23 +56,24 @@ Afterwards you can switch between three modes:
 - Hunk mode
 - Line mode
 
-You can step up or deeper in the hierarchy by using the left or right arrow key (or 'h' / 'l').
+You can move up or deeper in the hierarchy by using the left or right arrow key (or `h` / `l`).
+Switching files can be done using the up/down arrows (or `j` / `k`).
 
-Switching files can be done by using the up/down arrows (or 'j' / 'k').
+Depending on the mode, you stage (`SPACE`) a file, hunk, or line in a local repository.
+Or mark it as viewed in a PR – the same way you do on GitHub.
 
-Depending on the mode, you stage ('SPACE') a file/hunk/line in a local repository.
-Or mark it as viewed in a PR – the same way as you do on GitHub.
+When you're finished with the review, just hit `CMD` + `ENTER` to commit locally.
+Or approve/reject/comment a GitHub PR.
 
-When you have finished the review, just hit 'CMD' + 'ENTER' to commit it locally.
-Or approve, reject, or comment on a GitHub PR.
-
-There are several other shortcuts and a handy Xcode integration.
-You can see every shortcut by pressing '?'.
+There are several other shortcuts (see `?`) and a handy Xcode integration.
 Just play with it and try it out. ☺️
 
 A mockup of the UI can be found [here](/codereview).
 
-Where does it help? Is there something that could be improved?
+I hope you want to give it a try and test it.
+Every feedback is welcome.
+Where does it help?
+Is there something that could be improved?
 I'd love to hear from you: [CodeReview@juliankahnert.de](mailto:CodeReview@juliankahnert.de)
 
 *Written by a human 🤓*
