@@ -56,13 +56,23 @@ Afterwards you can switch between three modes:
 - Hunk mode
 - Line mode
 
-Depending on the mode, you stage a file/hunk/line in a local repository.
+You can step up or deeper in the hierarchy by using the left or right arrow key (or 'h' / 'l').
+
+Switching files can be done by using the up/down arrows (or 'j' / 'k').
+
+Depending on the mode, you stage ('SPACE') a file/hunk/line in a local repository.
 Or mark it as viewed in a PR – the same way as you do on GitHub.
-You can find a mock of this UI [here](/codereview).
+
+When you have finished the review, just hit 'CMD' + 'ENTER' to commit it locally.
+Or approve, reject, or comment on a GitHub PR.
+
 There are several other shortcuts and a handy Xcode integration.
-Just play with it and try it out.
+You can see every shortcut by pressing '?'.
+Just play with it and try it out. ☺️
+
+A mockup of the UI can be found [here](/codereview).
 
 Where does it help? Is there something that could be improved?
-I would love to hear from you: [CodeReview@juliankahnert.de](mailto:CodeReview@juliankahnert.de)
+I'd love to hear from you: [CodeReview@juliankahnert.de](mailto:CodeReview@juliankahnert.de)
 
 *Written by a human 🤓*
