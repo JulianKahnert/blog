@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roommate Albert</title>
+<meta name="description" content="Roommate Albert finds your meter photos in the photo library, reads the value and the time they were taken, and suggests the reading. One tap confirms it.">
+<link rel="canonical" href="https://juliankahnert.de/roommate/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ju ka">
+<meta property="og:url" content="https://juliankahnert.de/roommate/">
+<meta property="og:title" content="Roommate Albert">
+<meta property="og:description" content="Roommate Albert finds your meter photos in the photo library, reads the value and the time they were taken, and suggests the reading. One tap confirms it.">
+<meta property="og:locale" content="en_US">
+<link rel="alternate" href="https://juliankahnert.de/roommate/" hreflang="en">
+<link rel="alternate" href="https://juliankahnert.de/roommate/de/" hreflang="de">
+<link rel="alternate" href="https://juliankahnert.de/roommate/" hreflang="x-default">
+<link rel="icon" type="image/png" href="app-icon.png">
+<link rel="apple-touch-icon" href="app-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<header class="site-header">
+    <div class="wrap site-header-inner">
+        <a class="site-name" href="./"><img class="site-icon" src="app-icon.png" alt="">Roommate Albert</a>
+        <nav class="site-nav" aria-label="Main navigation">
+            <ul>
+                <li><a href="#how-it-works">How it works</a></li>
+                <li><a href="#questions">Questions</a></li>
+                <li class="language-toggle"><a href="de/" hreflang="de" aria-label="Deutsch">de</a><span class="language-sep" aria-hidden="true">|</span><a href="./" hreflang="en" aria-label="English" aria-current="page">en</a></li>
+                <li><a class="nav-cta" href="https://apps.apple.com/app/id1617545224">Download</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main id="content">
+    <section class="hero">
+        <div class="wrap">
+            <div>
+                <p class="hero-kicker">For iPhone, since 2022</p>
+                <h1><span>Snap it.</span> <span>Find it.</span> <span>Confirm it.</span></h1>
+                <p class="hero-lead">Meter readings from the photos you take anyway. Roommate Albert finds your meter photos in the photo library, reads the value and the time each was taken, and hands you a ready-made suggestion.</p>
+                <div class="hero-actions">
+                    <a class="button" href="#how-it-works">How it works</a>
+                    <a class="button button-ghost" href="#questions">Questions</a>
+                </div>
+                <p class="hero-note">Everything stays on your iPhone. No account, no server.</p>
+            </div>
+
+            <div class="scene" aria-label="Example: a cold water meter in a photo and the suggestion the app makes from it">
+                <div class="tile">
+                    <span class="photo-exif">Taken Mar 7, 2025, 6:42 PM</span>
+                    <div class="meter">
+                        <span class="serial">No. <b>21 481 735</b></span>
+                        <div class="counter is-idle" data-value="00059763" data-decimals="3" aria-label="00059.763 cubic meters"></div>
+                        <div class="meter-foot"><span>Cold Water</span><span>m³</span></div>
+                    </div>
+                </div>
+
+                <div class="suggestion" aria-hidden="true">
+                    <div class="suggestion-head">
+                        <span class="kind-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c-.3 0-.6.2-.8.4C9 5.8 5.5 10.6 5.5 14.3a6.5 6.5 0 0 0 13 0c0-3.7-3.5-8.5-5.7-11.4a1 1 0 0 0-.8-.4Z"/></svg></span>
+                        <div>
+                            <strong>Cold Water</strong>
+                            <span class="recognized">Recognized by serial number</span>
+                        </div>
+                    </div>
+                    <div class="suggestion-value"><span>Reading</span><b>59.763 m³</b></div>
+                    <div class="suggestion-foot"><span>Mar 7, 2025, 6:42 PM</span><span>Reject</span></div>
+                    <div class="suggestion-confirm">Confirm</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="steps" id="how-it-works" aria-labelledby="steps-title">
+        <div class="wrap">
+            <h2 class="section-title" id="steps-title">From photo to meter reading</h2>
+            <p class="section-lead">You take the photo. The app searches and reads, and you confirm.</p>
+
+            <ol class="step-list">
+                <li>
+                    <h3>Snap it.</h3>
+                    <p>With the Camera app, whenever you walk past the meter. Roommate Albert doesn’t have to be open: a photo from three months ago is found just like one from today.</p>
+                </li>
+                <li>
+                    <h3>Find it.</h3>
+                    <p>In the <span class="ui">Review</span> tab, tap <span class="ui">Search Photos</span>. The app compares new photos with each meter’s reference photo and reads the serial number, so it tells apart two identical meters in the same basement.</p>
+                </li>
+                <li>
+                    <h3>Confirm it.</h3>
+                    <p>Every suggestion arrives filled in: meter, register, value and the date from the photo. One tap on <span class="ui">Confirm</span> takes it. A value lower than an earlier one is flagged for correction, because meters never run backwards.</p>
+                </li>
+            </ol>
+
+            <p class="steps-note">For electricity, gas, cold and hot water, and heat. A meter with day and night tariff has two registers, HT and NT. When your utility installs a new meter, you add it as a new device: earlier readings stay, and the statistics show both in one series.</p>
+        </div>
+    </section>
+
+    <section class="reading" aria-labelledby="reading-title">
+        <div class="wrap">
+            <div class="dark-card">
+                <div>
+                    <h2 id="reading-title">The serial number shows where the reading is.</h2>
+                    <p>In every photo of a meter, the display sits in almost the same spot, measured from the printed serial number. The app learns that spot from what you confirm. The on-device language model then reads exactly that region, and text recognition and your reading history check its answer.</p>
+                    <p>The language model needs iOS 27 with Apple Intelligence; without it, text recognition reads alone.</p>
+                </div>
+                <div>
+                    <figure class="at-rest">
+                        <div class="counter" data-value="00059763" data-decimals="3" aria-label="00059.763 cubic meters"></div>
+                        <figcaption>The reading from the photo above: 59.763 m³. The three rollers after the decimal point count liters.</figcaption>
+                    </figure>
+                    <ol class="pipeline">
+                        <li><span><b>Similarity</b> picks the photos that look like one of your meters.</span></li>
+                        <li><span><b>Serial number</b> or barcode says which meter it is.</span></li>
+                        <li><span><b>Region</b> where this meter has its display.</span></li>
+                        <li><span><b>Value</b> from the language model and text recognition.</span></li>
+                        <li><span><b>History</b> picks the value that fits between the neighboring readings.</span></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="practice" aria-labelledby="practice-title">
+        <div class="wrap">
+            <h2 class="section-title" id="practice-title">What that means day to day</h2>
+            <ul class="checks">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Everything stays on your iPhone.</b> <span>Photos, recognition and readings stay on the device. There is no server anything is sent to.</span></div></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>You decide.</b> <span>Nothing lands in your history before you confirm it. You can correct or reject any time.</span></div></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>No account.</b> <span>No sign-up, no password, no email address.</span></div></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Your readings come along.</b> <span>Bring in data from older versions of the app under Settings → “Import”, as often as you like, without duplicates.</span></div></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Export as ZIP.</b> <span>A CSV file for spreadsheets and the photos of all readings. Plus a backup the app reads back in.</span></div></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>By hand works too.</b> <span>Add a reading without a photo with “Enter Reading”.</span></div></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="status" id="download" aria-labelledby="status-title">
+        <div class="wrap">
+            <h2 id="status-title">For your iPhone.</h2>
+            <p>Roommate Albert runs on iPhone with iOS 26 or later. Reading with the language model comes with iOS 27 and Apple Intelligence.</p>
+            <div class="hero-actions">
+                <a class="button" href="https://apps.apple.com/app/id1617545224">Download on the App Store</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="questions" id="questions" aria-labelledby="questions-title">
+        <div class="wrap">
+            <h2 id="questions-title">Questions?</h2>
+            <p>If the app misread a value or missed a meter, write from the app under Settings → “Contact Support”. A report is attached that helps find the cause.</p>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="wrap">
+        <span>© Julian Kahnert 2026</span>
+        <nav aria-label="Legal">
+            <a href="/roommate/en/privacy/">Privacy Policy</a>
+            <a href="/roommate/en/imprint/">Legal Notice</a>
+        </nav>
+    </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>

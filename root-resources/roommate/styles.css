@@ -1,0 +1,673 @@
+/* Roommate Albert, built on the pattern of pdf-archiver.io: paper throughout, one dark card, and one
+   signature object. Here that object is the roller counter of a water meter, rolling in the hero
+   and at rest in the dark card. */
+
+:root {
+    color-scheme: light dark;
+
+    /* Brand: the two ends of the app icon's gradient, and the red of a meter's decimal rollers. */
+    --ink: #0e1a2b;
+    --paper: #f3f6fa;
+    --paper-sunk: #e6ecf4;
+    --blue: #2a62d4;
+    --blue-bright: #6aa6ff;
+    --sky: #74c7fb;
+    --roller-red: #c42a38;
+
+    --text: #1b2533;
+    --text-soft: #56606e;
+    --rule: #d7dfea;
+    --card: #fff;
+    --ok: #1f8a4c;
+
+    --accent: var(--blue);
+    /* White on --blue-bright is under 3:1, so filled buttons keep the dark blue in both modes. */
+    --accent-fill: var(--blue);
+
+    --wrap: 72rem;
+    /* Charter ships with macOS and iOS; everyone else gets Source Serif. */
+    --font-heading: Charter, "Bitstream Charter", "Source Serif 4", Georgia, serif;
+    --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-digits: "Barlow Semi Condensed", "DIN Condensed", "Arial Narrow", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --paper: #111a26;
+        --paper-sunk: #18222f;
+        --card: #1a2533;
+        --text: #e6ebf2;
+        --text-soft: #a2adbc;
+        --rule: #3b4a60;
+        --accent: var(--blue-bright);
+        --ok: #4fc98a;
+    }
+}
+
+:root[data-theme="dark"] {
+    --paper: #111a26;
+    --paper-sunk: #18222f;
+    --card: #1a2533;
+    --text: #e6ebf2;
+    --text-soft: #a2adbc;
+    --rule: #3b4a60;
+    --accent: var(--blue-bright);
+    --ok: #4fc98a;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+h1, h2, h3 {
+    margin: 0;
+    font-family: var(--font-heading);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+}
+
+p { margin: 0 0 1.1em; }
+
+a { color: var(--accent); text-underline-offset: 0.18em; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.skip-link {
+    position: fixed;
+    top: -100%;
+    left: 1rem;
+    z-index: 40;
+    padding: 0.7rem 1.1rem;
+    border: 1px solid var(--rule);
+    border-radius: 0.7rem;
+    background: var(--card);
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.skip-link:focus { top: 1rem; }
+
+.wrap {
+    width: 100%;
+    max-width: var(--wrap);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 5vw, 3rem);
+}
+
+.section-title {
+    font-size: clamp(1.7rem, 3.2vw, 2.3rem);
+    font-weight: 700;
+    text-align: center;
+}
+
+.section-lead {
+    margin: 0.6rem auto 0;
+    max-width: 32em;
+    color: var(--text-soft);
+    text-align: center;
+}
+
+#so-gehts, #fragen, #laden,
+#how-it-works, #questions, #download { scroll-margin-top: 5rem; }
+
+/* ---------- Buttons ---------- */
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.6rem;
+    border-radius: 999px;
+    background: var(--accent-fill);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 12px 24px -12px color-mix(in srgb, var(--blue) 80%, transparent);
+    transition: transform 0.15s ease;
+}
+
+.button:hover { transform: translateY(-2px); color: #fff; }
+
+.button-ghost {
+    background: transparent;
+    color: var(--text);
+    box-shadow: inset 0 0 0 1.5px var(--rule);
+}
+
+.button-ghost:hover { background: var(--paper-sunk); color: var(--text); }
+
+.button svg { width: 1.1em; height: 1.1em; flex: none; }
+
+/* ---------- Header: transparent at rest, a floating pill once scrolled (from pdf-archiver.io) ---------- */
+
+.site-header {
+    padding-block: 1.3rem;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: transparent;
+    transition: padding-block 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.site-header-inner {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 4vw, 2.5rem);
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+    transition:
+        border-color 0.4s ease,
+        max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        padding-block 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        padding-inline 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        gap 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        background-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.site-header.is-scrolled { padding-block: 0.7rem; }
+
+.site-header.is-scrolled .site-header-inner {
+    max-width: min(54rem, 94vw);
+    padding-block: 0.55rem;
+    padding-inline: 1.2rem 0.55rem;
+    gap: clamp(0.75rem, 3vw, 1.75rem);
+    border-color: var(--rule);
+    background: color-mix(in srgb, var(--card) 97%, transparent);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    box-shadow:
+        0 10px 20px -8px rgba(14, 26, 43, 0.22),
+        0 28px 55px -22px rgba(14, 26, 43, 0.4);
+}
+
+.site-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.site-icon { width: 28px; height: 28px; border-radius: 7px; flex: none; }
+
+.site-nav { margin-inline-start: auto; }
+
+.site-nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.site-nav a {
+    color: var(--text-soft);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.site-nav a:hover { color: var(--accent); }
+
+/* Scoped under `.site-nav` so it outweighs `.site-nav a`, which would paint the label in the pill's colour. */
+.site-nav .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    background: var(--accent-fill);
+    color: #fff;
+    padding: 0.55rem 1.2rem;
+    border-radius: 999px;
+}
+
+.site-nav .nav-cta:hover { background: color-mix(in srgb, var(--accent-fill) 85%, var(--ink)); color: #fff; }
+
+.language-toggle { display: inline-flex; align-items: baseline; gap: 0.3rem; font-size: 0.85rem; }
+
+/* SC 2.5.8 asks for 24 × 24 CSS px; the bare 0.85rem label is about 17 × 22. */
+.language-toggle a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding-inline: 0.4rem;
+    color: var(--text-soft);
+    text-decoration: none;
+    font-weight: 500;
+    opacity: 0.75;
+}
+
+.language-toggle a:hover { color: var(--accent); opacity: 1; }
+
+.language-toggle [aria-current="page"] { color: var(--text); font-weight: 700; opacity: 1; }
+
+.language-sep { color: var(--rule); }
+
+@media (max-width: 720px) {
+    /* Without the toggle there is no way to the other language: nothing redirects by Accept-Language. */
+    .site-nav ul li:not(:has(.nav-cta)):not(.language-toggle) { display: none; }
+
+    .site-header-inner { flex-wrap: wrap; row-gap: 0.5rem; }
+
+    .site-nav .nav-cta { padding-inline: 0.9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-header, .site-header-inner { transition: none; }
+}
+
+/* ---------- Hero ---------- */
+
+.hero { padding-block: clamp(2.5rem, 7vw, 5.5rem) clamp(3rem, 7vw, 5rem); }
+
+.hero .wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+}
+
+@media (max-width: 56rem) {
+    .hero .wrap { grid-template-columns: minmax(0, 1fr); }
+}
+
+.hero-kicker {
+    margin-bottom: 1.1rem;
+    color: var(--text-soft);
+    font-weight: 500;
+}
+
+.hero h1 {
+    font-size: clamp(2.6rem, 6.4vw, 4.6rem);
+    font-weight: 700;
+}
+
+.hero h1 span { display: block; }
+
+.hero-lead {
+    margin-top: 1.4rem;
+    max-width: 30em;
+    color: var(--text-soft);
+    font-size: 1.15rem;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.8rem;
+}
+
+.hero-note {
+    margin: 1.1rem 0 0;
+    color: var(--text-soft);
+    font-size: 0.95rem;
+}
+
+/* ---------- The meter, drawn in the app icon's line style ---------- */
+
+.scene { position: relative; max-width: 30rem; margin-inline: auto; width: 100%; }
+
+.tile {
+    position: relative;
+    padding: clamp(3rem, 7vw, 3.8rem) clamp(1.2rem, 4vw, 2.4rem) clamp(2.4rem, 6vw, 3.2rem);
+    border-radius: 1.8rem;
+    background: linear-gradient(180deg, #3b82f6, var(--sky));
+    box-shadow: 0 30px 60px -30px rgba(14, 26, 43, 0.55);
+}
+
+.photo-exif {
+    position: absolute;
+    top: 0.9rem;
+    right: 1rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    background: rgba(14, 26, 43, 0.35);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+.meter {
+    padding: 1.4rem 1.3rem 1.2rem;
+    border: 3px solid #fff;
+    border-radius: 1.4rem;
+    color: #fff;
+}
+
+.serial {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-digits);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* Dashed like a text-recognition box: the serial number is what identifies the meter. */
+.serial b { padding: 0.05rem 0.45rem; border: 2px dashed #fff; border-radius: 0.3rem; font-weight: 600; }
+
+.meter .counter { margin-top: 1.1rem; }
+
+.meter-foot {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* ---------- Roller counter ---------- */
+
+.counter {
+    --size: clamp(1.7rem, 5.8vw, 2.5rem);
+    display: flex;
+    gap: 0.26rem;
+    font-family: var(--font-digits);
+    font-size: var(--size);
+    font-weight: 600;
+    line-height: 1;
+}
+
+.roller {
+    flex: 1 1 0;
+    height: 1.35em;
+    overflow: hidden;
+    border-radius: 0.25em;
+    box-shadow: inset 0 0 0 2.5px #fff;
+    color: #fff;
+    text-align: center;
+}
+
+/* The litre rollers behind the comma, red on a real meter, are filled here. */
+.roller.red { background: rgba(255, 255, 255, 0.22); }
+
+.comma {
+    flex: none;
+    align-self: flex-end;
+    width: 0.2em;
+    color: #fff;
+}
+
+.strip {
+    display: flex;
+    flex-direction: column;
+    /* Each digit cell is 1.35em tall; --to is the index of the resting digit in a 0–9 ×3 strip. */
+    transform: translateY(calc(var(--to) * -1.35em));
+    transition: transform var(--dur, 1.6s) cubic-bezier(0.22, 0.8, 0.26, 1) var(--delay, 0s);
+}
+
+.strip span { display: block; height: 1.35em; line-height: 1.35em; }
+
+.counter.is-idle .strip { transform: translateY(0); transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .strip { transition: none; }
+}
+
+/* ---------- Suggestion card (as in the app's Review tab) ---------- */
+
+.suggestion {
+    position: relative;
+    margin: -1.4rem 0.4rem 0 auto;
+    width: min(21rem, 92%);
+    padding: 1rem 1.1rem 1.1rem;
+    border: 1px solid var(--rule);
+    border-radius: 1.2rem;
+    background: var(--card);
+    box-shadow: 0 24px 40px -24px rgba(14, 26, 43, 0.45);
+    transform: rotate(0.8deg);
+}
+
+.suggestion-head { display: flex; gap: 0.7rem; align-items: center; }
+
+.kind-icon {
+    display: grid;
+    place-items: center;
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 0.6rem;
+    background: linear-gradient(180deg, var(--sky), #3b8df0);
+    color: #fff;
+    flex: none;
+}
+
+.kind-icon svg { width: 1.2rem; height: 1.2rem; }
+
+.suggestion-head strong { display: block; font-size: 1rem; }
+
+.recognized { color: var(--ok); font-size: 0.85rem; }
+
+.suggestion-value {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 0.8rem;
+    color: var(--text-soft);
+}
+
+.suggestion-value b { color: var(--text); font-size: 1.45rem; font-variant-numeric: tabular-nums; }
+
+.suggestion-foot {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.3rem;
+    color: var(--text-soft);
+    font-size: 0.85rem;
+}
+
+.suggestion-foot span:last-child { color: #d0342c; }
+
+.suggestion-confirm {
+    margin-top: 0.9rem;
+    padding: 0.6rem;
+    border-radius: 999px;
+    background: var(--accent-fill);
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* ---------- Steps ---------- */
+
+.steps { padding-block: clamp(3.5rem, 8vw, 6rem); background: var(--paper-sunk); }
+
+.step-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3.5vw, 3rem);
+    margin: clamp(2.2rem, 5vw, 3.5rem) 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+}
+
+@media (max-width: 52rem) {
+    .step-list { grid-template-columns: minmax(0, 1fr); max-width: 34rem; margin-inline: auto; }
+}
+
+.step-list li { counter-increment: step; }
+
+/* The step number sits on a single roller: the sequence is real, so it gets the counter's look. */
+.step-list li::before {
+    content: counter(step);
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 3rem;
+    margin-bottom: 1.1rem;
+    border-radius: 0.5rem;
+    box-shadow: inset 0 0 0 2.5px var(--accent);
+    color: var(--accent);
+    font-family: var(--font-digits);
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
+.step-list h3 { font-size: 1.55rem; margin-bottom: 0.6rem; }
+
+.step-list p { color: var(--text-soft); }
+
+.ui { color: var(--text); font-weight: 600; white-space: nowrap; }
+
+.steps-note {
+    max-width: 44rem;
+    margin: clamp(2rem, 4vw, 3rem) auto 0;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--rule);
+    color: var(--text-soft);
+    text-align: center;
+}
+
+/* ---------- The dark card ---------- */
+
+.reading { padding-block: clamp(3.5rem, 8vw, 6rem); }
+
+.dark-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    padding: clamp(1.6rem, 5vw, 4rem);
+    border-radius: 2rem;
+    background: var(--ink);
+    color: #e6ebf2;
+}
+
+:root:not([data-theme="light"]) .dark-card { box-shadow: inset 0 0 0 1px transparent; }
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .dark-card { box-shadow: inset 0 0 0 1px var(--rule); background: #0a121d; }
+}
+
+@media (max-width: 56rem) {
+    .dark-card { grid-template-columns: minmax(0, 1fr); }
+}
+
+.dark-card h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); font-weight: 700; color: #fff; }
+
+.dark-card p { color: #b5c0cf; }
+
+.dark-card p:first-of-type { margin-top: 1.2rem; }
+
+.dark-card a { color: var(--blue-bright); }
+
+.at-rest { margin: 0; }
+
+.at-rest .counter { --size: clamp(1.7rem, 4.6vw, 2.4rem); }
+
+.at-rest figcaption { margin-top: 0.8rem; font-size: 0.85rem; color: #b5c0cf; }
+
+.pipeline {
+    margin: 1.8rem 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: stage;
+}
+
+.pipeline li {
+    counter-increment: stage;
+    display: grid;
+    grid-template-columns: 1.8rem minmax(0, 1fr);
+    gap: 0.8rem;
+    padding-block: 0.7rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    color: #b5c0cf;
+    font-size: 0.97rem;
+}
+
+.pipeline li::before {
+    content: counter(stage);
+    color: var(--sky);
+    font-family: var(--font-digits);
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.pipeline b { color: #fff; font-weight: 600; }
+
+/* ---------- Practice ---------- */
+
+.practice { padding-block: 0 clamp(3.5rem, 8vw, 6rem); }
+
+.checks {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.8rem clamp(1.5rem, 3.5vw, 3rem);
+    margin: clamp(2rem, 4vw, 3rem) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+@media (max-width: 60rem) { .checks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 38rem) { .checks { grid-template-columns: minmax(0, 1fr); } }
+
+.checks li { display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); gap: 0.6rem; }
+
+.checks svg { width: 1.3rem; height: 1.3rem; margin-top: 0.2rem; color: var(--accent); }
+
+.checks b { display: block; color: var(--text); }
+
+.checks span { color: var(--text-soft); }
+
+/* ---------- Status and questions ---------- */
+
+.status, .questions {
+    padding-block: clamp(3rem, 7vw, 5rem);
+    border-top: 1px solid var(--rule);
+    text-align: center;
+}
+
+.status { background: var(--paper-sunk); }
+
+.status .wrap, .questions .wrap { max-width: 42rem; }
+
+.status h2, .questions h2 { font-size: clamp(1.7rem, 3.2vw, 2.3rem); font-weight: 700; }
+
+.status p, .questions p { margin-top: 1rem; color: var(--text-soft); }
+
+.status .hero-actions, .questions .hero-actions { justify-content: center; }
+
+/* ---------- Footer ---------- */
+
+.site-footer { padding-block: 2rem 2.6rem; border-top: 1px solid var(--rule); font-size: 0.95rem; }
+
+.site-footer .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--text-soft);
+}
+
+.site-footer nav { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+
+.site-footer a { color: var(--text-soft); text-decoration: none; }
+
+.site-footer a:hover { color: var(--text); text-decoration: underline; }
