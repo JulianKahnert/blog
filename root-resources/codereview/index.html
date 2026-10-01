@@ -27,9 +27,8 @@
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "macOS 26 or later",
   "url": "https://juliankahnert.de/codereview/",
-  "downloadUrl": "https://testflight.apple.com/join/bJQhUAFQ",
+  "downloadUrl": "https://apps.apple.com/app/id6799900907",
   "description": "Read every hunk of your working tree or a pull request without touching the mouse. Write the finding down where the fix has to happen.",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
   "author": { "@type": "Person", "name": "Julian Kahnert", "url": "https://juliankahnert.de" }
 }
 </script>
@@ -302,6 +301,9 @@
     text-decoration:none;
   }
   .btn:hover{ background:#0972DD; color:#fff; }
+  .btn-secondary{ background:var(--focus-tint); color:var(--focus); }
+  .btn-secondary:hover{ background:var(--focus); color:#fff; }
+  .md-actions{ display:flex; flex-wrap:wrap; gap:8px; }
 
   .ascii-block{ padding:6px 16px 20px; }
   .ascii-block pre{
@@ -535,8 +537,11 @@
             <div class="hunk-body">
               <div class="md-block">
                 <h2>Try it on your next review</h2>
-                <p>Public beta on TestFlight, free, no waitlist. Requires macOS 26 or later. Reviewing your own working tree needs no account and no network.</p>
-                <a class="btn" href="https://testflight.apple.com/join/bJQhUAFQ">Get the beta on TestFlight</a>
+                <p>Available on the Mac App Store. Want new builds first? The public beta on TestFlight has no waitlist. Requires macOS 26 or later. Reviewing your own working tree needs no account and no network.</p>
+                <div class="md-actions">
+                  <a class="btn" href="https://apps.apple.com/app/id6799900907">Download on the App Store</a>
+                  <a class="btn btn-secondary" href="https://testflight.apple.com/join/bJQhUAFQ">Get the beta on TestFlight</a>
+                </div>
               </div>
             </div>
           </div>
