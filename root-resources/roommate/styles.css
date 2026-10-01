@@ -683,6 +683,9 @@ img { max-width: 100%; height: auto; display: block; }
 
 .status .hero-actions, .questions .hero-actions { justify-content: center; }
 
+/* The ghost button's own hover fill is --paper-sunk, the same as this section, so it sits on a card instead. */
+.status .button-ghost, .status .button-ghost:hover { background: var(--card); }
+
 /* ---------- Footer ---------- */
 
 .site-footer { padding-block: 2rem 2.6rem; border-top: 1px solid var(--rule); font-size: 0.95rem; }
