@@ -52,7 +52,7 @@ extension AppEntry {
             summary: "Keyboard-first diff review. Read every hunk of your working tree or a pull request without touching the mouse.",
             iconPath: "/img/apps/codereview.svg",
             colorClass: "app-codereview",
-            primaryLink: Link(title: "Mac App Store", url: "https://apps.apple.com/app/id6799900907"),
+            primaryLink: Link(title: "App Store", url: "https://apps.apple.com/app/id6799900907"),
             secondaryLink: Link(title: "Learn more", url: "/codereview/")
         ),
         AppEntry(
