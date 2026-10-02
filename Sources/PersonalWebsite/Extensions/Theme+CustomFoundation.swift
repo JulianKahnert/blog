@@ -62,7 +62,10 @@ private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
                 .header(for: context, selectedSection: section.id),
                 .hr(),
                 .if(section.items.isEmpty,
-                    .wrapper(.contentBody(section.body)),
+                    .wrapper(
+                        .contentBody(section.body),
+                        .if(section.id.rawValue == "apps", .appList(for: AppEntry.all))
+                    ),
                     else: .wrapper(
                         .h1(.text(section.title)),
                         .itemList(for: section.items, on: context.site)
@@ -197,10 +200,7 @@ private extension Node where Context == HTML.BodyContext {
                                     .href(context.sections[section].path),
                                     .text(context.sections[section].title)
                                 ))
-                            },
-                            // Standalone page copied from `root-resources`, so it has no
-                            // SectionID the loop above could pick up.
-                            .li(.a(.href("/codereview/"), .text("Code Review")))
+                            }
                         )
                     )
                 )
@@ -231,6 +231,34 @@ private extension Node where Context == HTML.BodyContext {
                         .p(.text(item.description)),
                         .tagList(for: item, on: site)
                     ))
+            }
+        )
+    }
+
+    static func appList(for apps: [AppEntry]) -> Node {
+        return .ul(
+            .class("app-list"),
+            .forEach(apps) { app in
+                    .li(
+                        .class(app.colorClass),
+                        .img(.class("app-icon"), .src(app.iconPath), .alt("\(app.name) icon"), .width(84), .height(84)),
+                        .div(
+                            .class("app-text"),
+                            .p(.class("app-platforms"), .text(app.platforms)),
+                            .h2(
+                                .text(app.name),
+                                .unwrap(app.subtitle) { .small(.text($0)) }
+                            ),
+                            .p(.text(app.summary)),
+                            .div(
+                                .class("app-links"),
+                                .a(.class("app-button"), .href(app.primaryLink.url), .text(app.primaryLink.title)),
+                                .unwrap(app.secondaryLink) { link in
+                                    .a(.class("app-link"), .href(link.url), .text(link.title))
+                                }
+                            )
+                        )
+                    )
             }
         )
     }
