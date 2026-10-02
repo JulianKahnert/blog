@@ -284,3 +284,155 @@ div .tag-indigo,
         background-color: rgb(94, 92, 230);
     }
 }
+
+/* Apps */
+
+.app-pdf-archiver {
+    --app-color: #ca414f;
+    --app-tint: #fbeced;
+}
+
+.app-roommate {
+    --app-color: #2a62d4;
+    --app-tint: #e9eff9;
+}
+
+.app-codereview {
+    --app-color: #2b3138;
+    --app-tint: #eceef1;
+}
+
+.app-flowkit {
+    --app-color: #1b9150;
+    --app-tint: #e5f4ea;
+}
+
+.app-list {
+    display: grid;
+    gap: 16px;
+    margin-top: 30px;
+    list-style: none;
+}
+
+.app-list > li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+    padding: 28px;
+    border-radius: 20px;
+    background-color: var(--app-tint);
+}
+
+.app-icon {
+    display: block;
+    width: 84px;
+    height: 84px;
+    border-radius: 22.5%;
+    box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.35);
+}
+
+.app-platforms {
+    margin-bottom: 4px;
+    color: var(--app-color);
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.app-list h2 {
+    margin: 0 0 6px;
+    font-size: 1.6rem;
+    font-weight: 900;
+}
+
+.app-list h2 small {
+    margin-left: 6px;
+    font-size: 0.95rem;
+    font-weight: normal;
+    opacity: 0.6;
+}
+
+.app-list p {
+    max-width: 58ch;
+}
+
+.app-text > p:not(.app-platforms) {
+    margin-bottom: 16px;
+    line-height: 1.45;
+}
+
+.app-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+}
+
+.app-button,
+.app-link {
+    font-weight: bold;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.app-button {
+    padding: 8px 16px;
+    border-radius: 999px;
+    background-color: var(--app-color);
+    color: #fff;
+}
+
+.app-link {
+    padding: 8px 4px;
+    color: var(--app-color);
+}
+
+.app-link::after {
+    content: " →";
+}
+
+.app-button:hover,
+.app-link:hover {
+    opacity: 0.85;
+}
+
+@media (prefers-color-scheme: dark) {
+    .app-pdf-archiver {
+        --app-color: #f0707c;
+        --app-tint: #3a2629;
+    }
+
+    .app-roommate {
+        --app-color: #6aa6ff;
+        --app-tint: #1c2636;
+    }
+
+    .app-codereview {
+        --app-color: #d0d6de;
+        --app-tint: #2d3137;
+    }
+
+    .app-flowkit {
+        --app-color: #5fd08d;
+        --app-tint: #1b3024;
+    }
+
+    .app-button {
+        color: #222;
+    }
+}
+
+@media (max-width: 600px) {
+    .app-list > li {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+        padding: 22px;
+    }
+
+    .app-icon {
+        width: 64px;
+        height: 64px;
+    }
+}

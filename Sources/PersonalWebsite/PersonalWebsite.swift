@@ -4,7 +4,7 @@ import Publish
 
 struct PersonalWebsite: Website {
     enum SectionID: String, WebsiteSectionID {
-        case posts, about
+        case posts, about, apps
     }
 
     struct ItemMetadata: WebsiteItemMetadata {
