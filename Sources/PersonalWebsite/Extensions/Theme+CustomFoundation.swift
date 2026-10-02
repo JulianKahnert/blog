@@ -22,8 +22,11 @@ public extension Theme {
 
 private let styleFiles = ["styles.css", "fonts.css", "code.css"]
 
+// Changes with every build, so browsers and the CDN load the new stylesheets after a deploy.
+private let styleVersion = String(Int(Date().timeIntervalSince1970))
+
 private struct FoundationHTMLFactory<Site: Website>: HTMLFactory {
-    private let resourcePaths = styleFiles.map(Path.init)
+    private let resourcePaths = styleFiles.map { Path("\($0)?v=\(styleVersion)") }
 
     func makeIndexHTML(for index: Index,
                        context: PublishingContext<Site>) throws -> HTML {
