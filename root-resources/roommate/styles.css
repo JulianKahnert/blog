@@ -272,9 +272,32 @@ img { max-width: 100%; height: auto; display: block; }
     /* Without the toggle there is no way to the other language: nothing redirects by Accept-Language. */
     .site-nav ul li:not(:has(.nav-cta)):not(.language-toggle) { display: none; }
 
-    .site-header-inner { flex-wrap: wrap; row-gap: 0.5rem; }
+    /* One row on a phone: wrapping turned the scrolled pill into a two-row oval. */
+    .site-header-inner { gap: 0.75rem; }
 
-    .site-nav .nav-cta { padding-inline: 0.9rem; }
+    .site-header.is-scrolled .site-header-inner { padding-inline: 0.9rem 0.4rem; gap: 0.5rem; }
+
+    .site-name { gap: 0.5rem; font-size: 1rem; white-space: nowrap; }
+
+    .site-nav ul { gap: 0.5rem; }
+
+    .language-toggle { gap: 0.1rem; }
+
+    .language-toggle a { padding-inline: 0.3rem; }
+
+    .site-nav .nav-cta { padding: 0.5rem 0.9rem; font-size: 0.9rem; }
+}
+
+/* Name, toggle and button no longer fit in one row; the icon stands in, the name stays for screen readers. */
+@media (max-width: 380px) {
+    .site-name-text {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
