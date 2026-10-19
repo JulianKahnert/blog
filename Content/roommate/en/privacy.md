@@ -60,7 +60,7 @@ You manage or cancel a subscription in the settings of your Apple Account.
 
 ## Kickstart Exchange banner
 
-As long as you have no license, the app shows a banner for another app on top of the Meters and Review tabs. The banner comes from Kickstart Exchange, a service through which app developers show each other's apps. Kickstart Exchange chooses the app to show by the app it appears in, not by who you are; the banner does not track you or your device. TODO(owner): name the operator of Kickstart Exchange and their address, from https://exchange.kickstart.tools/privacy.
+As long as you have no license, the app shows a banner for another app on top of the Meters and Review tabs. The banner comes from Kickstart Exchange, a service through which app developers show each other's apps. Kickstart Exchange chooses the app to show by the app it appears in, not by who you are; the banner does not track you or your device. In the App Store privacy label, the app declares two data types for the Kickstart SDK: Product Interaction and Advertising Data, both Usage Data. Neither is linked to your identity, and neither is used for tracking. TODO(owner): name the operator of Kickstart Exchange and their address, from https://exchange.kickstart.tools/privacy.
 
 To load a banner, the app connects to api.kickstart.tools and sends:
 
