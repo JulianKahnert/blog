@@ -40,7 +40,7 @@ A backup or a ZIP export is created only when you ask for it, and it goes where 
 
 ## Support mails
 
-When you tap "Contact Support" or "Report Recognition Error", the app prepares an email to support@pdf-archiver.io in your mail app. Nothing is sent until you send that email yourself. It has a diagnostics report attached that contains:
+When you tap "Contact Support" or "Report Recognition Error", the app prepares an email to support@kahnert.me in your mail app. Nothing is sent until you send that email yourself. It has a diagnostics report attached that contains:
 
 - the app version, the device model, the operating system version, the languages set and the free storage
 - the app's log, which can name your meters, serial numbers and read values
