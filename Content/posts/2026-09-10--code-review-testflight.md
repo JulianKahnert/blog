@@ -59,6 +59,6 @@ There are several other shortcuts (see `?`) and a handy Xcode integration. Just 
 
 But most importantly: just try it in [TestFlight](https://testflight.apple.com/join/bJQhUAFQ) for free!
 
-And of course please give feedback 🙏 I'd love to hear from you: [CodeReview@juliankahnert.de](mailto:CodeReview@juliankahnert.de)
+And of course please give feedback 🙏 I'd love to hear from you: [support@kahnert.me](mailto:support@kahnert.me)
 
 _Written by a human 🤓_
